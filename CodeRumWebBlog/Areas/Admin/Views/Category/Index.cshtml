@@ -1,0 +1,71 @@
+﻿@model IPagedList<Model.Entity.Category>
+@using PagedList;
+@using PagedList.Mvc;
+
+@{
+    ViewBag.Title = "Index";
+}
+<h2>Danh sách danh mục</h2>
+<div class="col-md-6 mb-3">
+    <a href="/tao-moi-danh-muc" class="btn btn-primary">Tạo mới</a>
+</div>
+@using (Html.BeginForm("Index", "Category", FormMethod.Post))
+{
+    <div class="col-md-5">
+        <div class="row d-flex mb-3">
+            <div class="col-md-6 form-group">
+                <input type="text" class="form-control" value="@ViewBag.SearchString" name="searchString" />
+            </div>
+            <div class="col-md-6">
+                <button type="submit" class="btn btn-primary">Tìm kiếm</button>
+            </div>
+
+        </div>
+
+    </div>
+}
+<div class="table-responsive">
+    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+        <thead>
+            <tr>
+
+                <th>Tên</th>
+                <th>Ngày tạo</th>
+                <th>Ngày sửa đổi</th>
+                <th>Trạng thái</th>
+                <th>#</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var cate in Model)
+            {
+                <tr id="rows_@cate.Id">
+
+                    <td>@cate.Name</td>
+                    <td>@cate.CreateAt.Value.ToString("dd MMMM yyyy", new System.Globalization.CultureInfo("vi-VN"))</td>
+                    <td>@(cate.ModifyDate.HasValue ? cate.ModifyDate.Value.ToString("dd MMMM yyyy", new System.Globalization.CultureInfo("vi-VN")) : "Chưa có dữ liệu")</td>
+                    <td><a href="#" class="btn-active text-decoration-none" data-id="@cate.Id">@(cate.Status ? "Đã kích hoạt" : "Chưa kích hoạt")</a></td>
+                    <td>
+                        [<a href="/chinh-sua-nguoi-dung-@cate.Id">Sửa</a>]
+
+                        [@Ajax.ActionLink("Xóa", "Delete", new { @id = cate.Id }, new AjaxOptions
+                        {
+                        Confirm = "Bạn có muốn xóa?",
+                        OnComplete = "$('#rows_" + cate.Id + "').remove()",
+                        HttpMethod = "Delete"
+                        })]
+                    </td>
+                </tr>
+            }
+
+
+        </tbody>
+    </table>
+    <div class="pagination justify-content-end">
+        @Html.PagedListPager(Model, page => Url.Action("Index", new { page, @searchString = @ViewBag.SearchString }))
+
+    </div>
+
+</div>
+

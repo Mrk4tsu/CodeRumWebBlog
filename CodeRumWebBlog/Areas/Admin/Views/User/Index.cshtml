@@ -1,0 +1,74 @@
+﻿@model PagedList.IPagedList<Model.Entity.Account>
+@using PagedList;
+@using PagedList.Mvc;
+
+@{
+    ViewBag.Title = "Index";
+}
+
+@section jsFooter{
+    <script src="~/Assets/js/usercontroller.js"></script>
+}
+<h2>Danh sách người dùng</h2>
+<div class="col-md-6 mb-3">
+    <a href="/tao-moi-nguoi-dung" class="btn btn-primary">Tạo mới</a>
+</div>
+@using (Html.BeginForm("Index", "User", FormMethod.Post))
+{
+    <div class="col-md-5">
+        <div class="row d-flex mb-3">
+            <div class="col-md-6 form-group">
+                <input type="text" class="form-control" value="@ViewBag.SearchString" name="searchString" />
+            </div>
+            <div class="col-md-6">
+                <button type="submit" class="btn btn-primary">Tìm kiếm</button>
+            </div>
+
+        </div>
+
+    </div>
+}
+<div class="table-responsive">
+    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+        <thead>
+            <tr>
+
+                <th>Tài khoản</th>
+                <th>Tên</th>
+                <th>Email</th>
+                <th>Trạng thái</th>
+                <th>#</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var user in Model)
+            {
+                <tr id="row_@user.Id">
+
+                    <td>@user.Username</td>
+                    <td>@user.Name</td>
+                    <td>@user.Email</td>
+                    <td><a href="#" class="btn-active text-decoration-none" data-id="@user.Id">@(user.Status ? "Đã kích hoạt" : "Chưa kích hoạt")</a></td>
+                    <td>
+                        [<a href="/chinh-sua-nguoi-dung-@user.Id">Sửa</a>]
+
+                        [@Ajax.ActionLink("Xóa", "Delete", new { @id = user.Id }, new AjaxOptions
+                 {
+                      Confirm = "Bạn có muốn xóa?",
+                      OnComplete = "$('#row_" + @user.Id + "').remove()",
+                      HttpMethod = "Delete"
+                 })]
+                    </td>
+                </tr>
+            }
+
+
+        </tbody>
+    </table>
+    <div class="pagination justify-content-end">
+        @Html.PagedListPager(Model, page => Url.Action("Index", new { page, @searchString = @ViewBag.SearchString }))
+
+    </div>
+
+</div>
