@@ -70,18 +70,30 @@
     <Compile Include="Entity\CodeRumDbContext.cs" />
     <Compile Include="Entity\Comment.cs" />
     <Compile Include="Entity\Content.cs" />
+    <Compile Include="Entity\ContentTag.cs" />
     <Compile Include="Entity\Menu.cs" />
     <Compile Include="Entity\MenuType.cs" />
     <Compile Include="Entity\Slide.cs" />
+    <Compile Include="Entity\sysdiagram.cs" />
+    <Compile Include="Entity\SystemConfig.cs" />
+    <Compile Include="Entity\Tag.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModel\ContentViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="App.Config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\PagedList.css" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Common\Common.csproj">
+      <Project>{B2707B95-032D-4F5F-A332-0C4F293EF960}</Project>
+      <Name>Common</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

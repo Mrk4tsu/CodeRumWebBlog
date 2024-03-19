@@ -1,0 +1,27 @@
+﻿﻿@model Model.Entity.Content
+@{
+    ViewBag.Title = "Detail";
+}
+
+<div class="content">
+    <div class="content_top">
+        <div class="heading">
+            <h3>@Model.Name</h3>
+        </div>
+
+        <div class="clear"></div>
+    </div>
+    <div class="section-group">
+        @Html.Raw(Model.Detail)
+        <ul>
+            @{
+                var tags = (List<Model.Entity.Tag>)ViewBag.Tags;
+                foreach (var tag in tags)
+                {
+                    <li><a href="/tag/@tag.Id">@tag.Name</a></li>
+                }
+            }
+        </ul>
+    </div>
+</div>
+

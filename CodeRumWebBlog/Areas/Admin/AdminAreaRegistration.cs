@@ -23,6 +23,31 @@ namespace CodeRumWebBlog.Areas.Admin
                     controller = "Home",
                     action = "Index"
                 });
+            // Route cho danh sách bài viết
+            context.MapRoute(
+                name: "AdminListContent",
+                url: "danh-sach-bai-viet",
+                defaults: new
+                {
+                    controller = "Content",
+                    action = "Index"
+                });
+
+
+
+            // Route cho xem chi tiết bài viết
+            context.MapRoute(
+                name: "AdminDetailContent",
+                url: "chi-tiet/{metatitle}-{id}",
+                defaults: new
+                {
+                    controller = "Content",
+                    action = "Detail",
+                    id = UrlParameter.Optional
+                });
+
+
+
             // Route cho danh sách danh mục
             context.MapRoute(
                 name: "AdminListCategory",

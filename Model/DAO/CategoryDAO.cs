@@ -14,6 +14,10 @@ namespace Model.DAO
         {
             db = new CodeRumDbContext();
         }
+        public List<Category> ListAll()
+        {
+            return db.Categories.Where(x => x.Status == true).ToList();
+        }
         public IEnumerable<Category> ListAll(string searchString, int page, int pageSize)
         {
             IQueryable<Category> model = db.Categories;

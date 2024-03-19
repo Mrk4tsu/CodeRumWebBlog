@@ -17,9 +17,13 @@ namespace Model.Entity
         public virtual DbSet<Category> Categories { get; set; }
         public virtual DbSet<Comment> Comments { get; set; }
         public virtual DbSet<Content> Contents { get; set; }
+        public virtual DbSet<ContentTag> ContentTags { get; set; }
         public virtual DbSet<Menu> Menus { get; set; }
         public virtual DbSet<MenuType> MenuTypes { get; set; }
         public virtual DbSet<Slide> Slides { get; set; }
+        public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
+        public virtual DbSet<SystemConfig> SystemConfigs { get; set; }
+        public virtual DbSet<Tag> Tags { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -81,6 +85,14 @@ namespace Model.Entity
 
             modelBuilder.Entity<Content>()
                 .Property(e => e.ModifyBy)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<SystemConfig>()
+                .Property(e => e.Id)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<SystemConfig>()
+                .Property(e => e.Type)
                 .IsUnicode(false);
         }
     }
