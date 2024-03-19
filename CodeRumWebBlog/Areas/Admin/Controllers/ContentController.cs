@@ -48,6 +48,41 @@ namespace CodeRumWebBlog.Areas.Admin.Controllers
             ViewBag.Tags = new ContentDAO().ListTag(id);
             return View(model);
         }
+        [HttpGet]
+        public ActionResult Edit(long id)
+        {
+            var dao = new ContentDAO();
+            var content = dao.GetByID(id);
+            ViewBag.Content = content.Detail;
+            SetViewBag(content.CategoryId);
+
+            return View(content);
+        }
+        [HttpPost]
+        [ValidateInput(false)]
+        public async Task<ActionResult> Edit(Content model, string detailContent)
+        {
+            if (ModelState.IsValid)
+            {
+                var dao = new ContentDAO();
+
+                model.Detail = detailContent;
+
+                var result = await dao.EditAsyn(model);
+                if (result)
+                {
+                    SetAlert("Chỉnh sửa bài viết thành công", "sucess");
+                    return RedirectToAction("Index", "Content");
+                }
+                else
+                {
+                    ModelState.AddModelError("", "Cập nhật bài viết không thành công");
+                }
+                return View("Index", "Content");
+            }
+            SetViewBag(model.CategoryId);
+            return View();
+        }
         public void SetViewBag(long? selectedId = null)
         {
             var dao = new CategoryDAO();

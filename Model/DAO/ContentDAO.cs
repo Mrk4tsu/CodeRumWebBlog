@@ -3,6 +3,7 @@ using Model.Entity;
 using PagedList;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -78,41 +79,102 @@ namespace Model.DAO
                 foreach (var tag in tags)
                 {
                     var tagId = StringHelper.ToUnsignString(tag);
-                    var existedTag = this.CheckTag(tagId);
+                    var existedTag = await this.CheckTag(tagId);
 
                     //insert to to tag table
                     if (!existedTag)
                     {
-                        this.InsertTag(tagId, tag);
+                        await this.InsertTag(tagId, tag);
                     }
 
                     //insert to content tag
-                    this.InsertContentTag(content.Id, tagId);
+                    await this.InsertContentTag(content.Id, tagId);
 
                 }
             }
 
             return content.Id;
         }
-        public void InsertTag(string id, string name)
+        public async Task<bool> EditAsyn(Content entity)
+        {
+            try
+            {
+                var content = GetByID(entity.Id);
+                //Xử lý alias
+                if (string.IsNullOrEmpty(entity.MetaTitle))
+                {
+                    content.MetaTitle = StringHelper.ToUnsignString(entity.Name);
+                }
+                content.Name = entity.Name;
+                content.Description = entity.Description;
+                content.Image = entity.Image;
+                content.CategoryId = entity.CategoryId;
+                content.ViewCount = entity.ViewCount;
+                content.TopHot = entity.TopHot;
+                content.Tag = entity.Tag;
+                content.MetaKeyword = entity.MetaKeyword;
+                content.CreateAt = entity.CreateAt;
+                content.Detail = entity.Detail;
+                content.Status = entity.Status;
+                content.CreateBy = entity.CreateBy;
+                content.ModifyBy = entity.ModifyBy;
+                content.ModifyDate = DateTime.Now;
+
+                await db.SaveChangesAsync();
+
+                //Xử lý tag
+                if (!string.IsNullOrEmpty(entity.Tag))
+                {
+                    this.RemoveAllContentTag(entity.Id);
+                    string[] tags = entity.Tag.Split(',');
+                    foreach (var tag in tags)
+                    {
+                        var tagId = StringHelper.ToUnsignString(tag);
+                        var existedTag = await this.CheckTag(tagId);
+
+                        //insert to to tag table
+                        if (!existedTag)
+                        {
+                            await this.InsertTag(tagId, tag);
+                        }
+
+                        //insert to content tag
+                        await this.InsertContentTag(entity.Id, tagId);
+
+                    }
+                }
+
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+        public async Task InsertTag(string id, string name)
         {
             var tag = new Tag();
             tag.Id = id;
             tag.Name = name;
             db.Tags.Add(tag);
-            db.SaveChanges();
+            await db.SaveChangesAsync();
         }
-        public void InsertContentTag(long contentId, string tagId)
+        public async Task InsertContentTag(long contentId, string tagId)
         {
             var contentTag = new ContentTag();
             contentTag.ContentId = contentId;
             contentTag.TagId = tagId;
             db.ContentTags.Add(contentTag);
+            await db.SaveChangesAsync();
+        }
+        public void RemoveAllContentTag(long contentId)
+        {
+            db.ContentTags.RemoveRange(db.ContentTags.Where(x => x.ContentId == contentId));
             db.SaveChanges();
         }
-        public bool CheckTag(string id)
+        public async Task<bool> CheckTag(string id)
         {
-            return db.Tags.Count(x => x.Id == id) > 0;
+            return await db.Tags.CountAsync(x => x.Id == id) > 0;
         }
         public Tag GetTag(string id)
         {

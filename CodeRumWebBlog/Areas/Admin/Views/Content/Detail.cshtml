@@ -13,15 +13,16 @@
     </div>
     <div class="section-group">
         @Html.Raw(Model.Detail)
-        <ul>
-            @{
-                var tags = (List<Model.Entity.Tag>)ViewBag.Tags;
-                foreach (var tag in tags)
-                {
-                    <li><a href="/tag/@tag.Id">@tag.Name</a></li>
-                }
+
+        @{
+            var tags = (List<Model.Entity.Tag>)ViewBag.Tags;
+            foreach (var tag in tags)
+            {
+                <a style="background-color: rgba(66, 103, 178, 0.6)" class="btn btn-sm" href="/tag/@tag.Id">@tag.Name</a>
             }
-        </ul>
+        }
+
     </div>
+
 </div>
 

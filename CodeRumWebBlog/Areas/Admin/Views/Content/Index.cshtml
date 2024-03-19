@@ -36,6 +36,7 @@
                             <tr>
 
                                 <th>Tiêu đề</th>
+                                <th>Meta Title</th>
                                 <th>Hình ảnh</th>
                                 <th>Ngày đăng</th>
                                 <th>Trạng thái</th>
@@ -48,6 +49,7 @@
                                 <tr id="row_@item.Id">
 
                                     <td>@item.Name</td>
+                                    <td>@item.MetaTitle</td>
                                     <td><a href="/chi-tiet/@item.MetaTitle-@item.Id">@item.Image</a></td>
                                     <td>@item.CreateAt</td>
                                     <td><a href="#" class="btn-active" data-id="@item.Id">@Html.Raw(item.Status ? "<strong>Kích hoạt</strong>" : "Khoá")</a></td>

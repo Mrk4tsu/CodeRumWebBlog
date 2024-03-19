@@ -8,7 +8,6 @@ CKEDITOR.editorConfig = function( config ) {
 	// config.language = 'fr';
 	// config.uiColor = '#AADC6E';
 
-    config.skin = 'office2013'
     config.syntaxhighlight_lang = 'csharp';
     config.syntaxhighlight_hideControls = true;
     config.language = 'vi';
