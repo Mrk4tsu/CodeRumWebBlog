@@ -140,6 +140,7 @@
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\BaseController.cs" />
     <Compile Include="Areas\Admin\Controllers\CategoryController.cs" />
+    <Compile Include="Areas\Admin\Controllers\CommentController.cs" />
     <Compile Include="Areas\Admin\Controllers\ContentController.cs" />
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
     <Compile Include="Areas\Admin\Controllers\UserController.cs" />
@@ -167,6 +168,7 @@
     <Content Include="Assets\css\bootstrap.min.css" />
     <Content Include="Assets\css\bootstrap.rtl.css" />
     <Content Include="Assets\css\bootstrap.rtl.min.css" />
+    <Content Include="Assets\css\code-rum-style.css" />
     <Content Include="Assets\css\PagedList.css" />
     <Content Include="Assets\css\Site.css" />
     <Content Include="Areas\Admin\Views\User\Create.cshtml" />
@@ -177,6 +179,8 @@
     <Content Include="Areas\Admin\Views\Content\Create.cshtml" />
     <Content Include="Areas\Admin\Views\Content\Detail.cshtml" />
     <Content Include="Areas\Admin\Views\Content\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Content\Tag.cshtml" />
+    <Content Include="Areas\Admin\Views\Comment\Create.cshtml" />
     <None Include="Assets\jQuery\jquery-3.7.1.intellisense.js" />
     <Content Include="Assets\jQuery\jquery-3.7.1.js" />
     <Content Include="Assets\jQuery\jquery-3.7.1.min.js" />
@@ -191,7 +195,7 @@
     <Content Include="Assets\js\jquery.unobtrusive-ajax.js" />
     <Content Include="Assets\js\jquery.unobtrusive-ajax.min.js" />
     <Content Include="Assets\js\scripts.js" />
-    <Content Include="Assets\js\usercontroller.js" />
+    <Content Include="Assets\js\utilscontroller.js" />
     <Content Include="Assets\plugin\ckeditor\adapters\jquery.js" />
     <Content Include="Assets\plugin\ckeditor\build-config.js" />
     <Content Include="Assets\plugin\ckeditor\ckeditor.js" />

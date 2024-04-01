@@ -22,7 +22,27 @@ namespace CodeRumWebBlog.Areas.Admin.Controllers
             ViewBag.SearchString = searchString;
             return View(model);
         }
+        public ActionResult Tag(string tagId, int page = 1, int pageSize = 1)
+        {
+            var dao = new ContentDAO();
+            var model = dao.ListAllByTag(tagId, page, pageSize);
+            int totalRecord = dao.CountAllByTag(tagId); // Đếm tổng số bản ghi
 
+            ViewBag.Total = totalRecord;
+            ViewBag.Page = page;
+
+            ViewBag.Tag = new ContentDAO().GetTag(tagId);
+            int maxPage = 5;
+
+            int totalPage = (int)Math.Ceiling((double)(totalRecord / (double)pageSize));
+            ViewBag.TotalPage = totalPage;
+            ViewBag.MaxPage = maxPage;
+            ViewBag.First = 1;
+            ViewBag.Last = totalPage;
+            ViewBag.Next = page + 1;
+            ViewBag.Prev = page - 1;
+            return View(model);
+        }
         [HttpGet]
         public ActionResult Create()
         {
@@ -41,18 +61,19 @@ namespace CodeRumWebBlog.Areas.Admin.Controllers
             SetViewBag();
             return View();
         }
-        public ActionResult Detail(long id)
+        public async Task<ActionResult> Detail(long id, int page = 1, int pageSize = 5)
         {
-            var model = new ContentDAO().GetByID(id);
+            var model = await new ContentDAO().ViewDetail(id);
 
             ViewBag.Tags = new ContentDAO().ListTag(id);
+            ViewBag.Comments = new CommentDAO().ListByContent(id, page, pageSize);
             return View(model);
         }
         [HttpGet]
-        public ActionResult Edit(long id)
+        public async Task<ActionResult> Edit(long id)
         {
             var dao = new ContentDAO();
-            var content = dao.GetByID(id);
+            var content = await dao.GetByID(id);
             ViewBag.Content = content.Detail;
             SetViewBag(content.CategoryId);
 
@@ -82,6 +103,35 @@ namespace CodeRumWebBlog.Areas.Admin.Controllers
             }
             SetViewBag(model.CategoryId);
             return View();
+        }
+        [HttpPost]
+        public ActionResult AddComment(long ContentId, string CommentText)
+        {
+            var comment = new Comment
+            {
+                PostId = ContentId,
+                Content = CommentText,
+                CreateAt = DateTime.Now,
+                Status = true
+            };
+
+            var commentDao = new CommentDAO();
+            commentDao.Insert(comment);
+
+            return Json(new { success = true });
+        }
+        [HttpPost]
+        public async Task<ActionResult> EditComment(long commentId, string commentText)
+        {
+            var commentDao = new CommentDAO();
+            var comment = await commentDao.GetByID(commentId);
+            if (comment != null)
+            {
+                comment.Content = commentText;
+                commentDao.Update(comment);
+                return Json(new { success = true });
+            }
+            return Json(new { success = false });
         }
         public void SetViewBag(long? selectedId = null)
         {

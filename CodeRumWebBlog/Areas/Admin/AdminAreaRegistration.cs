@@ -23,6 +23,11 @@ namespace CodeRumWebBlog.Areas.Admin
                     controller = "Home",
                     action = "Index"
                 });
+            context.MapRoute(
+            name: "Tags",
+            url: "tag/{tagId}",
+            defaults: new { controller = "Content", action = "Tag", id = UrlParameter.Optional }
+        );
             // Route cho danh sách bài viết
             context.MapRoute(
                 name: "AdminListContent",

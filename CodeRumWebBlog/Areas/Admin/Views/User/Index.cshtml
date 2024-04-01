@@ -7,7 +7,7 @@
 }
 
 @section jsFooter{
-    <script src="~/Assets/js/usercontroller.js"></script>
+    <script src="~/Assets/js/utilscontroller.js"></script>
 }
 <h2>Danh sách người dùng</h2>
 <div class="col-md-6 mb-3">
@@ -49,16 +49,17 @@
                     <td>@user.Username</td>
                     <td>@user.Name</td>
                     <td>@user.Email</td>
-                    <td><a href="#" class="btn-active text-decoration-none" data-id="@user.Id">@(user.Status ? "Đã kích hoạt" : "Chưa kích hoạt")</a></td>
+                    <td><a href="#" class="btn-change-user-status text-decoration-none" data-id="@user.Id" data-status="@user.Status">@(user.Status ? "Đã kích hoạt" : "Chưa kích hoạt")</a></td>
+
                     <td>
                         [<a href="/chinh-sua-nguoi-dung-@user.Id">Sửa</a>]
 
                         [@Ajax.ActionLink("Xóa", "Delete", new { @id = user.Id }, new AjaxOptions
-                 {
-                      Confirm = "Bạn có muốn xóa?",
-                      OnComplete = "$('#row_" + @user.Id + "').remove()",
-                      HttpMethod = "Delete"
-                 })]
+            {
+                 Confirm = "Bạn có muốn xóa?",
+                 OnComplete = "$('#row_" + @user.Id + "').remove()",
+                 HttpMethod = "Delete"
+            })]
                     </td>
                 </tr>
             }

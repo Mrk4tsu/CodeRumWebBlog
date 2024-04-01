@@ -15,10 +15,7 @@ namespace CodeRumWebBlog.Areas.Admin.Controllers
             return View(dao);
         }
         [HttpGet]
-        public ActionResult Create()
-        {
-            return View();
-        }
+        public ActionResult Create() => View();
         [HttpPost]
         public async Task<ActionResult> Create(Category category)
         {

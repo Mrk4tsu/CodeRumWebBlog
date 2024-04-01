@@ -1,6 +1,48 @@
 ﻿﻿@model Model.Entity.Content
+@using PagedList;
+@using PagedList.Mvc;
 @{
     ViewBag.Title = "Detail";
+}
+
+@section jsFooter{
+    <script>
+    $(document).ready(function () {
+        $('.btn-add-comment').on('click', function (e) {
+            e.preventDefault();
+
+            var contentId = $('#ContentId').val();
+            var commentText = $('#CommentText').val();
+
+            $.ajax({
+                url: '@Url.Action("AddComment", "Content")',
+                type: 'POST',
+                data: {
+                    ContentId: contentId,
+                    CommentText: commentText
+                },
+                success: function () {
+                    // Handle success here. For example, clear the form:
+                    $('#CommentText').val('');
+                    // Add the new comment to the top of the list:
+                    $('#commentList').prepend('<p>' + commentText + '</p>');
+                },
+                error: function () {
+                    // Handle error here
+                }
+            });
+        });
+
+         $('#editCommentModal').on('show.bs.modal', function (event) {
+     var button = $(event.relatedTarget);
+     var commentId = button.data('comment-id');
+     var commentText = button.data('comment-text');
+     var modal = $(this);
+     modal.find('#editCommentId').val(commentId);
+     modal.find('#editCommentText').val(commentText);
+ });
+    });
+    </script>
 }
 
 <div class="content">
@@ -11,7 +53,7 @@
 
         <div class="clear"></div>
     </div>
-    <div class="section-group">
+    <div class="container">
         @Html.Raw(Model.Detail)
 
         @{
@@ -21,8 +63,22 @@
                 <a style="background-color: rgba(66, 103, 178, 0.6)" class="btn btn-sm" href="/tag/@tag.Id">@tag.Name</a>
             }
         }
+    <form id="commentForm" class="mt-2">
+        <input type="hidden" id="ContentId" value="@Model.Id" />
+        <textarea class="form-control" id="CommentText"></textarea>
+        <input class="btn btn-primary my-1 btn-add-comment" type="submit" value="Add Comment" />
 
+    </form>
     </div>
-
+    <div id="commentList" class="card">
+        @{
+            var comments = (PagedList.IPagedList<Model.Entity.Comment>)ViewBag.Comments;
+            foreach (var cmt in comments)
+            {
+                <span>@cmt.Content</span>
+                <p>@cmt.CreateAt</p>               
+            }
+        }
+    </div>
 </div>
 

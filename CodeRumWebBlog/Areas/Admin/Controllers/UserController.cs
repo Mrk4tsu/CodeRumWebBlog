@@ -97,5 +97,14 @@ namespace CodeRumWebBlog.Areas.Admin.Controllers
                 status = result
             });
         }
+        [HttpPost]
+        public JsonResult AddComment(long id, Comment comment)
+        {
+            var result = new CommentDAO().Insert(comment);
+            return Json(new
+            {
+                status = result
+            });
+        }
     }
 }

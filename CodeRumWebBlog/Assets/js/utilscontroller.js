@@ -3,7 +3,7 @@
         user.registerEvents();
     },
     registerEvents: function () {
-        $('.btn-active').off('click').on('click', function (e) {
+        $('.btn-change-user-status').off('click').on('click', function (e) {
             e.preventDefault();
             var btn = $(this);
             var id = btn.data('id');

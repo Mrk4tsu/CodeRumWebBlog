@@ -52,7 +52,7 @@
                                     <td>@item.MetaTitle</td>
                                     <td><a href="/chi-tiet/@item.MetaTitle-@item.Id">@item.Image</a></td>
                                     <td>@item.CreateAt</td>
-                                    <td><a href="#" class="btn-active" data-id="@item.Id">@Html.Raw(item.Status ? "<strong>Kích hoạt</strong>" : "Khoá")</a></td>
+                                    <td><a href="#" class=" text-decoration-none" data-id="@item.Id">@(item.Status ? "Đã kích hoạt" : "Chưa kích hoạt")</a></td>
                                     <td>
                                         <a href="/Admin/Content/Edit/@item.Id">Sửa</a>
                                         |

@@ -16,17 +16,22 @@ namespace Model.DAO
         {
             db = new CodeRumDbContext();
         }
+        public IEnumerable<Content> ListAll()
+        {
+            return db.Contents.Where(x => x.Status == true).ToList();
+        }
         public IEnumerable<Content> ListAllPaging(string searchString, int page, int pageSize)
         {
             IQueryable<Content> model = db.Contents;
             if (!string.IsNullOrEmpty(searchString))
             {
                 model = model.Where(x => x.Name.Contains(searchString) ||
-                x.MetaTitle.Contains(searchString)||
+                x.MetaTitle.Contains(searchString) ||
                 x.Tag.Contains(searchString));
             }
             return model.OrderByDescending(x => x.CreateAt).ToPagedList(page, pageSize);
         }
+
         public IEnumerable<Content> ListAllByTag(string tag, int page, int pageSize)
         {
             var model = (from a in db.Contents
@@ -55,9 +60,17 @@ namespace Model.DAO
                          });
             return model.OrderByDescending(x => x.CreateAt).ToPagedList(page, pageSize);
         }
-        public Content GetByID(long id)
+        public int CountAllByTag(string tag)
         {
-            return db.Contents.Find(id);
+            return (from a in db.Contents
+                    join b in db.ContentTags
+                    on a.Id equals b.ContentId
+                    where b.TagId == tag
+                    select a).Count();
+        }
+        public async Task<Content> GetByID(long id)
+        {
+            return await db.Contents.FindAsync(id);
         }
         public async Task<long> InsertAsync(Content content)
         {
@@ -99,7 +112,7 @@ namespace Model.DAO
         {
             try
             {
-                var content = GetByID(entity.Id);
+                var content = await GetByID(entity.Id);
                 //Xử lý alias
                 if (string.IsNullOrEmpty(entity.MetaTitle))
                 {
@@ -119,8 +132,6 @@ namespace Model.DAO
                 content.CreateBy = entity.CreateBy;
                 content.ModifyBy = entity.ModifyBy;
                 content.ModifyDate = DateTime.Now;
-
-                await db.SaveChangesAsync();
 
                 //Xử lý tag
                 if (!string.IsNullOrEmpty(entity.Tag))
@@ -144,12 +155,79 @@ namespace Model.DAO
                     }
                 }
 
+                await db.SaveChangesAsync();
                 return true;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                // Log the exception here
                 return false;
             }
+        }
+
+        //public async Task<bool> EditAsyn(Content entity)
+        //{
+        //    try
+        //    {
+        //        var content = await GetByID(entity.Id);
+        //        //Xử lý alias
+        //        if (string.IsNullOrEmpty(entity.MetaTitle))
+        //        {
+        //            content.MetaTitle = StringHelper.ToUnsignString(entity.Name);
+        //        }
+        //        content.Name = entity.Name;
+        //        content.Description = entity.Description;
+        //        content.Image = entity.Image;
+        //        content.CategoryId = entity.CategoryId;
+        //        content.ViewCount = entity.ViewCount;
+        //        content.TopHot = entity.TopHot;
+        //        content.Tag = entity.Tag;
+        //        content.MetaKeyword = entity.MetaKeyword;
+        //        content.CreateAt = entity.CreateAt;
+        //        content.Detail = entity.Detail;
+        //        content.Status = entity.Status;
+        //        content.CreateBy = entity.CreateBy;
+        //        content.ModifyBy = entity.ModifyBy;
+        //        content.ModifyDate = DateTime.Now;
+
+        //        await db.SaveChangesAsync();
+
+        //        //Xử lý tag
+        //        if (!string.IsNullOrEmpty(entity.Tag))
+        //        {
+        //            this.RemoveAllContentTag(entity.Id);
+        //            string[] tags = entity.Tag.Split(',');
+        //            foreach (var tag in tags)
+        //            {
+        //                var tagId = StringHelper.ToUnsignString(tag);
+        //                var existedTag = await this.CheckTag(tagId);
+
+        //                //insert to to tag table
+        //                if (!existedTag)
+        //                {
+        //                    await this.InsertTag(tagId, tag);
+        //                }
+
+        //                //insert to content tag
+        //                await this.InsertContentTag(entity.Id, tagId);
+
+        //            }
+        //        }
+
+        //        return true;
+        //    }
+        //    catch (Exception)
+        //    {
+        //        return false;
+        //    }
+        //}
+        public async Task<Content> ViewDetail(long id)
+        {
+            var content = await GetByID(id);
+            content.ViewCount++;
+            await db.SaveChangesAsync();
+
+            return content;
         }
         public async Task InsertTag(string id, string name)
         {

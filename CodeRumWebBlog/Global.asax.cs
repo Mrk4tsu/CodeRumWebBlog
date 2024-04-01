@@ -17,5 +17,9 @@ namespace CodeRumWebBlog
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
         }
+        //protected void Application_BeginRequest()
+        //{
+        //    Response.Headers.Add("Content-Security-Policy", "script-src 'self'; style-src 'self'");
+        //}
     }
 }
