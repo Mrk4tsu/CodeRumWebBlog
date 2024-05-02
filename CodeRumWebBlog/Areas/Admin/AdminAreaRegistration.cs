@@ -2,17 +2,17 @@
 
 namespace CodeRumWebBlog.Areas.Admin
 {
-    public class AdminAreaRegistration : AreaRegistration 
+    public class AdminAreaRegistration : AreaRegistration
     {
-        public override string AreaName 
+        public override string AreaName
         {
-            get 
+            get
             {
                 return "Admin";
             }
         }
 
-        public override void RegisterArea(AreaRegistrationContext context) 
+        public override void RegisterArea(AreaRegistrationContext context)
         {
             // Route trang chủ cho admin
             context.MapRoute(
@@ -24,14 +24,18 @@ namespace CodeRumWebBlog.Areas.Admin
                     action = "Index"
                 });
             context.MapRoute(
-            name: "Tags",
-            url: "tag/{tagId}",
-            defaults: new { controller = "Content", action = "Tag", id = UrlParameter.Optional }
-        );
+                name: "Tags",
+                url: "tag/{tagId}",
+                defaults: new
+                {
+                    controller = "Content",
+                    action = "Tag",
+                    id = UrlParameter.Optional
+                });
             // Route cho danh sách bài viết
             context.MapRoute(
                 name: "AdminListContent",
-                url: "danh-sach-bai-viet",
+                url: "quan-ly-danh-sach",
                 defaults: new
                 {
                     controller = "Content",

@@ -1,0 +1,127 @@
+﻿@model IEnumerable<Model.Entity.Content>
+
+@{
+    var tag = (Model.Entity.Tag)ViewBag.Tag;
+
+    ViewBag.Title = "Tag: " + tag.Name;
+    Layout = "~/Views/Shared/_LayoutPublic.cshtml";
+}
+
+@section styles{
+    <link href="~/Resourse/css/blog.css" rel="stylesheet" />
+}
+
+<!-- Tìm kiếm Begin -->
+@using (Html.BeginForm("Index", "Blog", FormMethod.Get))
+{
+    <section class="container ">
+        <div class="row d-flex justify-content-center">
+            <div class="col-sm-12 col-md-8 col-lg-8 col-12">
+                <div class="input-group mb-3 my-2">
+                    <input type="text" value="@ViewBag.SearchString" name="searchString" class="form-control rounded-e-20 p-4" placeholder="Nhập để tìm kiếm..." aria-label="Search">
+                    <div class="input-group-append">
+                        <button class="btn btn-green" type="submit">Tìm kiếm</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </section>
+}
+<!-- Tìm kiếm End -->
+
+<div class="container bootstrap snippets bootdey">
+    <div class="row">
+        <h3 class="text-info"><span class="text-secondary"> Tag: </span> @tag.Name</h3>
+        <hr>
+    </div>
+    <div class="row">
+        <!-- posts -->
+        <div class="col-md-8">
+            @foreach (var item in Model)
+            {
+                <div class="panel blog-container ">
+                    <div class="panel-body my-4 shadow-light rounded-e-20">
+                        <a href="/chi-tiet-@item.MetaTitle-@item.Id">
+                            <div class="image-wrapper " style="background-image: url(@item.Image)">
+                            </div>
+                        </a>
+
+                        <div class="p-3">
+                            <div class="d-flex w-100 justify-content-between">
+                                <a href="/chi-tiet-@item.MetaTitle-@item.Id"><h5 class="mb-1 text-info font-weight-bold"> @item.Name </h5></a>
+                                <div class="stats">
+                                    <a href="javascript:void(0);" class="stat-item text-light">
+                                        <i class="fa fa-thumbs-up icon"></i>228
+                                    </a>
+                                    <a href="javascript:void(0);" class="stat-item text-light">
+                                        <i class="fa fa-comment" aria-hidden="true"></i>128
+                                    </a>
+                                </div>
+                            </div>
+                            <small class="text-muted">
+                                Tải lên bởi <a href="profile.html"><strong> @item.CreateBy </strong></a> lúc
+                                @item.CreateAt.Value.ToString("dd MMMM yyyy", new System.Globalization.CultureInfo("vi-VN"))
+                            </small>
+                            <p class="text-light">
+                                @item.Description
+                            </p>
+                            <a style="color: #3CC032" href="/chi-tiet-@item.MetaTitle-@item.Id"> Đọc tiếp... </a>
+                        </div>
+                    </div>
+                </div>
+            }
+        <div class="my-4">
+            @if (ViewBag.TotalPage > 1)
+            {
+                var pageDisplay = (int)ViewBag.MaxPage;
+                int totalPage = (int)ViewBag.TotalPage;
+                int currentPage = ((int)ViewBag.Page);
+
+                // Create numeric links
+                var startPageIndex = Math.Max(1, currentPage - pageDisplay / 2);
+                var endPageIndex = Math.Min(totalPage, currentPage + pageDisplay / 2);
+
+                var link = "/tag-" + tag.Id;
+
+                <div class="d-flex justify-content-center">
+                    <div class="paginations">
+                        @if (currentPage > ViewBag.First)
+                        {
+                            <a class="first-child text-light" href="@link?page=@ViewBag.First">«</a>
+                        }
+                        <a hidden href="#"></a>
+                        @for (int i = startPageIndex; i <= endPageIndex; i++)
+                        {
+                            if (currentPage == i)
+                            {
+                                <a class="active text-dark" href="@link?page=@i">@i</a>
+                            }
+                            else
+                            {
+                                <a class="text-light" href="@link?page=@i">@i</a>
+                            }
+
+                        }
+                        <a class="text-light" hidden style="display:none" href="#"></a>
+                        @if (currentPage < totalPage)
+                        {
+                            <a class="last-child text-light" href="@link?page=@ViewBag.Last">»</a>
+                        }
+
+                    </div>
+                </div>
+            }
+        </div>
+           
+        </div>
+
+        <div class="col-md-4">
+            <h4 class="headline text-muted">
+                POPULAR POST
+                <span class="line"></span>
+            </h4>
+        </div>
+    </div>
+</div>
+

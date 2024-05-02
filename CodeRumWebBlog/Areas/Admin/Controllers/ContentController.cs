@@ -118,7 +118,13 @@ namespace CodeRumWebBlog.Areas.Admin.Controllers
             var commentDao = new CommentDAO();
             commentDao.Insert(comment);
 
-            return Json(new { success = true });
+            var commentTime = comment.CreateAt.ToString();
+
+            return Json(new 
+            {
+                success = true,
+                commentTime = commentTime,
+            });
         }
         [HttpPost]
         public async Task<ActionResult> EditComment(long commentId, string commentText)

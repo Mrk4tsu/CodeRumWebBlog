@@ -1,12 +1,11 @@
 ﻿using System;
 
-namespace Common
+namespace CodeRumWebBlog
 {
     [Serializable]
     public class UserLogin
     {
-        public long UserID { set; get; }
-        public string UserName { set; get; }
-        public string GroupID { set; get; }
+        public long UserId { get; set; }
+        public string UserName { get; set; }
     }
 }

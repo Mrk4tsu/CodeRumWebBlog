@@ -1,0 +1,133 @@
+.blog-container {
+    word-wrap: break-word;
+}
+
+    .blog-container p {
+        overflow-wrap: break-word;
+    }
+
+.img-account-profile {
+    height: 7rem;
+}
+
+.rounded-circle {
+    border-radius: 50% !important;
+}
+
+.card {
+    box-shadow: 0 0.15rem 1.75rem 0 rgb(33 40 50 / 15%);
+}
+
+    .card .card-header {
+        font-weight: 500;
+    }
+
+.card-header:first-child {
+    border-radius: 0.35rem 0.35rem 0 0;
+}
+
+.card-header {
+    padding: 1rem 1.35rem;
+    margin-bottom: 0;
+    background-color: rgba(33, 40, 50, 0.03);
+    border-bottom: 1px solid rgba(33, 40, 50, 0.125);
+}
+
+.form-control, .dataTable-input {
+    display: block;
+    width: 100%;
+    padding: 0.875rem 1.125rem;
+    font-size: 0.875rem;
+    font-weight: 400;
+    line-height: 1;
+    color: #69707a;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #c5ccd6;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    border-radius: 0.35rem;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.nav-borders .nav-link.active {
+    color: #0061f2;
+    border-bottom-color: #0061f2;
+}
+
+.nav-borders .nav-link {
+    color: #69707a;
+    border-bottom-width: 0.125rem;
+    border-bottom-style: solid;
+    border-bottom-color: transparent;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    padding-left: 0;
+    padding-right: 0;
+    margin-left: 1rem;
+    margin-right: 1rem;
+}
+
+.btn-danger-soft {
+    color: #000;
+    background-color: #f1e0e3;
+    border-color: #f1e0e3;
+}
+
+.panel-body {
+    background: rgb(39, 61, 82);
+}
+
+.image-wrapper img {
+    border-top-right-radius: 20px;
+    border-top-left-radius: 20px;
+}
+
+.image-wrapper {
+    background-size: cover;
+    border-top-right-radius: 20px;
+    border-top-left-radius: 20px;
+    height: 250px;
+    width: 100%;
+}
+
+.btn-green {
+    background-color: #3CC032;
+    color: white;
+    border-radius: 20px;
+}
+
+    .btn-green:hover {
+        background-color: #faee02;
+        color: #414141;
+        border-radius: 20px;
+    }
+
+.shadow-light {
+    box-shadow: 0 0.05rem 1rem 0 rgba(196, 187, 0, 0.77);
+}
+
+.rounded-e-10 {
+    border-radius: 10px;
+}
+
+.rounded-e-20 {
+    border-radius: 20px;
+}
+
+.rounded-e-30 {
+    border-radius: 30px;
+}
+
+.rounded-e-40 {
+    border-radius: 40px;
+}
+
+.rounded-e-50 {
+    border-radius: 50px;
+}
+
+.rounded-e-60 {
+    border-radius: 60px;
+}

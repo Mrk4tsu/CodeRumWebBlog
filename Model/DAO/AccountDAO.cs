@@ -29,9 +29,9 @@ namespace Model.DAO
             }
             return model.OrderByDescending(x => x.CreateAt).ToPagedList(page, pageSize);
         }
-        public Account GetByName(string name)
+        public Account GetByUsername(string username)
         {
-            return db.Accounts.Find(name);
+            return db.Accounts.SingleOrDefault(x => x.Username == username);
         }
         public Account GetById(long id)
         {
@@ -83,9 +83,33 @@ namespace Model.DAO
                 return false;
             }
         }
-        public void Login(string username, string password)
+        public int Login(string username, string password)
         {
-
+            var result = GetByUsername(username);
+            if (result == null)
+            {
+                return 0;
+            }
+            else
+            {
+                if (result.Status == false)
+                {
+                    return -1;
+                }
+                else
+                {
+                    if (result.Password.Equals(password))
+                    {
+                        return 1;
+                    }    
+                       
+                    else
+                    {
+                        return -2;
+                    }    
+                        
+                }
+            }
         }
         public void Register()
         {
