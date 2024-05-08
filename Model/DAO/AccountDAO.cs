@@ -1,7 +1,9 @@
 ﻿using Model.Entity;
+using Model.ViewModel;
 using PagedList;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
@@ -29,17 +31,22 @@ namespace Model.DAO
             }
             return model.OrderByDescending(x => x.CreateAt).ToPagedList(page, pageSize);
         }
+        public List<Role> ListAllRole()
+        {
+            return db.Roles.ToList();
+        }
         public Account GetByUsername(string username)
         {
             return db.Accounts.SingleOrDefault(x => x.Username == username);
         }
-        public Account GetById(long id)
+        public async Task<Account> GetById(long id)
         {
-            return db.Accounts.Find(id);
+            return await db.Accounts.FindAsync(id);
         }
         public async Task<long> InsertAsync(Account account)
         {
             account.CreateAt = DateTime.Now;
+            account.RoleId = "customer";
             db.Accounts.Add(account);
             await db.SaveChangesAsync();
 
@@ -49,13 +56,14 @@ namespace Model.DAO
         {
             try
             {
-                var user = GetById(entity.Id);
+                var user = await GetById(entity.Id);
                 if (!string.IsNullOrEmpty(entity.Password))
                 {
                     user.Password = entity.Password;
                 }
                 user.Name = entity.Name;
                 user.Email = entity.Email;
+                user.Avatar = entity.Avatar;
                 user.ModifyBy = entity.ModifyBy;
                 user.ModifyDate = DateTime.Now;
                 user.Status = entity.Status;
@@ -72,7 +80,7 @@ namespace Model.DAO
         {
             try
             {
-                var user = GetById(id);
+                var user = await GetById(id);
                 db.Accounts.Remove(user);
                 await db.SaveChangesAsync();
 
@@ -82,6 +90,21 @@ namespace Model.DAO
             {
                 return false;
             }
+        }
+        public async Task<UserContentViewModel> DetailAsyn(long id)
+        {
+            var account = await GetById(id);
+            var content = await db.Contents.Where(c => c.CreateBy == account.Username).ToListAsync();
+
+            return new UserContentViewModel
+            {
+                Account = account,
+                Contents = content
+            };
+        }
+        public async Task<int> CountContentsByCreator(string creatorUsername)
+        {
+            return await db.Contents.CountAsync(c => c.CreateBy == creatorUsername);
         }
         public int Login(string username, string password)
         {

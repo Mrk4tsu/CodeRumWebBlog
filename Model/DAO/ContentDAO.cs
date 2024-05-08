@@ -20,18 +20,39 @@ namespace Model.DAO
         {
             return db.Contents.Where(x => x.Status == true).ToList();
         }
+        //public IEnumerable<Content> ListAllPaging(string searchString, int page, int pageSize)
+        //{
+
+        //    IQueryable<Content> model = db.Contents;
+
+        //    if (!string.IsNullOrEmpty(searchString))
+        //    {
+        //        model = model.Where(x => x.Name.Contains(searchString) ||
+        //        x.MetaTitle.Contains(searchString) ||
+        //        x.Tag.Contains(searchString) ||
+        //        x.CreateBy.Contains(searchString));
+        //    }
+        //    return model.OrderByDescending(x => x.CreateAt).ToPagedList(page, pageSize);
+        //}
         public IEnumerable<Content> ListAllPaging(string searchString, int page, int pageSize)
         {
-            IQueryable<Content> model = db.Contents;
+
+            var model = from content in db.Contents
+                        join account in db.Accounts on content.CreateBy equals account.Username
+                        select new { Content = content, Account = account };
+
+
             if (!string.IsNullOrEmpty(searchString))
             {
-                model = model.Where(x => x.Name.Contains(searchString) ||
-                x.MetaTitle.Contains(searchString) ||
-                x.Tag.Contains(searchString));
+                model = model.Where(x => x.Content.Name.Contains(searchString) ||
+                x.Content.Description.Contains(searchString) ||
+                x.Content.Tag.Contains(searchString) ||
+                x.Content.CreateBy.Contains(searchString) ||
+                x.Account.Name.Contains(searchString) ||
+                x.Account.Email.Contains(searchString));
             }
-            return model.OrderByDescending(x => x.CreateAt).ToPagedList(page, pageSize);
+            return model.Select(x => x.Content).OrderByDescending(x => x.CreateAt).ToPagedList(page, pageSize);
         }
-
         public IEnumerable<Content> ListAllByTag(string tag, int page, int pageSize)
         {
             var model = (from a in db.Contents
@@ -59,6 +80,10 @@ namespace Model.DAO
                              Id = x.ID
                          });
             return model.OrderByDescending(x => x.CreateAt).ToPagedList(page, pageSize);
+        }
+        public int CountAll()
+        {
+            return db.Contents.Count();
         }
         public int CountAllByTag(string tag)
         {
@@ -164,7 +189,21 @@ namespace Model.DAO
                 return false;
             }
         }
+        public async Task<bool> DeleteAsyn(long id)
+        {
+            var content = await GetByID(id);
 
+            if (content != null)
+            {
+                var comments = db.Comments.Where(c => c.Id == content.Id);
+                db.Comments.RemoveRange(comments);
+
+                db.Contents.Remove(content);
+                await db.SaveChangesAsync();
+                return true;
+            }
+            return false;
+        }
         //public async Task<bool> EditAsyn(Content entity)
         //{
         //    try

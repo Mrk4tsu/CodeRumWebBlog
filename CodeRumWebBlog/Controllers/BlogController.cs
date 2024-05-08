@@ -11,12 +11,28 @@ namespace CodeRumWebBlog.Controllers
     public class BlogController : Controller
     {
         // GET: Blog
-        public ActionResult Index(string searchString, int page = 1, int pageSize = 10)
+        public ActionResult Index(string searchString, int page = 1, int pageSize = 1)
         {
             var dao = new ContentDAO();
             var model = dao.ListAllPaging(searchString, page, pageSize);
 
             ViewBag.SearchString = searchString;
+
+
+            int totalRecord = dao.CountAll(); // Đếm tổng số bản ghi
+            ViewBag.Total = totalRecord;
+            ViewBag.Page = page;
+
+            int maxPage = 5;
+
+            int totalPage = (int)Math.Ceiling((double)(totalRecord / (double)pageSize));
+            ViewBag.TotalPage = totalPage;
+            ViewBag.MaxPage = maxPage;
+            ViewBag.First = 1;
+            ViewBag.Last = totalPage;
+            ViewBag.Next = page + 1;
+            ViewBag.Prev = page - 1;
+
             return View(model);
         }
         public async Task<ActionResult> Detail(long id, int page = 1, int pageSize = 5)

@@ -6,11 +6,12 @@
 CKEDITOR.editorConfig = function( config ) {
 	// Define changes to default configuration here. For example:
 	// config.language = 'fr';
-	// config.uiColor = '#AADC6E';
-
+	 config.uiColor = '#AADC6E';
+    config.extraPlugins = 'codesnippet';
     config.syntaxhighlight_lang = 'csharp';
     config.syntaxhighlight_hideControls = true;
     config.language = 'vi';
+    config.codeSnippet_theme = 'school_book';
     config.filebrowserBrowseUrl = '/Assets/plugin/ckfinder/ckfinder.html';
     config.filebrowserImageBrowseUrl = '/Assets/plugin/ckfinder.html?Type=Images';
     config.filebrowserFlashBrowseUrl = '/Assets/plugin/ckfinder.html?Type=Flash';

@@ -1,0 +1,86 @@
+﻿<!-- Humberger Begin -->
+<div class="humberger__menu__overlay"></div>
+<!--Phần navbar trên điện thoại-->
+<div class="humberger__menu__wrapper">
+    <div class="humberger__menu__logo">
+        <a href="@Url.Action("Index", "Home")"><img src="~/Resourse/publics/img/logo.png" alt=""></a>
+    </div>
+    <div class="humberger__menu__cart">
+        <ul>
+            <li><a href="#"><i class="fa fa-upload" aria-hidden="true"></i></a></li>
+            <li><a href="#"><i class="fa fa-bell" aria-hidden="true"></i> <span>99+</span></a></li>
+        </ul>
+        <div class="header__user"><span>Login</span></div>
+    </div>
+    <nav class="humberger__menu__nav mobile-menu">
+        <ul>
+            <li class="active"><a href="@Url.Action("Index", "Home")">Trang chủ</a></li>
+            <li><a href="@Url.Action("Index", "Blog")">Blog</a></li>
+            <li><a href="./#">Liên hệ</a></li>
+            <li><a href="./#">Ứng dụng</a></li>
+        </ul>
+    </nav>
+    <div id="mobile-menu-wrap"></div>
+</div>
+<!--Kết thúc navbar trên điện thoại-->
+<!-- Navbar trên màn hình PC -->
+<header class="header ">
+    <div class="container nav-bar-style">
+        <div class="row mx-3">
+            <div class="col-lg-3 d-flex align-items-center justify-content-center">
+                <div class="header__logo">
+                    <a href="@Url.Action("Index", "Home")"><img src="~/Resourse/publics/img/logo.png" style="width: 200px" alt=""></a>
+                </div>
+            </div>
+            <div class="col-lg-6 d-flex align-items-center justify-content-center">
+                <nav class="header__menu text-center">
+                    <ul>
+                        <li class="@(ViewBag.IsHome ? "active" : "")"><a href="@Url.Action("Index", "Home")"> Trang chủ </a></li>
+                        <li class="@(ViewBag.IsBlog ? "active" : "")"><a href="@Url.Action("Index", "Blog")"> Blog </a></li>
+                        @*<li class="@(IsSectionDefined("Home") ? "active" : "")"><a href="@Url.Action("Index", "Home")"> Trang chủ </a></li>
+        <li class="@(IsSectionDefined("Blog") ? "active" : "")"><a href="@Url.Action("Index", "Blog")"> Blog </a></li>*@
+                        <li><a href="./#"> Liên hệ </a></li>
+                        <li><a href="./#"> Ứng dụng </a></li>
+                    </ul>
+                </nav>
+            </div>
+            <div class="col-lg-3">
+                <div class="header__function">
+                    <ul>
+                        <li><a href="#"><i class="fa fa-upload" aria-hidden="true"></i></a></li>
+                        <li><a href="#"><i class="fa fa-bell" aria-hidden="true"></i> <span>99+</span></a></li>
+                    </ul>
+
+                    <div class="header__user">
+                        <span>
+                            <a href="#" data-toggle="modal" data-target="#modalLogin">
+                                <i class="fa fa-user" aria-hidden="true"></i>
+                            </a>
+                        </span>
+                    </div>
+
+
+                    <!--                        <div class="header__user dropdown">-->
+                    <!--                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><img src="img/demo/m.jpg" alt=""></a>-->
+                    <!--                            <div class="dropdown-menu dropdown__header__cus shadow">-->
+                    <!--                                <div class="image-dropdown">-->
+                    <!--                                    <img src="img/demo/m.jpg" alt="">-->
+                    <!--                                </div>-->
+                    <!--                                <p class="text-center text-info h6">MrKatsu</p>-->
+                    <!--                                <a class="dropdown-item" href="profile.html"> Trang cá nhân </a>-->
+                    <!--                                <a class="dropdown-item" href="#"> Đổi mật khẩu </a>-->
+                    <!--                                <a class="dropdown-item" href="#"> Trang quản trị </a>-->
+                    <!--                                <div class="dropdown-divider"></div>-->
+                    <!--                                <a class="dropdown-item" href="#"> Đăng xuất </a>-->
+                    <!--                            </div>-->
+                    <!--                        </div>-->
+
+                </div>
+            </div>
+        </div>
+        <div class="humberger__open">
+            <i class="fa fa-bars"></i>
+        </div>
+    </div>
+</header>
+<!-- Kết thúc Navbar trên màn hình PC -->

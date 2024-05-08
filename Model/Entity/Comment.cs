@@ -1,4 +1,4 @@
-namespace Model.Entity
+﻿namespace Model.Entity
 {
     using System;
     using System.Collections.Generic;
@@ -16,14 +16,14 @@ namespace Model.Entity
 
         public long? ParentId { get; set; }
 
-        [StringLength(1)]
+        [StringLength(50)]
         public string CreateBy { get; set; }
 
         public DateTime? CreateAt { get; set; }
 
         public DateTime? ModifyDate { get; set; }
 
-        [StringLength(1)]
+        [StringLength(50)]
         public string ModifyBy { get; set; }
 
         public long? PostId { get; set; }

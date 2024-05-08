@@ -3,31 +3,25 @@
 @{
     ViewBag.Title = "Chi tiết: " + Model.Name;
     Layout = "~/Views/Shared/_LayoutPublic.cshtml";
-    <style>
-    </style>
-}
-@section styles{
-    <link href="~/Resourse/css/blog.css" rel="stylesheet" />
-    <link href="~/Resourse/css/details.css" rel="stylesheet" />
-}
-<!-- Tìm kiếm Begin -->
-@using (Html.BeginForm("Index", "Blog", FormMethod.Get))
-{
-    <section class="container ">
-        <div class="row d-flex justify-content-center">
-            <div class="col-sm-12 col-md-8 col-lg-8 col-12">
-                <div class="input-group mb-3 my-2">
-                    <input type="text" value="@ViewBag.SearchString" name="searchString" class="form-control rounded-e-20 p-4" placeholder="Nhập để tìm kiếm..." aria-label="Search">
-                    <div class="input-group-append">
-                        <button class="btn btn-green" type="submit">Tìm kiếm</button>
-                    </div>
-                </div>
-            </div>
-        </div>
 
-    </section>
+    var user = new Model.DAO.AccountDAO().GetByUsername(Model.CreateBy);
 }
-<!-- Tìm kiếm End -->
+
+@section Nav {
+    @{
+        ViewBag.IsHome = false;
+        ViewBag.IsBlog = true;
+    }
+}
+
+@section styles{
+    <link href="~/Resourse/publics/css/tooltip.css" rel="stylesheet" />
+    <link href="~/Resourse/publics/dist/ekko-lightbox.css" rel="stylesheet" />
+    <link href="~/Resourse/publics/plugin/styles/hybrid.css" rel="stylesheet" />
+}
+@section jsFooter{
+    <script src="~/Resourse/publics/dist/ekko-lightbox.js"></script>
+}
 
 <div class="container">
     <div class="row">
@@ -36,27 +30,48 @@
             <h3 class="font-weight-bold text-info my-3"> @Model.Name </h3>
             <!--       Nội dung-->
             <div class="content-blog py-3">
-                <div class="px-3">
-                    <span class="badge badge-dark px-3 py-1 rounded-e-20"> @Model.CreateAt.Value.ToString("dd MMMM yyyy", new System.Globalization.CultureInfo("vi-VN")) </span>
-                    <p> Đăng bởi <span><a class="text-info" href="profile.html">MrKatsu</a></span></p>
+                <div class="px-3 tooltip-info-group">
+
+                    <span class="badge badge-dark px-2 rounded-e-20"> @Model.CreateAt.Value.ToString("dd MMMM yyyy", new System.Globalization.CultureInfo("vi-VN")) </span>
+                    <div class="tooltip-group">
+                        <div class='field'>
+                            <span class="text-light"> Đăng bởi </span><a href="@Url.Action("Detail", "Account", new { id = user.Id, name = user.Name })" class='has-tooltip'> @user.Name </a>
+                            <span class='tooltip og shadow-light'>
+                                <h4>@user.Name</h4>
+                                <p class="small">Tham gia từ @user.CreateAt.Value.ToString("dd MMMM yyyy", new System.Globalization.CultureInfo("vi-VN"))</p>
+                                <img src="@user.Avatar" alt="" />
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-center">
+                    <img src="@Model.Image" class="img-fluid">
                 </div>
 
-                <img id="img-title" src="@Model.Image" alt="" class="img-fluid my-2">
                 <div class="content-detail">
-
                     @Html.Raw(Model.Detail)
 
-
                     <hr class="p-0">
-                    <div class="mt-3 px-3">
 
+                    <!--Thẻ tag-->
+                    <div class="mt-3 px-3">
                         <span class="text-light ">Tags:</span>
-                        <div class="tags mt-1">
+                        <div class="sidebar__item mt-2">
                             @{
-                                var tags = (List<Model.Entity.Tag>)ViewBag.Tags;
-                                foreach (var tag in tags)
+                                var _tags = (List<Model.Entity.Tag>)ViewBag.Tags;
+                                foreach (var tag in _tags)
                                 {
-                                    <a href="/tag-@tag.Id"><span class="badge badge-green mx-1"> @tag.Name </span></a>
+
+                                    <div class="sidebar__item__size">
+                                        <label for="large">
+                                            <a class="text-light" href="/tag-@tag.Id">
+                                                @tag.Name
+                                            </a>
+                                            <input type="radio" id="large">
+                                        </label>
+                                    </div>
+
+
                                 }
                             }
                         </div>
@@ -66,39 +81,39 @@
 
             </div>
             <section class="comment-list p-2">
-                <div class="d-flex w-100 justify-content-between">
-                    <label class="h5 text-light font-weight-bold mt-2 mb-4" for="comment">
-                        <i id="comment-list-ico" class="fa fa-comment mx-1"></i> Bình luận
-                    </label>
+                <div class="d-flex w-100 justify-content-between align-items-center my-1">
+                    <div class="h5 text-light font-weight-bold">
+                        <i class="fa fa-comment bg-gradient-primary p-2 rounded-circle"></i> Danh sách bình luận
+                    </div>
                     <div>
-                        <a href="#comment-ico" class="text-light shadow-light mt-3 mb-4 mr-3 badge badge-green">
-                            Bình
-                            luận
+                        <a href="#comment-ico"
+                           class="text-light shadow-light bg-gradient-success px-3 py-2 rounded-e-10">
+                            <i class="fa fa-angle-right" aria-hidden="true"></i>
                         </a>
                     </div>
 
                 </div>
-
                 @{
                     var comments = (PagedList.IPagedList<Model.Entity.Comment>)ViewBag.Comments;
+
                     foreach (var cmt in comments)
                     {
+                        var userCmt = new Model.DAO.AccountDAO().GetByUsername(cmt.CreateBy);
+
                         <div class="row-comment my-1">
                             <div class="row mx-2">
-                                <img class="mr-2" src="~/Resourse/img/demo/wm.jpg" alt="">
+                                <img class="mr-2" src="@user.Avatar" alt="">
                                 <div class="comment-list-top ">
                                     <span class="h6 font-weight-bold">
-                                        <a href="profile.html" class="text-info"> MrKatsu </a>
+                                        <a href="@Url.Action("Detail", "Account", new {id = user.Id, name = user.Name})" class="text-info"> @user.Name </a>
                                     </span>
                                     <br>
-                                    <p class="badge badge-success mr-2"> Author </p>
+                                    <p class="badge badge-secondary mr-2"> Visitor </p>
                                     <span class="small text-secondary">@cmt.CreateAt.Value.ToString("dd MMMM yyyy", new System.Globalization.CultureInfo("vi-VN"))</span>
                                 </div>
                             </div>
-                            <div class="comment-list-body mx-2 mt-2">
-                                <span class="text-light ml-2">
-                                    @cmt.Content
-                                </span>
+                            <div class="comment-list-body mx-4">
+                                <span class="text-light ">@cmt.Content</span>
                             </div>
                             <div class="comment-list-footer p-2 my-2">
                                 <div class="d-flex justify-content-between w-100">
@@ -113,12 +128,13 @@
                         </div>
                     }
                 }
+
             </section>
             <!--                Bình luận-->
-            <section class="mt-3 section-login">
+            <section class="mt-3 section-null">
                 <p class="p-2 mx-2">
-                    <i id="ico-info" class="fa fa-exclamation px-3" aria-hidden="true"></i>
-                    <a href="#" class="text-info">Đăng nhập</a>
+                    <i class="fa fa-info bg-gradient-warning rounded-circle"></i>
+                    <a href="#" data-toggle="modal" data-target="#modalLogin" class="text-info">Đăng nhập</a>
                     hoặc
                     <a href="#" class="text-info">đăng ký</a>
                     để bình luận
@@ -126,13 +142,15 @@
             </section>
             <div class="container comment-group my-3 py-3">
                 <div class="form-group">
-                    <label class="h5 text-light font-weight-bold my-2" for="comment">
-                        <i id="comment-ico" class="fa fa-comment mx-1"></i> Để lại bình luận
+                    <label for="comment" class="h5 text-light font-weight-bold">
+                        <i class="fa fa-comment bg-gradient-violet p-2 rounded-circle"></i> Để lại bình luận
                     </label>
                     <p>Comment text</p>
                     <textarea class="form-control form-comment p-3 text-light" id="comment" rows="5"></textarea>
                 </div>
-                <button type="submit" class="btn btn-green rounded-e-20 shadow-light text-light"> Bình luận</button>
+                <button type="submit" class="btn bg-gradient-success rounded-e-20 shadow-light text-light">
+                    Bình luận
+                </button>
             </div>
         </div>
         <div class="col-lg-3 col-md-3 col-sm-12 ">

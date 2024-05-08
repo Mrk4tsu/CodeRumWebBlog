@@ -1,4 +1,4 @@
-namespace Model.Entity
+﻿namespace Model.Entity
 {
     using System;
     using System.Collections.Generic;
@@ -19,15 +19,20 @@ namespace Model.Entity
 
         [StringLength(150)]
         public string Name { get; set; }
+        [StringLength(50)]
+        public string RoleId { get; set; }
 
         [StringLength(50)]
         public string Email { get; set; }
+
+        [StringLength(250)]
+        public string Avatar { get; set; }
 
         public DateTime? CreateAt { get; set; }
 
         public DateTime? ModifyDate { get; set; }
 
-        [StringLength(1)]
+        [StringLength(50)]
         public string ModifyBy { get; set; }
 
         public bool Status { get; set; }

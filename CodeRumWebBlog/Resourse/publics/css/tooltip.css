@@ -1,0 +1,77 @@
+
+.tooltip-group button,
+.tooltip-group .btn,
+.tooltip-group input[type='submit'] {
+    padding: 20px 60px;
+    border: none;
+    outline: none;
+    background: #47b8e0;
+    transition: 0.15s ease-in-out;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    display: inline-block; }
+.tooltip-group button:hover,
+.tooltip-group button:focus,
+.tooltip-group .btn:hover,
+.tooltip-group .btn:focus,
+.tooltip-group input[type='submit']:hover,
+.tooltip-group input[type='submit']:focus {
+    background: #23a3d1; }
+
+.has-tooltip:hover + .tooltip,
+.has-tooltip:focus + .tooltip,
+.has-tooltip.hover + .tooltip {
+    opacity: 1;
+    transform: translate(-50%, -100%) scale(1) rotate(0deg);
+    pointer-events: inherit; }
+
+.tooltip {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 150px;
+    transform: translate(-50%, -50%) scale(0.75) rotate(5deg);
+    transform-origin: bottom center;
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-align: center;
+    color: white;
+    transition: 0.15s ease-in-out;
+    opacity: 0;
+    pointer-events: none;
+    z-index: 5; }
+.tooltip.og {
+    background: rgba(39, 61, 82); }
+.tooltip.blue {
+    background: rgba(71, 184, 224, 0.75); }
+.tooltip.blue:after {
+    border-top: 5px solid rgba(71, 184, 224, 0.75); }
+.tooltip.red {
+    background: rgba(231, 29, 54, 0.75); }
+.tooltip.red:after {
+    border-top: 5px solid rgba(231, 29, 54, 0.75); }
+.tooltip.green {
+    background: rgba(46, 196, 182, 0.75); }
+.tooltip.green:after {
+    border-top: 5px solid rgba(46, 196, 182, 0.75); }
+.tooltip.purple {
+    background: rgba(165, 147, 224, 0.75); }
+.tooltip.purple:after {
+    border-top: 5px solid rgba(165, 147, 224, 0.75); }
+.tooltip:hover {
+    opacity: 1;
+    transform: translate(-50%, -100%) scale(1) rotate(0deg);
+    pointer-events: inherit; }
+.tooltip img {
+    width: 120px;
+    border-radius: 50%;
+}
+
+
+.tooltip-group .field {
+    position: relative;
+    padding-bottom: 10px;
+    padding-left: 5px;
+}
+  

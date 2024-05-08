@@ -1,81 +1,195 @@
-﻿@model IEnumerable<Model.Entity.Content>
+﻿@model PagedList.IPagedList<Model.Entity.Content>
+@using PagedList.Mvc;
 
 @{
     ViewBag.Title = "Danh sách bài viết";
     Layout = "~/Views/Shared/_LayoutPublic.cshtml";
 }
 
+@section Nav {
+    @{
+        ViewBag.IsHome = false;
+        ViewBag.IsBlog = true;
+    }
+}
+
 @section styles{
-    <link href="~/Resourse/css/blog.css" rel="stylesheet" />
+    <link href="~/Resourse/publics/css/tooltip.css" rel="stylesheet" />
 }
 
-<!-- Tìm kiếm Begin -->
-@using (Html.BeginForm("Index", "Blog", FormMethod.Get))
-{
-    <section class="container ">
-        <div class="row d-flex justify-content-center">
-            <div class="col-sm-12 col-md-8 col-lg-8 col-12">
-                <div class="input-group mb-3 my-2">
-                    <input type="text" value="@ViewBag.SearchString" name="searchString" class="form-control rounded-e-20 p-4" placeholder="Nhập để tìm kiếm..." aria-label="Search">
-                    <div class="input-group-append">
-                        <button class="btn btn-green" type="submit">Tìm kiếm</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-    </section>
-}
-<!-- Tìm kiếm End -->
 
 <div class="container bootstrap snippets bootdey">
     <div class="row">
-        <h2 class="text-muted">Welcome to our blog</h2>
+        <h4>Danh sách bài viết</h4>
         <hr>
     </div>
+
     <div class="row">
         <!-- posts -->
         <div class="col-md-8">
+            <div class="row">
+                <div class="col-12 col-md-4 col-lg-4">
+                    <div class="form-group">
+                        <select class="form-control">
+                            <option value="0" selected> Tất cả </option>
+                            <option value="1"> Mới nhất </option>
+                            <option value="2"> Phổ biến nhất </option>
+                            <option value="3"> Đề xuất </option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-12 col-md-4 col-lg-4">
+                    <div class="form-group">
+                        <select class="form-control">
+                            <option value="0" selected> Tất cả </option>
+                            <option value="0"> Game Souls </option>
+                            <option value="1"> Game Arcade </option>
+                            <option value="2"> Game Moba </option>
+                            <option value="3"> Game FPS </option>
+                            <option value="4"> Game Console </option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-12 col-md-4 col-lg-4">
+                    <div class="form-group">
+                        <select class="form-control">
+                            <option value="0" selected>All Snippets</option>
+                            <option value="1">Featured</option>
+                            <option value="2">Most popular</option>
+                            <option value="3">Top rated</option>
+                            <option value="4">Most commented</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
             @foreach (var item in Model)
             {
+                var user = new Model.DAO.AccountDAO().GetByUsername(item.CreateBy);
+
                 <div class="panel blog-container ">
                     <div class="panel-body my-4 shadow-light rounded-e-20">
                         <a href="/chi-tiet-@item.MetaTitle-@item.Id">
-                            <div class="image-wrapper " style="background-image: url(@item.Image)">
-                            </div>
+                            <div class="image-wrapper " style="background-image: url('@item.Image')"></div>
                         </a>
 
+
                         <div class="p-3">
+                            <h5 class="mb-1 font-weight-bold"><a href="/chi-tiet-@item.MetaTitle-@item.Id"> @item.Name </a></h5>
+                            <div class="tooltip-group">
+                                <div class='field'>
+                                    <span class="text-light small">
+                                        Tải lên @item.CreateAt.Value.ToString("dd MMMM yyyy", new System.Globalization.CultureInfo("vi-VN")) | Bởi
+                                    </span>
+                                    <a href="@Url.Action("Detail", "Account", new {id = user.Id, name = user.Name })" class='has-tooltip small'> @user.Name </a>
+                                    <span class='tooltip og shadow-light'>
+                                        <h4> @user.Name </h4>
+                                        <p class="small">Tham gia từ @user.CreateAt.Value.ToString("dd MMMM yyyy", new System.Globalization.CultureInfo("vi-VN"))</p>
+                                        <img src="@user.Avatar" alt="" />
+                                    </span>
+                                </div>
+                            </div>
+                            <p>
+                                @item.Description
+                            </p>
                             <div class="d-flex w-100 justify-content-between">
-                                <a href="/chi-tiet-@item.MetaTitle-@item.Id"><h5 class="mb-1 text-info font-weight-bold"> @item.Name </h5></a>
+                                <a href="/chi-tiet-@item.MetaTitle-@item.Id"> Đọc tiếp... </a>
                                 <div class="stats">
                                     <a href="javascript:void(0);" class="stat-item text-light">
-                                        <i class="fa fa-thumbs-up icon"></i>228
+                                        <i class="fa fa-eye" aria-hidden="true"></i>@item.ViewCount
                                     </a>
                                     <a href="javascript:void(0);" class="stat-item text-light">
-                                        <i class="fa fa-comment" aria-hidden="true"></i>128
+                                        <i class="fa fa-comment" aria-hidden="true"></i> 128
                                     </a>
                                 </div>
                             </div>
-                            <small class="text-muted">
-                                Tải lên bởi <a href="profile.html"><strong> @item.CreateBy </strong></a> lúc
-                                @item.CreateAt.Value.ToString("dd MMMM yyyy", new System.Globalization.CultureInfo("vi-VN"))
-                            </small>
-                            <p class="text-light " style="overflow-wrap: break-word">
-                                @item.Description
-                            </p>
-                            <a style="color: #3CC032" href="/chi-tiet-@item.MetaTitle-@item.Id"> Đọc tiếp... </a>
+
                         </div>
                     </div>
                 </div>
             }
+
+            @Html.PagedListPager(Model, page => Url.Action("Index", new { page, @searchString = @ViewBag.SearchString }))
         </div>
 
         <div class="col-md-4">
-            <h4 class="headline text-muted">
-                POPULAR POST
+            <h4 class="headline text-light font-weight-bold">
+                <i class="fa fa-tags bg-gradient-primary p-2 rounded-circle"></i> Bài viết tiêu biểu
                 <span class="line"></span>
             </h4>
+            <div class="media popular-post">
+                <a class="pull-left" href="#">
+                    <img src="img/demo/sekiro-4.jpg" alt="Popular Post">
+                </a>
+                <div class="media-body">
+                    <a href="#">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</a>
+                </div>
+            </div>
+            <div class="media popular-post">
+                <a class="pull-left" href="#">
+                    <img src="https://www.bootdey.com/image/60x60/4B0082/000000" alt="Popular Post">
+                </a>
+                <div class="media-body">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                </div>
+            </div>
+            <div class="media popular-post">
+                <a class="pull-left" href="#">
+                    <img src="https://www.bootdey.com/image/60x60/E6E6FA/000000" alt="Popular Post">
+                </a>
+                <div class="media-body">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                </div>
+            </div>
+            <div class="media popular-post">
+                <a class="pull-left" href="#">
+                    <img src="https://www.bootdey.com/image/60x60/FFFACD/000000" alt="Popular Post">
+                </a>
+                <div class="media-body">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                </div>
+            </div>
+            <div class="media popular-post">
+                <a class="pull-left" href="#">
+                    <img src="https://www.bootdey.com/image/60x60/E0FFFF/000000" alt="Popular Post">
+                </a>
+                <div class="media-body">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                </div>
+            </div>
+
+            <h4 class="headline text-light font-weight-bold mt-4">
+                <i class="fa fa-tags bg-gradient-danger p-2 rounded-circle"></i> Tag phổ biến
+                <span class="line"></span>
+            </h4>
+            <div class="sidebar__item mt-2">
+                <div class="sidebar__item__size">
+                    <label for="large">
+                        Gay
+                        <input type="radio" id="large">
+                    </label>
+                </div>
+                <div class="sidebar__item__size">
+                    <label for="medium">
+                        Lesbian
+                        <input type="radio" id="medium">
+                    </label>
+                </div>
+                <div class="sidebar__item__size">
+                    <label for="small">
+                        Hentai
+                        <input type="radio" id="small">
+                    </label>
+                </div>
+                <div class="sidebar__item__size">
+                    <label for="tiny">
+                        Tiny
+                        <input type="radio" id="tiny">
+                    </label>
+                </div>
+            </div>
         </div>
     </div>
 </div>
+
+

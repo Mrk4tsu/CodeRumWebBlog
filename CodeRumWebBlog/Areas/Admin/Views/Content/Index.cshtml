@@ -4,6 +4,9 @@
     ViewBag.Title = "Danh sách bài viết";
 }
 
+@section jsFooter{
+    
+}
 
 <div class="row">
 
@@ -47,7 +50,7 @@
                         <tbody>
                             @foreach (var item in Model)
                             {
-                                <tr id="row_@item.Id">
+                                <tr id="rowContent_@item.Id">
 
                                     <td>@item.Name</td>
                                     <td>@item.MetaTitle</td>
@@ -57,12 +60,12 @@
                                     <td>
                                         <a href="/Admin/Content/Edit/@item.Id">Sửa</a>
                                         |
-                                        @Ajax.ActionLink("Xoá", "Delete", new { @id = item.Id }, new AjaxOptions
-                                   {
-                                       Confirm = "Bạn có muốn xoá bản ghi này?",
-                                       OnComplete = "$('#row_" + @item.Id + "').remove()",
-                                       HttpMethod = "Delete"
-                                   })
+                                        [@Ajax.ActionLink("Xóa", "Delete", new { @id = item.Id }, new AjaxOptions
+                                            {
+                                            Confirm = "Bạn có muốn xóa?",
+                                            OnComplete = "$('#rowContent_" + item.Id + "').remove()",
+                                            HttpMethod = "Delete"
+                                            })]
                                     </td>
                                 </tr>
                             }

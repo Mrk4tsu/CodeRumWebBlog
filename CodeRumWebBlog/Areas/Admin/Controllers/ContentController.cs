@@ -14,12 +14,13 @@ namespace CodeRumWebBlog.Areas.Admin.Controllers
     public class ContentController : BaseController
     {
         // GET: Admin/Content
-        public ActionResult Index(string searchString, int page = 1, int pageSize = 10)
+        public ActionResult Index(string searchString, int page = 1, int pageSize = 1)
         {
             var dao = new ContentDAO();
             var model = dao.ListAllPaging(searchString, page, pageSize);
 
-            ViewBag.SearchString = searchString;
+            ViewBag.SearchString = searchString;           
+
             return View(model);
         }
         public ActionResult Tag(string tagId, int page = 1, int pageSize = 1)
@@ -104,6 +105,12 @@ namespace CodeRumWebBlog.Areas.Admin.Controllers
             SetViewBag(model.CategoryId);
             return View();
         }
+        [HttpDelete]
+        public async Task<ActionResult> Delete(long id)
+        {
+            await new ContentDAO().DeleteAsyn(id);
+            return RedirectToAction("Index");
+        }
         [HttpPost]
         public ActionResult AddComment(long ContentId, string CommentText)
         {
@@ -120,7 +127,7 @@ namespace CodeRumWebBlog.Areas.Admin.Controllers
 
             var commentTime = comment.CreateAt.ToString();
 
-            return Json(new 
+            return Json(new
             {
                 success = true,
                 commentTime = commentTime,

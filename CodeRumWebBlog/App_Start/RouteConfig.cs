@@ -1,5 +1,6 @@
 ﻿using System.Web.Mvc;
 using System.Web.Routing;
+using System.Xml.Linq;
 
 namespace CodeRumWebBlog
 {
@@ -8,6 +9,8 @@ namespace CodeRumWebBlog
         public static void RegisterRoutes(RouteCollection routes)
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
+
+
 
             routes.MapRoute(
                 name: "List Blog",
@@ -25,6 +28,16 @@ namespace CodeRumWebBlog
                     controller = "Blog",
                     action = "Detail",
                     id = UrlParameter.Optional
+                });
+
+            routes.MapRoute(
+                name: "Detail Profile",
+                url: "trang-ca-nhan/{name}#{id}",
+                defaults: new
+                {
+                    controller = "Account",
+                    action = "Detail",
+                    name = UrlParameter.Optional
                 });
             routes.MapRoute(
                 name: "List Blog With Tag",

@@ -35,7 +35,7 @@ namespace Model.Entity
 
         public DateTime? ModifyDate { get; set; }
 
-        [StringLength(1)]
+        [StringLength(50)]
         public string ModifyBy { get; set; }
 
         [StringLength(100)]

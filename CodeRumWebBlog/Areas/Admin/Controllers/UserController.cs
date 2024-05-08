@@ -18,6 +18,7 @@ namespace CodeRumWebBlog.Areas.Admin.Controllers
         [HttpGet]
         public ActionResult Create()
         {
+            SetViewBag();
             return View();
         }
         [HttpPost]
@@ -48,14 +49,16 @@ namespace CodeRumWebBlog.Areas.Admin.Controllers
                 SetAlert("Thêm User không thành công", "error");
                 ModelState.AddModelError("", "Thêm người dùng không thành công");
             }
+            SetViewBag();
             return View("Index");
         }
         #endregion
         #region[Edit]
         [HttpGet]
-        public ActionResult Edit(long id)
+        public async Task<ActionResult> Edit(long id)
         {
-            var user = new AccountDAO().GetById(id);
+            var user = await new AccountDAO().GetById(id);
+            SetViewBag(user.RoleId);
             return View(user);
         }
         [HttpPost]
@@ -78,6 +81,7 @@ namespace CodeRumWebBlog.Areas.Admin.Controllers
             {
                 ModelState.AddModelError("", "Cập nhật người dùng không thành công");
             }
+            SetViewBag(account.RoleId);
             return View("Index");
         }
         #endregion
@@ -105,6 +109,11 @@ namespace CodeRumWebBlog.Areas.Admin.Controllers
             {
                 status = result
             });
+        }
+        public void SetViewBag(string selectedId = null)
+        {
+            var dao = new AccountDAO();
+            ViewBag.RoleId = new SelectList(dao.ListAllRole(), "Id", "Name", selectedId);
         }
     }
 }
