@@ -24,26 +24,26 @@ namespace Model.DAO
 
             return model.OrderByDescending(x => x.CreateAt).ToPagedList(page, pageSize);
         }
-        public async Task<Comment> GetByID(long id)
+        public async Task<Comment> GetByIDAsync(long id)
         {
             return await db.Comments.FindAsync(id);
         }
-        public long Insert(Comment comment)
+        public async Task<long> InsertAsync(Comment comment)
         {
             comment.CreateAt = DateTime.Now;
             comment.Status = true;
             db.Comments.Add(comment);
 
-            db.SaveChanges();
+            await db.SaveChangesAsync();
             return comment.Id;
         }
-        public void Update(Comment comment)
+        public async Task UpdateAsync(Comment comment)
         {
-            var entity = db.Comments.Find(comment.Id);
+            var entity = await db.Comments.FindAsync(comment.Id);
             if (entity != null)
             {
                 entity.Content = comment.Content;
-                db.SaveChanges();
+                await db.SaveChangesAsync();
             }
         }
     }

@@ -12,9 +12,11 @@
     }
 }
 @section styles{
-    <link href="~/Resourse/publics/css/profile.css" rel="stylesheet" />
+    <link href="~/Resourse/client/css/profile.css" rel="stylesheet" />
+    <link href="~/Resourse/client/dist/ekko-lightbox.css" rel="stylesheet" />
 }
 @section jsFooter{
+    <script src="~/Resourse/client/dist/ekko-lightbox.js"></script>
 }
 <div class="container mt-4">
     <div class="row d-flex justify-content-center text-light">
@@ -24,7 +26,7 @@
 
                     <!-- Avatar -->
                     <div class="col-sm-12">
-                        <div class="image-container bg2 rounded-e-20" style="background:url(../../Resourse/img/demo/background.jpg)">
+                        <div class="image-container bg2 rounded-e-20" style="background: url(../../Resourse/client/img/demo/background.jpg)">
                             <a href="@Model.Account.Avatar" data-toggle="lightbox">
                                 <img src="@Model.Account.Avatar" class="avatar" alt="avatar">
                             </a>

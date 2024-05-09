@@ -1,12 +1,6 @@
 ﻿using Model.DAO;
-using System;
-using System.Collections.Generic;
-using System.Drawing.Printing;
-using System.Linq;
 using System.Threading.Tasks;
-using System.Web;
 using System.Web.Mvc;
-using System.Web.UI;
 
 namespace CodeRumWebBlog.Controllers
 {
@@ -18,7 +12,7 @@ namespace CodeRumWebBlog.Controllers
             var dao = new AccountDAO();
             var viewModel = await new AccountDAO().DetailAsyn(id);
 
-            var user = await dao.GetById(id);
+            var user = await dao.GetByIdAsync(id);
             
 
             ViewBag.CountBlog = await new AccountDAO().CountContentsByCreator(viewModel.Account.Username);
@@ -30,6 +24,12 @@ namespace CodeRumWebBlog.Controllers
 
             name = user.Name;
             return View(viewModel);
+        }
+        public void SetViewBag(string selectedId = null)
+        {
+            var dao = new AccountDAO();
+            var roles = dao.ListAllRole();
+            ViewBag.RoleId = new SelectList(roles, "Id", "Name", selectedId);
         }
     }
 }

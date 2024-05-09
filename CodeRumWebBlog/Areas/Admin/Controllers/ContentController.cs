@@ -23,7 +23,7 @@ namespace CodeRumWebBlog.Areas.Admin.Controllers
 
             return View(model);
         }
-        public ActionResult Tag(string tagId, int page = 1, int pageSize = 1)
+        public async Task<ActionResult> Tag(string tagId, int page = 1, int pageSize = 1)
         {
             var dao = new ContentDAO();
             var model = dao.ListAllByTag(tagId, page, pageSize);
@@ -32,7 +32,7 @@ namespace CodeRumWebBlog.Areas.Admin.Controllers
             ViewBag.Total = totalRecord;
             ViewBag.Page = page;
 
-            ViewBag.Tag = new ContentDAO().GetTag(tagId);
+            ViewBag.Tag = await new ContentDAO().GetTagAsync(tagId);
             int maxPage = 5;
 
             int totalPage = (int)Math.Ceiling((double)(totalRecord / (double)pageSize));
@@ -74,7 +74,7 @@ namespace CodeRumWebBlog.Areas.Admin.Controllers
         public async Task<ActionResult> Edit(long id)
         {
             var dao = new ContentDAO();
-            var content = await dao.GetByID(id);
+            var content = await dao.GetByIDAsync(id);
             ViewBag.Content = content.Detail;
             SetViewBag(content.CategoryId);
 
@@ -112,7 +112,7 @@ namespace CodeRumWebBlog.Areas.Admin.Controllers
             return RedirectToAction("Index");
         }
         [HttpPost]
-        public ActionResult AddComment(long ContentId, string CommentText)
+        public async Task<ActionResult> AddComment(long ContentId, string CommentText)
         {
             var comment = new Comment
             {
@@ -123,7 +123,7 @@ namespace CodeRumWebBlog.Areas.Admin.Controllers
             };
 
             var commentDao = new CommentDAO();
-            commentDao.Insert(comment);
+            await commentDao.InsertAsync(comment);
 
             var commentTime = comment.CreateAt.ToString();
 
@@ -137,11 +137,11 @@ namespace CodeRumWebBlog.Areas.Admin.Controllers
         public async Task<ActionResult> EditComment(long commentId, string commentText)
         {
             var commentDao = new CommentDAO();
-            var comment = await commentDao.GetByID(commentId);
+            var comment = await commentDao.GetByIDAsync(commentId);
             if (comment != null)
             {
                 comment.Content = commentText;
-                commentDao.Update(comment);
+                await commentDao.UpdateAsync(comment);
                 return Json(new { success = true });
             }
             return Json(new { success = false });

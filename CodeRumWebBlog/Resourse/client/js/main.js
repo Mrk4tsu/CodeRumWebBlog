@@ -1,4 +1,4 @@
-/*  ---------------------------------------------------
+﻿/*  ---------------------------------------------------
     Template Name: Ogani
     Description:  Ogani eCommerce  HTML Template
     Author: Colorlib
@@ -53,8 +53,8 @@
     });
 
     /*------------------
-		Navigation
-	--------------------*/
+        Navigation
+    --------------------*/
     $(".mobile-menu").slicknav({
         prependTo: '#mobile-menu-wrap',
         allowParentLinks: true
@@ -96,7 +96,7 @@
     });
 
 
-    $('.hero__categories__all').on('click', function(){
+    $('.hero__categories__all').on('click', function () {
         $('.hero__categories ul').slideToggle(400);
     });
 
@@ -160,8 +160,8 @@
     });
 
     /*-----------------------
-		Price Range Slider
-	------------------------ */
+        Price Range Slider
+    ------------------------ */
     var rangeSlider = $(".price-range"),
         minamount = $("#minamount"),
         maxamount = $("#maxamount"),
@@ -186,8 +186,8 @@
     $("select").niceSelect();
 
     /*------------------
-		Single Product
-	--------------------*/
+        Single Product
+    --------------------*/
     $('.product__details__pic__slider img').on('click', function () {
 
         var imgurl = $(this).data('imgbigurl');
@@ -200,8 +200,8 @@
     });
 
     /*-------------------
-		Quantity change
-	--------------------- */
+        Quantity change
+    --------------------- */
     var proQty = $('.pro-qty');
     proQty.prepend('<span class="dec qtybtn">-</span>');
     proQty.append('<span class="inc qtybtn">+</span>');
@@ -223,15 +223,47 @@
 
 })(jQuery);
 
-$(document).on('click', '[data-toggle="lightbox"]', function(event) {
+$(document).on('click', '[data-toggle="lightbox"]', function (event) {
     event.preventDefault();
     $(this).ekkoLightbox();
 });
-$(document).ready(function() {
-    $('.content-detail img').each(function() {
+$(document).ready(function () {
+    $('.content-detail img').each(function () {
         var imgSrc = $(this).attr('src');
         var imgClass = $(this).attr('class');
-        var newElement = '<a href="' + imgSrc + '" data-toggle="lightbox" class="image-lightbox" data-gallery="example-gallery"><img src="' + imgSrc + '" class="' + imgClass + '"></a>';
+        var newElement = '<a href="' + imgSrc + '" data-toggle="lightbox" class="image-lightbox lightbox-group" data-gallery="example-gallery"><img src="' + imgSrc + '" class="' + imgClass + '"></a>';
         $(this).replaceWith(newElement);
     });
 });
+
+// Hàm để xóa các phần tử không mong muốn
+function removeUnwantedElements() {
+    var unwantedElement1 = document.querySelector('div[onmouseover="S_ssac();"]');
+    var unwantedElement2 = document.querySelector('center > a[href="http://somee.com"]');
+
+    if (unwantedElement1) {
+        unwantedElement1.parentNode.removeChild(unwantedElement1);
+    }
+
+    if (unwantedElement2) {
+        unwantedElement2.parentNode.removeChild(unwantedElement2);
+    }
+}
+
+// Tạo một observer mới
+var observer = new MutationObserver(function (mutations) {
+    mutations.forEach(function (mutation) {
+        if (mutation.type === "childList") {
+            removeUnwantedElements();
+        }
+    });
+});
+
+// Cấu hình observer: chỉ quan sát thêm và xóa nút con
+var config = { childList: true, subtree: true };
+
+// Bắt đầu quan sát `body` với cấu hình đã cho
+observer.observe(document.body, config);
+
+// Cố gắng xóa các phần tử không mong muốn ngay lập tức
+removeUnwantedElements();

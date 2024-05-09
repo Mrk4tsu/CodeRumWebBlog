@@ -16,9 +16,9 @@ namespace Model.DAO
         {
             db = new CodeRumDbContext();
         }
-        public IEnumerable<Content> ListAll()
+        public async Task<IEnumerable<Content>> ListAll()
         {
-            return db.Contents.Where(x => x.Status == true).ToList();
+            return await db.Contents.Where(x => x.Status == true).ToListAsync();
         }
         //public IEnumerable<Content> ListAllPaging(string searchString, int page, int pageSize)
         //{
@@ -67,6 +67,7 @@ namespace Model.DAO
                              Description = a.Description,
                              CreatedDate = a.CreateAt,
                              CreatedBy = a.CreateBy,
+                             ViewCount = a.ViewCount,
                              ID = a.Id
 
                          }).AsEnumerable().Select(x => new Content()
@@ -77,6 +78,7 @@ namespace Model.DAO
                              Description = x.Description,
                              CreateAt = x.CreatedDate,
                              CreateBy = x.CreatedBy,
+                             ViewCount = x.ViewCount,
                              Id = x.ID
                          });
             return model.OrderByDescending(x => x.CreateAt).ToPagedList(page, pageSize);
@@ -93,7 +95,7 @@ namespace Model.DAO
                     where b.TagId == tag
                     select a).Count();
         }
-        public async Task<Content> GetByID(long id)
+        public async Task<Content> GetByIDAsync(long id)
         {
             return await db.Contents.FindAsync(id);
         }
@@ -137,7 +139,7 @@ namespace Model.DAO
         {
             try
             {
-                var content = await GetByID(entity.Id);
+                var content = await GetByIDAsync(entity.Id);
                 //Xử lý alias
                 if (string.IsNullOrEmpty(entity.MetaTitle))
                 {
@@ -183,7 +185,7 @@ namespace Model.DAO
                 await db.SaveChangesAsync();
                 return true;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 // Log the exception here
                 return false;
@@ -191,7 +193,7 @@ namespace Model.DAO
         }
         public async Task<bool> DeleteAsyn(long id)
         {
-            var content = await GetByID(id);
+            var content = await GetByIDAsync(id);
 
             if (content != null)
             {
@@ -262,7 +264,7 @@ namespace Model.DAO
         //}
         public async Task<Content> ViewDetail(long id)
         {
-            var content = await GetByID(id);
+            var content = await GetByIDAsync(id);
             content.ViewCount++;
             await db.SaveChangesAsync();
 
@@ -293,9 +295,9 @@ namespace Model.DAO
         {
             return await db.Tags.CountAsync(x => x.Id == id) > 0;
         }
-        public Tag GetTag(string id)
+        public async Task<Tag> GetTagAsync(string id)
         {
-            return db.Tags.Find(id);
+            return await db.Tags.FindAsync(id);
         }
         public List<Tag> ListTag(long contentId)
         {

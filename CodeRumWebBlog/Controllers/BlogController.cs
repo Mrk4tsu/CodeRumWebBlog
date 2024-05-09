@@ -43,7 +43,7 @@ namespace CodeRumWebBlog.Controllers
             ViewBag.Comments = new CommentDAO().ListByContent(id, page, pageSize);
             return View(model);
         }
-        public ActionResult Tag(string tagId, int page = 1, int pageSize = 2)
+        public async Task<ActionResult> Tag(string tagId, int page = 1, int pageSize = 1)
         {
             var dao = new ContentDAO();
             var model = dao.ListAllByTag(tagId, page, pageSize);
@@ -52,7 +52,7 @@ namespace CodeRumWebBlog.Controllers
             ViewBag.Total = totalRecord;
             ViewBag.Page = page;
 
-            ViewBag.Tag = new ContentDAO().GetTag(tagId);
+            ViewBag.Tag = await new ContentDAO().GetTagAsync(tagId);
             int maxPage = 5;
 
             int totalPage = (int)Math.Ceiling((double)(totalRecord / (double)pageSize));

@@ -1,13 +1,14 @@
 ﻿@model CodeRumWebBlog.Areas.Admin.Data.LoginModel
 
-@using (Html.BeginForm())
-{
-    <div class="container">
-        <!-- The Modal -->
-        <div class="modal fade" id="modalLogin">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content modal-login p-3">
-                    <!-- Modal body -->
+
+<div class="container">
+    <!-- The Modal -->
+    <div class="modal fade" id="modalLogin">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content modal-login p-3">
+                <!-- Modal body -->
+                @using (Html.BeginForm("LoginModal", "Auths", FormMethod.Post))
+                {
                     <div class="modal-body">
                         <div class="d-flex justify-content-between align-items-center">
                             <div class="login-modal-head d-flex">
@@ -57,10 +58,11 @@
 
                         </div>
                     </div>
-
-                </div>
+                }
             </div>
         </div>
-
     </div>
-}
+
+</div>
+
+

@@ -12,10 +12,9 @@ namespace CodeRumWebBlog.Controllers
     public class AuthsController : Controller
     {
         // GET: Auths
-        [HttpGet]
         public ActionResult LoginModal()
         {
-            return PartialView("LoginModal");
+            return PartialView();
         }
         [HttpPost]
         public ActionResult LoginModal(LoginModel model)

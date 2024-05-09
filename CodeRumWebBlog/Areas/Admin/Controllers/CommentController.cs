@@ -3,6 +3,7 @@ using Model.Entity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 
@@ -12,27 +13,28 @@ namespace CodeRumWebBlog.Areas.Admin.Controllers
     {
         // GET: Admin/Comment
         [HttpGet]
-        public ActionResult Create()
+        public async Task<ActionResult> Create()
         {
-            SetViewBag();
+            await SetViewBag();
             return View();
         }
         [HttpPost]
-        public ActionResult Create(Comment comment)
+        public async Task<ActionResult> Create(Comment comment)
         {
             if (ModelState.IsValid)
             {
-                new CommentDAO().Insert(comment);
+                await new CommentDAO().InsertAsync(comment);
                 return RedirectToAction("Index");
             }
-            SetViewBag();
+            await SetViewBag();
             return View();
 
         }
-        public void SetViewBag(long? selectedId = null)
+        public async Task SetViewBag(long? selectedId = null)
         {
             var dao = new ContentDAO();
-            ViewBag.PostID = new SelectList(dao.ListAll(), "Id", "Name", selectedId);
+            var post = await dao.ListAll();
+            ViewBag.PostID = new SelectList(post, "Id", "Name", selectedId);
         }
     }
 }

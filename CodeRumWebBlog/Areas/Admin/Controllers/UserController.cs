@@ -25,6 +25,7 @@ namespace CodeRumWebBlog.Areas.Admin.Controllers
         public async Task<ActionResult> Create(Account account)
         {
             var dao = new AccountDAO();
+            SetViewBag();
             if (dao.IsUsenameExist(account.Username))
             {
                 SetAlert("Tài khoản đã tồn tại", "error");
@@ -49,7 +50,7 @@ namespace CodeRumWebBlog.Areas.Admin.Controllers
                 SetAlert("Thêm User không thành công", "error");
                 ModelState.AddModelError("", "Thêm người dùng không thành công");
             }
-            SetViewBag();
+            
             return View("Index");
         }
         #endregion
@@ -57,7 +58,7 @@ namespace CodeRumWebBlog.Areas.Admin.Controllers
         [HttpGet]
         public async Task<ActionResult> Edit(long id)
         {
-            var user = await new AccountDAO().GetById(id);
+            var user = await new AccountDAO().GetByIdAsync(id);
             SetViewBag(user.RoleId);
             return View(user);
         }
@@ -102,9 +103,9 @@ namespace CodeRumWebBlog.Areas.Admin.Controllers
             });
         }
         [HttpPost]
-        public JsonResult AddComment(long id, Comment comment)
+        public async Task<JsonResult> AddComment(long id, Comment comment)
         {
-            var result = new CommentDAO().Insert(comment);
+            var result = await new CommentDAO().InsertAsync(comment);
             return Json(new
             {
                 status = result
@@ -113,7 +114,8 @@ namespace CodeRumWebBlog.Areas.Admin.Controllers
         public void SetViewBag(string selectedId = null)
         {
             var dao = new AccountDAO();
-            ViewBag.RoleId = new SelectList(dao.ListAllRole(), "Id", "Name", selectedId);
+            var roles = dao.ListAllRole();
+            ViewBag.RoleId = new SelectList(roles, "Id", "Name", selectedId);
         }
     }
 }

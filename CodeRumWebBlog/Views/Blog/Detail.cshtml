@@ -5,6 +5,10 @@
     Layout = "~/Views/Shared/_LayoutPublic.cshtml";
 
     var user = new Model.DAO.AccountDAO().GetByUsername(Model.CreateBy);
+
+    ViewBag.URL = $"/chi-tiet-{Model.MetaTitle}-{Model.Id}";
+    ViewBag.Image = Model.Image;
+    ViewBag.Description = Model.Name;
 }
 
 @section Nav {
@@ -15,12 +19,14 @@
 }
 
 @section styles{
-    <link href="~/Resourse/publics/css/tooltip.css" rel="stylesheet" />
-    <link href="~/Resourse/publics/dist/ekko-lightbox.css" rel="stylesheet" />
-    <link href="~/Resourse/publics/plugin/styles/hybrid.css" rel="stylesheet" />
+    <link href="~/Resourse/client/css/tooltip.css" rel="stylesheet" />
+    <link href="~/Resourse/client/dist/ekko-lightbox.css" rel="stylesheet" />
+    <link href="~/Resourse/client/plugin/styles/hybrid.css" rel="stylesheet" />
 }
 @section jsFooter{
-    <script src="~/Resourse/publics/dist/ekko-lightbox.js"></script>
+    <script src="~/Resourse/client/dist/ekko-lightbox.js"></script>
+    <script src="~/Resourse/client/plugin/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
 }
 
 <div class="container">
@@ -102,10 +108,10 @@
 
                         <div class="row-comment my-1">
                             <div class="row mx-2">
-                                <img class="mr-2" src="@user.Avatar" alt="">
+                                <img class="mr-2" src="@userCmt.Avatar" alt="">
                                 <div class="comment-list-top ">
                                     <span class="h6 font-weight-bold">
-                                        <a href="@Url.Action("Detail", "Account", new {id = user.Id, name = user.Name})" class="text-info"> @user.Name </a>
+                                        <a href="@Url.Action("Detail", "Account", new {id = userCmt.Id, name = userCmt.Name})" class="text-info"> @userCmt.Name </a>
                                     </span>
                                     <br>
                                     <p class="badge badge-secondary mr-2"> Visitor </p>

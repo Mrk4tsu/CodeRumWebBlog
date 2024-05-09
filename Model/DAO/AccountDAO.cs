@@ -4,6 +4,7 @@ using PagedList;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
@@ -31,7 +32,7 @@ namespace Model.DAO
             }
             return model.OrderByDescending(x => x.CreateAt).ToPagedList(page, pageSize);
         }
-        public List<Role> ListAllRole()
+        public IEnumerable<Role> ListAllRole()
         {
             return db.Roles.ToList();
         }
@@ -39,14 +40,17 @@ namespace Model.DAO
         {
             return db.Accounts.SingleOrDefault(x => x.Username == username);
         }
-        public async Task<Account> GetById(long id)
+        public async Task<Account> GetByIdAsync(long id)
         {
             return await db.Accounts.FindAsync(id);
+        }
+        public Account GetById(long id)
+        {
+            return db.Accounts.Find(id);
         }
         public async Task<long> InsertAsync(Account account)
         {
             account.CreateAt = DateTime.Now;
-            account.RoleId = "customer";
             db.Accounts.Add(account);
             await db.SaveChangesAsync();
 
@@ -56,7 +60,7 @@ namespace Model.DAO
         {
             try
             {
-                var user = await GetById(entity.Id);
+                var user = await GetByIdAsync(entity.Id);
                 if (!string.IsNullOrEmpty(entity.Password))
                 {
                     user.Password = entity.Password;
@@ -80,7 +84,13 @@ namespace Model.DAO
         {
             try
             {
-                var user = await GetById(id);
+                var user = await GetByIdAsync(id);
+                // Delete the user's directory.
+                var userDirectory = $@"https://gatapchoi.id.vn/Resourse/data/{user.Username}/";
+                if (Directory.Exists(userDirectory))
+                {
+                    Directory.Delete(userDirectory, true);
+                }
                 db.Accounts.Remove(user);
                 await db.SaveChangesAsync();
 
@@ -93,7 +103,7 @@ namespace Model.DAO
         }
         public async Task<UserContentViewModel> DetailAsyn(long id)
         {
-            var account = await GetById(id);
+            var account = await GetByIdAsync(id);
             var content = await db.Contents.Where(c => c.CreateBy == account.Username).ToListAsync();
 
             return new UserContentViewModel
