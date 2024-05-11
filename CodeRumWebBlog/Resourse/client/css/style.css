@@ -127,12 +127,12 @@ ol {
 -----------------------*/
 
 .section-title {
-    margin-bottom: 50px;
+    margin-bottom: 30px;
     text-align: center;
 }
 
     .section-title h2 {
-        color: #1c1c1c;
+        color: #ffffff;
         font-weight: 700;
         position: relative;
     }
@@ -2936,6 +2936,7 @@ input.input-search:focus {
         margin: 3rem auto;
     }
 }
+
 /*---------------------
   Custom Blog
 -----------------------*/
@@ -2988,6 +2989,7 @@ input.input-search:focus {
             color: whitesmoke;
             font-weight: bold;
         }
+
 /*---------------------
     Custom Pagination
 -----------------------*/
@@ -3105,6 +3107,7 @@ input.input-search:focus {
     padding: 5px 11px;
     text-align: center;
 }
+
 /*---------------------
     Custom Carousel
 -----------------------*/
@@ -3178,6 +3181,7 @@ input.input-search:focus {
         font-size: 1rem;
         font-weight: 700;
     }
+
 /*---------------------
     Custom Detail
 -----------------------*/
@@ -3306,8 +3310,44 @@ input.input-search:focus {
     }
 
 /*---------------------
+    Custom Sign in
+-----------------------*/
+.form-sign-in {
+    color: #d9eaff;
+}
+
+    .form-sign-in label {
+        font-weight: 800;
+    }
+
+    .form-sign-in input {
+        border-radius: 20px;
+        background: #273D52;
+        border: #6c757d 1px solid;
+        color: #ffff;
+        padding: 0 10px;
+    }
+
+        .form-sign-in input:focus {
+            background: #273D52;
+            color: white;
+        }
+
+    .form-sign-in .captcha {
+        margin-top: 10px;
+        width: 100%;
+    }
+
+        .form-sign-in .captcha img {
+            border-radius: 5px;
+        }
+/*---------------------
     Custom Utilities
 -----------------------*/
+.bg-original-layout {
+    background: rgba(39, 61, 82);
+}
+
 .bg-gradient-success {
     background-image: linear-gradient(to bottom, #a6ff79 2%, #3FBC62 99%) !important;
 }
@@ -3420,6 +3460,7 @@ input.input-search:focus {
         max-width: 1170px;
     }
 }
+
 /* Medium Device = 1200px */
 @media only screen and (min-width: 992px) and (max-width: 1199px) {
     .header__menu ul li {
@@ -3454,6 +3495,7 @@ input.input-search:focus {
         width: 240px;
     }
 }
+
 /* Tablet Device = 768px */
 @media only screen and (min-width: 768px) and (max-width: 991px) {
     .hero__categories {
@@ -3720,6 +3762,7 @@ input.input-search:focus {
         overflow: hidden;
     }
 }
+
 /* Wide Mobile = 480px */
 @media only screen and (max-width: 767px) {
     .hero__categories {
@@ -4031,6 +4074,7 @@ input.input-search:focus {
         overflow: hidden;
     }
 }
+
 /* Small Device = 320px */
 @media only screen and (max-width: 479px) {
     .hero__search__form form .hero__search__categories {

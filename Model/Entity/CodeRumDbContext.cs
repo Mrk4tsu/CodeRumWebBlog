@@ -96,9 +96,5 @@ namespace Model.Entity
                 .Property(e => e.Type)
                 .IsUnicode(false);
         }
-
-        public System.Data.Entity.DbSet<Model.ViewModel.RegisterModel> RegisterModels { get; set; }
-
-        public System.Data.Entity.DbSet<Model.ViewModel.LoginViewModel> LoginViewModels { get; set; }
     }
 }

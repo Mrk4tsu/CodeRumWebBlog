@@ -3,8 +3,16 @@
 @using PagedList.Mvc;
 @{
     ViewBag.Title = "Chi tiết: " + Model.Name;
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
 }
 
+@section Navbar {
+    @{
+        ViewBag.IsHome = false;
+        ViewBag.IsContent = true;
+        ViewBag.IsUser = false;
+    }
+}
 @section jsFooter{
     <script>
     $(document).ready(function () {

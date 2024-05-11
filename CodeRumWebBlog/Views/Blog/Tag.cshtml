@@ -17,7 +17,23 @@
 @section styles{
     <link href="~/Resourse/client/css/tooltip.css" rel="stylesheet" />
 }
+<section class="container position-relative">
+    <div class="row d-flex justify-content-center">
+        <div class="col-sm-12 col-md-8 col-lg-8 col-12">
+            @using (Html.BeginForm("Index", "Blog", FormMethod.Get))
+            {
+                <div class="input-group mb-3 my-2">
+                    <input type="text" name="searchString" value="@ViewBag.SearchString" class="form-control text-light input-search p-4"
+                           placeholder="Nhập để tìm kiếm...">
+                    <div class="input-group-append">
+                        <button class="btn bg-gradient-success" type="submit">Tìm kiếm</button>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
 
+</section>
 <div class="container bootstrap snippets bootdey">
     <div class="row">
         <h4 class="text-light">
@@ -98,7 +114,7 @@
                                 else
                                 {
                                     <li><a href="@link?page=@i">@i</a></li>
-                                }                               
+                                }
                             }
 
                             <li class="PagedList-skipToNext">

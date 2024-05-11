@@ -2,6 +2,15 @@
 
 @{
     ViewBag.Title = "Edit";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+@section Navbar {
+    @{
+        ViewBag.IsHome = false;
+        ViewBag.IsContent = true;
+        ViewBag.IsUser = false;
+    }
 }
 
 @section jsFooter{

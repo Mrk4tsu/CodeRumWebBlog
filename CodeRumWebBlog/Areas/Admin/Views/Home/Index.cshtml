@@ -1,9 +1,16 @@
 ﻿
 @{
     ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
 }
 
-<h2>Trang chủ</h2>
+@section Navbar {
+    @{
+        ViewBag.IsHome = true;
+        ViewBag.IsContent = false;
+        ViewBag.IsUser = false;
+    }
+}
 
 <h5>
     <a href="/danh-sach-nguoi-dung">Danh sách người dùng</a>

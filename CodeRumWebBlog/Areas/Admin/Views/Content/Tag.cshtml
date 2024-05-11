@@ -3,8 +3,15 @@
     ViewBag.Title = "Tag";
 
     var tag = (Model.Entity.Tag)ViewBag.Tag;
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
 }
-
+@section Navbar {
+    @{
+        ViewBag.IsHome = false;
+        ViewBag.IsContent = true;
+        ViewBag.IsUser = false;
+    }
+}
 <div class="content">
     <div class="content_top">
         <div class="heading">
@@ -119,6 +126,5 @@
 
 
 <style>
-    
 </style>
 

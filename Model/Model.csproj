@@ -63,6 +63,7 @@
     <Compile Include="DAO\AccountDAO.cs" />
     <Compile Include="DAO\CategoryDAO.cs" />
     <Compile Include="DAO\CommentDAO.cs" />
+    <Compile Include="DAO\ContentCategoryDAO.cs" />
     <Compile Include="DAO\ContentDAO.cs" />
     <Compile Include="Entity\About.cs" />
     <Compile Include="Entity\Account.cs" />
@@ -70,6 +71,7 @@
     <Compile Include="Entity\CodeRumDbContext.cs" />
     <Compile Include="Entity\Comment.cs" />
     <Compile Include="Entity\Content.cs" />
+    <Compile Include="Entity\ContentCategory.cs" />
     <Compile Include="Entity\ContentTag.cs" />
     <Compile Include="Entity\Menu.cs" />
     <Compile Include="Entity\MenuType.cs" />

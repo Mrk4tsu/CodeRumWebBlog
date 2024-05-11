@@ -15,7 +15,7 @@ namespace CodeRumWebBlog.Areas.Admin.Controllers
     public class ContentController : BaseController
     {
         // GET: Admin/Content
-        public ActionResult Index(string searchString, int page = 1, int pageSize = 1)
+        public ActionResult Index(string searchString, int page = 1, int pageSize = 10)
         {
             var dao = new ContentDAO();
             var model = dao.ListAllPaging(searchString, page, pageSize);
@@ -24,7 +24,7 @@ namespace CodeRumWebBlog.Areas.Admin.Controllers
 
             return View(model);
         }
-        public async Task<ActionResult> Tag(string tagId, int page = 1, int pageSize = 1)
+        public async Task<ActionResult> Tag(string tagId, int page = 1, int pageSize = 10)
         {
             var dao = new ContentDAO();
             var model = dao.ListAllByTag(tagId, page, pageSize);
@@ -154,6 +154,15 @@ namespace CodeRumWebBlog.Areas.Admin.Controllers
         {
             var dao = new CategoryDAO();
             ViewBag.CategoryID = new SelectList(dao.ListAll(), "ID", "Name", selectedId);
+        }
+        public JsonResult ChangeStatus(long id)
+        {
+            var result = new ContentDAO().ChangeStatus(id);
+
+            return Json(new
+            {
+                status = result
+            });
         }
     }
 }

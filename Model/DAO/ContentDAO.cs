@@ -328,5 +328,14 @@ namespace Model.DAO
                          });
             return model.ToList();
         }
+        public bool ChangeStatus(long id)
+        {
+            var content = db.Contents.Find(id);
+
+            content.Status = !content.Status;
+            db.SaveChanges();
+
+            return content.Status;
+        }
     }
 }

@@ -61,7 +61,7 @@ namespace Model.DAO
 
                 return true;
             }
-            catch (System.Exception)
+            catch (Exception)
             {
                 return false;
             }
@@ -72,7 +72,11 @@ namespace Model.DAO
             try
             {
                 var cate = GetById(id);
-                db.Categories.Remove(cate);
+
+                cate.Status = false;
+                cate.ShowOnHome = false;
+
+                //db.Categories.Remove(cate);
                 await db.SaveChangesAsync();
 
                 return true;
