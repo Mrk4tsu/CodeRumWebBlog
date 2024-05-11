@@ -3,6 +3,10 @@
 @{
     ViewBag.Title = Model.Account.Name;
     Layout = "~/Views/Shared/_LayoutPublic.cshtml";
+
+    ViewBag.URL = Url.Action("Detail", "Account", new { name = Model.Account.Name, id = Model.Account.Id });
+    ViewBag.Description = "Thông tin trang cá nhân: " + Model.Account.Name;
+    ViewBag.Image = Model.Account.Avatar;
 }
 
 @section Nav {
@@ -91,33 +95,7 @@
                                     </a>
                                 </div>
                             </div>
-                            <div class="post-footer">
-
-                                <ul class="comments-list">
-                                    @{
-                                        var comments = (PagedList.IPagedList<Model.Entity.Comment>)ViewBag.Comments;
-                                        foreach (var cmt in comments)
-                                        {
-                                            {
-                                                var user = new Model.DAO.AccountDAO().GetByUsername(cmt.CreateBy);
-
-                                                <li class="comment">
-                                                    <a class="pull-left" href="javascript:void(0);">
-                                                        <img class="avatar rounded-circle" src="@user.Avatar" alt="avatar">
-                                                    </a>
-                                                    <div class="comment-body">
-                                                        <div class="comment-heading">
-                                                            <h4 class="user"> @user.Name </h4>
-                                                            <h5 class="time">@cmt.CreateAt.Value.ToString("dd MMMM yyyy", new System.Globalization.CultureInfo("vi-VN"))</h5>
-                                                        </div>
-                                                        <p class="text-light"> @cmt.Content </p>
-                                                    </div>
-                                                </li>
-                                            }
-                                        }
-                                    }
-                                </ul>
-                            </div>
+                           
                         </div>
                     }
 

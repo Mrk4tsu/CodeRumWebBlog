@@ -1,0 +1,70 @@
+﻿@model Model.ViewModel.LoginViewModel
+
+<div class="container">
+    <!-- The Modal -->
+    <div class="modal fade" id="modalLogin">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content modal-login p-3">
+                <!-- Modal body -->
+                <div class="modal-body">
+
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div class="login-modal-head d-flex">
+                            <img src="~/Resourse/client/img/logo.png" alt="">
+                        </div>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+
+                    <h5 class="text-center my-3 font-weight-bold">Đăng nhập với</h5>
+                    <div class="login-social">
+                        <a href="#" id="facebook" class="bg-gradient-primary rounded-circle shadow-light">
+                            <i class="fa fa-facebook"
+                               aria-hidden="true"></i>
+                        </a>
+                        <a href="#" id="google" class="bg-gradient-danger rounded-circle shadow-light">
+                            <i class="fa fa-google"
+                               aria-hidden="true"></i>
+                        </a>
+                    </div>
+                    <h5 class="text-center my-3 font-weight-bold">hoặc</h5>
+
+
+                    @using (Html.BeginForm("Login", "Auths", FormMethod.Post))
+                    {
+                        <div class="login-form form-group">
+                            @Html.AntiForgeryToken()
+
+                            @Html.LabelFor(model => model.Username, htmlAttributes: new { @class = "label-login" })
+                            @Html.EditorFor(model => model.Username, new { htmlAttributes = new { @class = "form-control px-4", @placeholder = "Nhập tài khoản", @type = "text" } })
+                            @Html.ValidationMessageFor(model => model.Username, "", new { @class = "text-danger" })
+
+                            @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "label-login" })
+                            @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control px-4", @placeholder = "Nhập mật khẩu", @type = "password" } })
+                            @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+
+                            <div class="checkout__input__checkbox mt-2">
+                                <label class="text-light" for="acc">
+                                    Nhớ mật khẩu
+                                    <input type="checkbox" name="RememberMe" id="acc">
+                                    <span class="checkmark"></span>
+                                </label>
+                            </div>
+
+                            <div class="d-flex justify-content-between align-items-center row mx-2">
+                                <div>
+                                    <a href="@Url.Action("Register", "Auths")">Tạo tài khoản</a>
+                                </div>
+                                <div>
+                                    <button type="submit" class="btn bg-gradient-success rounded-e-20 text-light">Đăng nhập</button>
+                                </div>
+                            </div>
+
+                        </div>
+                    }
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

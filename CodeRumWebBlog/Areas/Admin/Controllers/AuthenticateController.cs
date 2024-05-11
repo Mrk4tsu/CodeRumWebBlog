@@ -7,13 +7,14 @@ namespace CodeRumWebBlog.Areas.Admin.Controllers
 {
     public class AuthenticateController : Controller
     {
-        [HttpGet]
+        [HttpGet] 
         public ActionResult Login()
         {
             return View();
         }
         // GET: Authenticate
         [HttpPost]
+        [OutputCache(Location = System.Web.UI.OutputCacheLocation.Client, Duration = int.MaxValue)]
         public ActionResult Login(LoginModel model)
         {
             if (ModelState.IsValid)

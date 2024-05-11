@@ -5,6 +5,9 @@
 @{
     ViewBag.Title = "Index";
 }
+@section jsFooter{
+    <script src="~/Assets/js/utilscontroller.js"></script>
+}
 <h2>Danh sách danh mục</h2>
 <div class="col-md-6 mb-3">
     <a href="/tao-moi-danh-muc" class="btn btn-primary">Tạo mới</a>
@@ -40,21 +43,21 @@
         <tbody>
             @foreach (var cate in Model)
             {
-                <tr id="rows_@cate.Id">
+                <tr id="cateRows_@cate.Id">
 
                     <td>@cate.Name</td>
                     <td>@cate.CreateAt.Value.ToString("dd MMMM yyyy", new System.Globalization.CultureInfo("vi-VN"))</td>
                     <td>@(cate.ModifyDate.HasValue ? cate.ModifyDate.Value.ToString("dd MMMM yyyy", new System.Globalization.CultureInfo("vi-VN")) : "Chưa có dữ liệu")</td>
-                    <td><a href="#" class="btn-active text-decoration-none" data-id="@cate.Id">@(cate.Status ? "Đã kích hoạt" : "Chưa kích hoạt")</a></td>
+                    <td><a href="#" class="btn-change-category-status text-decoration-none" data-id="@cate.Id">@(cate.Status ? "Đã kích hoạt" : "Chưa kích hoạt")</a></td>
                     <td>
                         [<a href="/chinh-sua-nguoi-dung-@cate.Id">Sửa</a>]
 
                         [@Ajax.ActionLink("Xóa", "Delete", new { @id = cate.Id }, new AjaxOptions
-                        {
-                        Confirm = "Bạn có muốn xóa?",
-                        OnComplete = "$('#rows_" + cate.Id + "').remove()",
-                        HttpMethod = "Delete"
-                        })]
+                      {
+                      Confirm = "Bạn có muốn xóa?",
+                      OnComplete = "$('#cateRows_" + cate.Id + "').remove()",
+                      HttpMethod = "Delete"
+                      })]
                     </td>
                 </tr>
             }

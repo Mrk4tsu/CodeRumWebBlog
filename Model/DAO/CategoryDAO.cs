@@ -82,5 +82,14 @@ namespace Model.DAO
                 return false;
             }
         }
+        public bool ChangeStatus(long id)
+        {
+            var cate = db.Categories.Find(id);
+
+            cate.Status = !cate.Status;
+            db.SaveChanges();
+
+            return cate.Status;
+        }
     }
 }

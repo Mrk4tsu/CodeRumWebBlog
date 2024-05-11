@@ -235,7 +235,19 @@ $(document).ready(function () {
         $(this).replaceWith(newElement);
     });
 });
-
+$(document).ready(function () {
+    $.get('/Auths/Login', function (data) {
+        $('#loginModalContainer').html(data);
+        $('#iconId').on('click', function () {
+            // Khi icon được nhấp, thay đổi thuộc tính 'visibility' của '#loginModalContainer' thành 'visible'
+            $('#loginModalContainer').css('display', 'unset');
+        });
+        $('#modalLogin').on('hidden.bs.modal', function () {
+            // Khi modal ẩn đi, thay đổi thuộc tính 'visibility' của '#loginModalContainer' trở lại 'hidden'
+            $('#loginModalContainer').css('display', 'none');
+        });
+    });
+});
 // Hàm để xóa các phần tử không mong muốn
 function removeUnwantedElements() {
     var unwantedElement1 = document.querySelector('div[onmouseover="S_ssac();"]');

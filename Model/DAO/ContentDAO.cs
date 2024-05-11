@@ -83,6 +83,14 @@ namespace Model.DAO
                          });
             return model.OrderByDescending(x => x.CreateAt).ToPagedList(page, pageSize);
         }
+        public IEnumerable<Content> GetTop3ContentMostView()
+        {
+            return db.Contents.Where(c => c.Status == true).OrderByDescending(c => c.ViewCount).Take(3).ToList();
+        }
+        public IEnumerable<Content> GetTop3ContentNewest()
+        {
+            return db.Contents.Where(c => c.Status == true).OrderByDescending(c => c.CreateAt).Take(3).ToList();
+        }
         public int CountAll()
         {
             return db.Contents.Count();
@@ -94,6 +102,10 @@ namespace Model.DAO
                     on a.Id equals b.ContentId
                     where b.TagId == tag
                     select a).Count();
+        }
+        public int GetCommentCountByContentId(long contentId)
+        {
+            return db.Comments.Count(c => c.PostId == contentId && c.Status == true);
         }
         public async Task<Content> GetByIDAsync(long id)
         {

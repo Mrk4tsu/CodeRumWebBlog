@@ -7,6 +7,7 @@ namespace CodeRumWebBlog.Controllers
     public class AccountController : Controller
     {
         // GET: Account
+        [OutputCache(Location = System.Web.UI.OutputCacheLocation.Client, Duration = int.MaxValue, VaryByParam = "id")]
         public async Task<ActionResult> Detail(long id, string name, int page = 1, int pageSize = 5)
         {
             var dao = new AccountDAO();

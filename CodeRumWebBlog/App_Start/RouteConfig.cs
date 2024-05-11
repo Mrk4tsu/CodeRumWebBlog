@@ -10,7 +10,17 @@ namespace CodeRumWebBlog
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
+            routes.IgnoreRoute("{*botdetect}",
+            new { botdetect = @"(.*)BotDetectCaptcha\.ashx" });
 
+            routes.MapRoute(
+               name: "Register",
+               url: "dang-ky",
+               defaults: new
+               {
+                   controller = "Auths",
+                   action = "Register"
+               });
 
             routes.MapRoute(
                 name: "List Blog",

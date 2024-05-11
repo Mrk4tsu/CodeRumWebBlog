@@ -5,6 +5,7 @@ namespace Model.Entity
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
+    using System.Globalization;
 
     [Table("Category")]
     public partial class Category
@@ -29,7 +30,6 @@ namespace Model.Entity
 
         [StringLength(50)]
         public string CreateBy { get; set; }
-
         public DateTime? CreateAt { get; set; }
 
         public DateTime? ModifyDate { get; set; }

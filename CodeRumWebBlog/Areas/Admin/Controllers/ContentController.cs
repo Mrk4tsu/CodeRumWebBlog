@@ -8,6 +8,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.UI;
 
 namespace CodeRumWebBlog.Areas.Admin.Controllers
 {
@@ -45,6 +46,7 @@ namespace CodeRumWebBlog.Areas.Admin.Controllers
             return View(model);
         }
         [HttpGet]
+        [OutputCache(Location = OutputCacheLocation.Any, Duration = int.MaxValue)]
         public ActionResult Create()
         {
             SetViewBag();
@@ -62,6 +64,7 @@ namespace CodeRumWebBlog.Areas.Admin.Controllers
             SetViewBag();
             return View();
         }
+        [OutputCache(Location = OutputCacheLocation.Any, Duration = 3600 * 24, VaryByParam = "id")]
         public async Task<ActionResult> Detail(long id, int page = 1, int pageSize = 5)
         {
             var model = await new ContentDAO().ViewDetail(id);
@@ -71,6 +74,7 @@ namespace CodeRumWebBlog.Areas.Admin.Controllers
             return View(model);
         }
         [HttpGet]
+        [OutputCache(Location = OutputCacheLocation.Any, Duration = int.MaxValue, VaryByParam = "id")]
         public async Task<ActionResult> Edit(long id)
         {
             var dao = new ContentDAO();

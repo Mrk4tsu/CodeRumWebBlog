@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using Model.DAO;
 using System.Web.Mvc;
+using System.Web.UI;
 
 namespace CodeRumWebBlog.Controllers
 {
@@ -12,19 +10,23 @@ namespace CodeRumWebBlog.Controllers
         {
             return View();
         }
-
-        public ActionResult About()
+        [OutputCache(Location = OutputCacheLocation.Client, Duration = 3600 * 24)]
+        public ActionResult TopContent()
         {
-            ViewBag.Message = "Your application description page.";
+            var dao = new ContentDAO();
+            var top = dao.GetTop3ContentMostView();
 
-            return View();
+            ViewBag.TopContents = top;
+            return PartialView("TopContent");
         }
-
-        public ActionResult Contact()
+        [OutputCache(Location = OutputCacheLocation.Client, Duration = 3600 * 12)]
+        public ActionResult ContentNew()
         {
-            ViewBag.Message = "Your contact page.";
+            var dao = new ContentDAO();
+            var top = dao.GetTop3ContentNewest();
 
-            return View();
+            ViewBag.NewContents = top;
+            return PartialView("ContentNew");
         }
     }
 }

@@ -155,11 +155,6 @@ ol {
     background-position: top center;
 }
 
-.spad {
-    padding-top: 100px;
-    padding-bottom: 100px;
-}
-
 .text-white h1,
 .text-white h2,
 .text-white h3,
@@ -915,11 +910,11 @@ ol {
 
 .from-blog {
     padding-top: 50px;
-    padding-bottom: 50px;
 }
 
     .from-blog .blog__item {
-        margin-bottom: 30px;
+        margin-bottom: 5px;
+        height: 100%;
     }
 
 .from-blog__title {
@@ -2164,6 +2159,8 @@ ol {
 -----------------------*/
 
 .blog__item {
+    background: rgba(43, 76, 85);
+    border-radius: 20px;
     margin-bottom: 60px;
 }
 
@@ -2171,14 +2168,15 @@ ol {
     width: 100%;
     height: 250px;
     object-fit: cover;
+    border-radius: 20px 20px 0 0;
 }
 
 .blog__item__text {
-    padding-top: 25px;
+    padding: 10px 10px;
 }
 
     .blog__item__text ul {
-        margin-bottom: 15px;
+        margin: 5px 5px;
     }
 
         .blog__item__text ul li {
@@ -2186,7 +2184,6 @@ ol {
             color: #b2b2b2;
             list-style: none;
             display: inline-block;
-            margin-right: 15px;
         }
 
             .blog__item__text ul li:last-child {
@@ -2198,8 +2195,8 @@ ol {
     }
 
         .blog__item__text h5 a {
-            font-size: 20px;
-            color: #1c1c1c;
+            font-size: 18px;
+            color: #d7d7d7;
             font-weight: 700;
         }
 
@@ -3403,6 +3400,18 @@ input.input-search:focus {
     border-bottom-right-radius: 20px !important;
 }
 
+.validation-summary-errors ul {
+    list-style: none;
+}
+
+    .validation-summary-errors ul li {
+        color: lemonchiffon !important;
+        background: #dd2222;
+        padding: 3px 7px;
+        border-radius: 5px;
+        width: fit-content;
+        font-size: 13px;
+    }
 
 /*--------------------------------- Responsive Media Quaries -----------------------------*/
 
