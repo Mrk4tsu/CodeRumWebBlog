@@ -55,7 +55,15 @@ namespace CodeRumWebBlog.Areas.Admin
                     id = UrlParameter.Optional
                 });
 
-
+            // Route cho xem chi tiết bài viết
+            context.MapRoute(
+                name: "AdminLockContent",
+                url: "phe-duyet-bai-viet",
+                defaults: new
+                {
+                    controller = "Content",
+                    action = "DisApproveContent",
+                });
 
             // Route cho danh sách danh mục
             context.MapRoute(

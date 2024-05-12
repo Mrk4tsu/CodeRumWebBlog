@@ -53,11 +53,10 @@
                                 <tr id="rowContent_@item.Id" class="text-center">
                                     <td>@item.CreateBy</td>
                                     <td>
-                                        <div><a href="/chi-tiet-@item.MetaTitle-@item.Id">@item.Name</a></div>
+                                        <div><a href="/chi-tiet-@item.MetaTitle-@item.Id" target="_blank">@item.Name</a></div>
                                     </td>
-                                    <td>
-                                       
-                                        <div class="text-date" data-date="@item.CreateAt.Value.ToString("o")"></div>
+                                    <td>                                     
+                                        <div>@item.CreateAt.Value.ToString("dd MMMM yyyy")</div>
                                     </td>
                                     <td>
                                         <a href="#" class="@(item.Status ? "badge badge-success" : "badge badge-danger") btn-change-content-status text-decoration-none" data-id="@item.Id">

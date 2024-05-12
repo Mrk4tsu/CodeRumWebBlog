@@ -21,22 +21,8 @@ namespace Model.DAO
         {
             return await db.Contents.Where(x => x.Status == true).ToListAsync();
         }
-        //Danh sách bài viết chưa phê duyệt
-        public IEnumerable<Content> ListAllLockContent(string searchString, int page, int pageSize)
-        {
-            IQueryable<Content> model = db.Contents;
-
-            if (!string.IsNullOrEmpty(searchString))
-            {
-                model = model.Where(x => x.Name.Contains(searchString) ||
-                x.MetaTitle.Contains(searchString) ||
-                x.Tag.Contains(searchString) ||
-                x.CreateBy.Contains(searchString));
-            }
-            return model.OrderByDescending(x => x.CreateAt).Where(c => c.Locked == false).ToPagedList(page, pageSize);
-        }
         //Danh sách bài viết đã được duyệt
-        public IEnumerable<Content> ListAllPaging(string searchString, int page, int pageSize)
+        public IEnumerable<Content> ListAllPaging(string searchString, int page, int pageSize, bool isLock)
         {
 
             IQueryable<Content> model = db.Contents;
@@ -48,7 +34,7 @@ namespace Model.DAO
                 x.Tag.Contains(searchString) ||
                 x.CreateBy.Contains(searchString));
             }
-            return model.OrderByDescending(x => x.CreateAt).Where(c => c.Locked == false).ToPagedList(page, pageSize);
+            return model.OrderByDescending(x => x.CreateAt).Where(c => c.Locked == isLock).ToPagedList(page, pageSize);
         }
         //Status = true (Trạng thái Hiện), Locked = false (Trạng thái phê duyệt, cấm)
         public IEnumerable<Content> ListAllPagingPublic(string searchString, int page, int pageSize)
@@ -234,6 +220,18 @@ namespace Model.DAO
                 db.Comments.RemoveRange(comments);
 
                 db.Contents.Remove(content);
+                await db.SaveChangesAsync();
+                return true;
+            }
+            return false;
+        }
+        public async Task<bool> ApproveAsync(long id)
+        {
+            var content = await GetByIDAsync(id);
+
+            if (content != null)
+            {
+                content.Locked = false;
                 await db.SaveChangesAsync();
                 return true;
             }

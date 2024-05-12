@@ -1,0 +1,98 @@
+﻿@model PagedList.IPagedList<Model.Entity.Content>
+@using PagedList.Mvc;
+
+@{
+    ViewBag.Title = "Duyệt bài";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+@section Navbar {
+    @{
+        ViewBag.IsHome = false;
+        ViewBag.IsContent = true;
+        ViewBag.IsUser = false;
+    }
+}
+@section jsFooter{
+    <script src="~/Resourse/plugin/utils.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('.deny-link').html('<i class="fas fa-times-circle py-1 px-2"></i>');
+            $('.accept-link').html('<i class="fas fa-check-circle py-1 px-2"></i>');
+        });
+    </script>
+}
+
+<div class="row">
+    <!-- column -->
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Danh sách bài viết</h4>
+                @using (Html.BeginForm("DisApproveContent", "Content", FormMethod.Post))
+                {
+                    <div class="d-flex justify-content-start align-items-center">
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="myInput" value="@ViewBag.SearchString" name="searchString" />
+                        </div>
+                        <div class="form-group px-2">
+                            <button type="submit" class="btn btn-primary">Tìm kiếm</button>
+                        </div>
+
+                    </div>
+                }
+            <div class="table-responsive">
+                <table class="table table-hover table-bordered">
+                    <thead>
+                        <tr class="text-center">
+                            <th>Auths</th>
+                            <th>Tiêu đề</th>
+                            <th>Ngày đăng</th>
+                            <th>#</th>
+                        </tr>
+                    </thead>
+                    <tbody id="myTable">
+                        @foreach (var item in Model)
+                        {
+                            <tr id="rowContent_@item.Id" class="text-center">
+                                <td>@item.CreateBy</td>
+                                <td>
+                                    <div><a href="/chi-tiet-@item.MetaTitle-@item.Id" target="_blank">@item.Name</a></div>
+                                </td>
+                                <td>
+
+                                    <div class="text-date" data-date="@item.CreateAt.Value.ToString("o")"></div>
+                                </td>
+                                <td>
+                                    @*<a href="/Admin/Content/ApproveContent/@item.Id" class="text-center badge badge-success">
+                                <i class="fas fa-check-circle py-1 px-2"></i>
+                            </a>*@
+                                    @Ajax.ActionLink("Phê duyệt", "ApproveContent", new { @id = item.Id }, new AjaxOptions
+                                    {
+
+                                        OnComplete = "$('#rowContent_" + item.Id + "').remove()",
+                                        HttpMethod = "Delete",
+                                    }, new { @class = "accept-link badge badge-success" })
+
+                                    @Ajax.ActionLink("Xóa", "Delete", new { @id = item.Id }, new AjaxOptions
+                                {
+                                    Confirm = "Bạn có muốn xóa?",
+                                    OnComplete = "$('#rowContent_" + item.Id + "').remove()",
+                                    HttpMethod = "Delete",
+                                }, new { @class = "deny-link badge badge-danger" })
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+                @if (Model.Count() < 1)
+                {
+                    <h4 class="fw-bold text-center">Không có bài viết nào.</h4>
+                }
+                @Html.PagedListPager(Model, page => Url.Action("DisApproveContent", new { page, @searchString = @ViewBag.SearchString }))
+
+            </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -18,7 +18,7 @@ namespace CodeRumWebBlog.Areas.Admin.Controllers
         public ActionResult Index(string searchString, int page = 1, int pageSize = 10)
         {
             var dao = new ContentDAO();
-            var model = dao.ListAllPaging(searchString, page, pageSize);
+            var model = dao.ListAllPaging(searchString, page, pageSize, false);
 
             ViewBag.SearchString = searchString;
 
@@ -43,6 +43,15 @@ namespace CodeRumWebBlog.Areas.Admin.Controllers
             ViewBag.Last = totalPage;
             ViewBag.Next = page + 1;
             ViewBag.Prev = page - 1;
+            return View(model);
+        }
+        public ActionResult DisApproveContent(string searchString, int page = 1, int pageSize = 10)
+        {
+            var dao = new ContentDAO();
+            var model = dao.ListAllPaging(searchString, page, pageSize, true);
+
+            ViewBag.SearchString = searchString;
+
             return View(model);
         }
         [HttpGet]
@@ -108,6 +117,12 @@ namespace CodeRumWebBlog.Areas.Admin.Controllers
             }
             SetViewBag(model.CategoryId);
             return View();
+        }
+        [HttpDelete]
+        public async Task<ActionResult> ApproveContent(long id)
+        {
+            await new ContentDAO().ApproveAsync(id);
+            return RedirectToAction("Index");
         }
         [HttpDelete]
         public async Task<ActionResult> Delete(long id)
