@@ -5,6 +5,7 @@
     Layout = "~/Views/Shared/_LayoutPublic.cshtml";
 
     var user = new Model.DAO.AccountDAO().GetByUsername(Model.CreateBy);
+    var session = (UserLogin)Session[Common.CommonConstants.USER_SESSION];
 
     ViewBag.URL = $"/chi-tiet-{Model.MetaTitle}-{Model.Id}";
     ViewBag.Image = Model.Image;
@@ -22,6 +23,12 @@
     <link href="~/Resourse/client/css/tooltip.css" rel="stylesheet" />
     <link href="~/Resourse/client/dist/ekko-lightbox.css" rel="stylesheet" />
     <link href="~/Resourse/client/plugin/styles/hybrid.css" rel="stylesheet" />
+    <style>
+        iframe{
+            width: 100% !important;
+            height: calc(350px - 20px);
+        }
+    </style>
 }
 @section jsFooter{
     <script src="~/Resourse/client/dist/ekko-lightbox.js"></script>
@@ -122,7 +129,7 @@
                     {
                         var userCmt = new Model.DAO.AccountDAO().GetByUsername(cmt.CreateBy);
 
-                        <div class="row-comment my-1">
+                        <div class="row-comment mt-1">
                             <div class="row mx-2">
                                 <img class="mr-2" src="@userCmt.Avatar" alt="">
                                 <div class="comment-list-top ">
@@ -137,9 +144,9 @@
                             <div class="comment-list-body mx-4">
                                 <span class="text-light ">@cmt.Content</span>
                             </div>
-                            <div class="comment-list-footer p-2 my-2">
+                            <div class="comment-list-footer p-2">
                                 <div class="d-flex justify-content-between w-100">
-                                    <a href="#" class="ml-3"> <i class="fa fa-reply" aria-hidden="true"></i> <span>Reply</span></a>
+                                    <a href="#" class="ml-3" data-toggle="collapse" data-target="#reply"> <i class="fa fa-reply" aria-hidden="true"></i> <span>Reply</span></a>
                                 </div>
                                 <div>
                                     <a href="#" class="mx-2" data-toggle="tooltip" title="Báo xấu!">
@@ -148,6 +155,11 @@
                                 </div>
                             </div>
                         </div>
+
+                        @*<div id="reply" class="reply-group collapse">
+                            <img class="rounded-circle mx-2" src="@session.Avatar" style="width: 45px; height: 100%">
+                            <textarea class="form-control form-comment p-3 text-light" id="comment-reply" rows="2"></textarea>
+                        </div>*@
                     }
                 }
 

@@ -5,57 +5,86 @@
 }
 
 <!DOCTYPE html>
+<html lang="en">
 
-<html>
 <head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Login</title>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="/ico.ico" type="image/x-icon">
+
+    <title>GaVL - Đăng nhập</title>
+
+    <!-- Custom fonts for this template-->
+    <link href="/Resourse/admin/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <!-- Custom styles for this template-->
+    <link href="~/Resourse/admin/css/sb-admin-2.min.css" rel="stylesheet">
+    <link href="~/Resourse/admin/css/style.css" rel="stylesheet">
+
 </head>
-<body>
-    @using (Html.BeginForm()) 
-    {
-        @Html.AntiForgeryToken()
-        
-        <div class="form-horizontal">
-            <h4>LoginModel</h4>
-            <hr />
-            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-            <div class="form-group">
-                @Html.LabelFor(model => model.UserName, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
-                </div>
-            </div>
-    
-            <div class="form-group">
-                @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
-                </div>
-            </div>
-    
-            <div class="form-group">
-                @Html.LabelFor(model => model.RememberMe, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    <div class="checkbox">
-                        @Html.EditorFor(model => model.RememberMe)
-                        @Html.ValidationMessageFor(model => model.RememberMe, "", new { @class = "text-danger" })
+
+<body class="bg-gradient-primary">
+    <div class="container">
+
+        <!-- Outer Row -->
+        <div class="row  d-flex align-items-center justify-content-center">
+
+            <div class="col-xl-6 col-lg-7 col-md-6">
+
+                <div class="card o-hidden border-0 shadow-lg my-5">
+                    <div class="card-body p-0">
+                        <!-- Nested Row within Card Body -->
+                        <div class="row d-flex justify-content-center">
+                            <div class="col-lg-12">
+                                <div class="p-5">
+                                    <div class="text-center">
+                                        <h1 class="h4 text-gray-900 mb-4"> Đăng nhập hệ thống </h1>
+                                    </div>
+                                    @using (Html.BeginForm("Login", "Authenticate", FormMethod.Post, new {@class = "user" }))
+                                    {
+                                        @Html.AntiForgeryToken()
+                                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                        <div class="form-group">
+                                            <input type="text" name="UserName" class="form-control form-control-user" placeholder="Nhập tài khoản...">
+                                            @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="password" name="Password" class="form-control form-control-user" placeholder="Nhập mật khẩu">
+                                            @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="custom-control custom-checkbox small">
+                                                <input type="checkbox" name="RememberMe" class="custom-control-input" id="customCheck">
+                                                <label class="custom-control-label" for="customCheck">
+                                                    Remember
+                                                    Me
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <button type="submit" class="btn btn-primary btn-user btn-block">Đăng nhập</button>
+
+                                    }
+
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
+
             </div>
-    
-            <div class="form-group">
-                <div class="col-md-offset-2 col-md-10">
-                    <input type="submit" value="Create" class="btn btn-default" />
-                </div>
-            </div>
+
         </div>
-    }
-    
-    <div>
-        @Html.ActionLink("Back to List", "Index")
+
     </div>
+    <!-- Bootstrap core JavaScript-->
+    <script src="~/Resourse/admin/vendor/jquery/jquery.min.js"></script>
+    <script src="~/Resourse/admin/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="~/Resourse/admin/vendor/jquery-easing/jquery.easing.min.js"></script>
+    <script src="~/Resourse/admin/js/sb-admin-2.min.js"></script>
+
 </body>
+
 </html>

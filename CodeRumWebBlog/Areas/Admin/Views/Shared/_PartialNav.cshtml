@@ -1,4 +1,4 @@
-﻿<ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+﻿<ul class="navbar-nav bg-success sidebar sidebar-dark accordion" id="accordionSidebar">
 
     <!-- Sidebar - Brand -->
     <a class="sidebar-brand d-flex align-items-center justify-content-center" href="@Url.Action("Index", "Home")">
@@ -14,7 +14,7 @@
     <!-- Nav Item - Dashboard -->
     <li class="nav-item @(ViewBag.IsHome ? "active" : "")">
         <a class="nav-link" href="@Url.Action("Index", "Home")">
-            <i class="fas fa-fw fa-tachometer-alt"></i>
+            <i class="fas fa-fw fa-home"></i>
             <span>Trang chủ</span>
         </a>
     </li>
@@ -31,7 +31,7 @@
     <li class="nav-item @(ViewBag.IsContent ? "active" : "")">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
            aria-expanded="true" aria-controls="collapseTwo">
-            <i class="fas fa-fw fa-cog"></i>
+            <i class="fas fa-fw fa-book"></i>
             <span>Bài viết </span>
         </a>
         <div id="collapseTwo" class="collapse @(ViewBag.IsContent ? "show" : "")" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
@@ -48,7 +48,7 @@
     <li class="nav-item @(ViewBag.IsUser ? "active" : "")">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
            aria-expanded="true" aria-controls="collapseUtilities">
-            <i class="fas fa-fw fa-wrench"></i>
+            <i class="fas fa-fw fa-user"></i>
             <span>Người dùng</span>
         </a>
         <div id="collapseUtilities" class="collapse @(ViewBag.IsUser ? "show" : "")" aria-labelledby="headingUtilities"

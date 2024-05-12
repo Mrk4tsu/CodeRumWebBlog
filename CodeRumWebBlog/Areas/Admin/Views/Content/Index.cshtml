@@ -15,16 +15,6 @@
 
 @section jsFooter{
     <script src="~/Resourse/plugin/utils.js"></script>
-    <script>
-        $(document).ready(function () {
-            $("#myInput").on("keyup", function () {
-                var value = $(this).val().toLowerCase();
-                $("#myTable tr").filter(function () {
-                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-                });
-            });
-        });
-    </script>
 }
 
 <div class="row">
@@ -33,7 +23,7 @@
         <div class="card">
             <div class="card-body">
                 <h4 class="card-title">Danh sách bài viết</h4>
-                <h6 class="card-subtitle my-2"><a href="#">Thêm bài viết mới</a></h6>
+                <h6 class="card-subtitle my-2"><a href="@Url.Action("Create", "Content")">Thêm bài viết mới</a></h6>
                 @using (Html.BeginForm("Index", "Content", FormMethod.Post))
                 {
                     <div class="d-flex justify-content-start align-items-center">
@@ -66,22 +56,25 @@
                                         <div><a href="/chi-tiet-@item.MetaTitle-@item.Id">@item.Name</a></div>
                                     </td>
                                     <td>
-                                        <div class="text-truncate">@item.CreateAt.Value.ToString("dd-MM-yyyy")</div>
+                                       
+                                        <div class="text-date" data-date="@item.CreateAt.Value.ToString("o")"></div>
                                     </td>
                                     <td>
-                                        <a href="#" class="btn-change-content-status text-decoration-none" data-id="@item.Id">
+                                        <a href="#" class="@(item.Status ? "badge badge-success" : "badge badge-danger") btn-change-content-status text-decoration-none" data-id="@item.Id">
                                             @(item.Status ? "Đã kích hoạt" : "Chưa kích hoạt")
                                         </a>
                                     </td>
                                     <td>
-                                        <a href="/Admin/Content/Edit/@item.Id">Sửa</a>
-                                        |
-                                        [@Ajax.ActionLink("Xóa", "Delete", new { @id = item.Id }, new AjaxOptions
-                                  {
-                                  Confirm = "Bạn có muốn xóa?",
-                                  OnComplete = "$('#rowContent_" + item.Id + "').remove()",
-                                  HttpMethod = "Delete"
-                                  })]
+                                        <a href="/Admin/Content/Edit/@item.Id" class="text-center badge badge-primary">
+                                            <i class="fas fa-pen-square p-1"></i>
+                                        </a>
+
+                                        @Ajax.ActionLink("Xóa", "Delete", new { @id = item.Id }, new AjaxOptions
+                                    {
+                                        Confirm = "Bạn có muốn xóa?",
+                                        OnComplete = "$('#rowContent_" + item.Id + "').remove()",
+                                        HttpMethod = "Delete",
+                                    }, new { @class = "delete-link badge badge-danger" })
                                     </td>
                                 </tr>
                             }

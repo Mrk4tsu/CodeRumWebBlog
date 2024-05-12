@@ -28,12 +28,10 @@
     @RenderSection("styles", required: false)
 </head>
 
-<body>
+<body id="page-top">
     <div class="bg-layer">
         <!-- Page Preloder -->
-        <div id="preloder">
-            <div class="loader"></div>
-        </div>
+
 
         @RenderSection("Nav", required: false)
         <!-- Humberger Begin -->
@@ -45,6 +43,9 @@
 
 
         @RenderBody()
+        <a class="scroll-to-top rounded-circle" href="#page-top">
+            <i class="fa fa-caret-up" aria-hidden="true"></i>
+        </a>
         <div id="loginModalContainer" style="display: none;"></div>
         <!-- Footer Section Begin -->
         <footer class="footer">
@@ -70,6 +71,7 @@
     <!-- Footer Section End -->
     <!-- Js Plugins -->
     <script src="~/Resourse/client/js/jquery-3.3.1.min.js"></script>
+    <script src="~/Resourse/plugin/dododot/jquery.dotdotdot.js"></script>
     <script src="~/Resourse/client/js/bootstrap.bundle.js"></script>
     <script src="~/Resourse/client/js/bootstrap.min.js"></script>
     <script src="~/Resourse/client/js/jquery.nice-select.min.js"></script>

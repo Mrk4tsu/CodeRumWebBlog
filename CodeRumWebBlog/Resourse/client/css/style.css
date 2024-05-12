@@ -914,7 +914,6 @@ ol {
 
     .from-blog .blog__item {
         margin-bottom: 5px;
-        height: 100%;
     }
 
 .from-blog__title {
@@ -3308,7 +3307,17 @@ input.input-search:focus {
         padding: 10px 15px;
         color: #5f3f3f;
     }
-
+.reply-group {
+    background: rgba(43, 76, 85);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 25px;
+    margin: 0 20px;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+    z-index: initial;
+}
 /*---------------------
     Custom Sign in
 -----------------------*/
@@ -3344,6 +3353,9 @@ input.input-search:focus {
 /*---------------------
     Custom Utilities
 -----------------------*/
+#cke_txtContent {
+    border-radius: 10px;
+}
 .bg-original-layout {
     background: rgba(39, 61, 82);
 }
@@ -3452,7 +3464,33 @@ input.input-search:focus {
         width: fit-content;
         font-size: 13px;
     }
+/*
+    Scroll To Top
+*/
+.scroll-to-top {
+    position: fixed;
+    right: 1rem;
+    bottom: 1rem;
+    display: none;
+    width: 2.75rem;
+    height: 2.75rem;
+    text-align: center;
+    color: #fff;
+    background: rgba(90, 92, 105, .5);
+    line-height: 46px
+}
 
+    .scroll-to-top:focus, .scroll-to-top:hover {
+        color: #fff
+    }
+
+    .scroll-to-top:hover {
+        background: #5a5c69
+    }
+
+    .scroll-to-top i {
+        font-weight: 800
+    }
 /*--------------------------------- Responsive Media Quaries -----------------------------*/
 
 @media only screen and (min-width: 1200px) {

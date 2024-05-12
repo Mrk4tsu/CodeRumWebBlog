@@ -1,4 +1,5 @@
-﻿using Common;
+﻿using CodeRumWebBlog;
+using Common;
 using Model.Entity;
 using PagedList;
 using System;
@@ -20,21 +21,37 @@ namespace Model.DAO
         {
             return await db.Contents.Where(x => x.Status == true).ToListAsync();
         }
-        //public IEnumerable<Content> ListAllPaging(string searchString, int page, int pageSize)
-        //{
+        //Danh sách bài viết chưa phê duyệt
+        public IEnumerable<Content> ListAllLockContent(string searchString, int page, int pageSize)
+        {
+            IQueryable<Content> model = db.Contents;
 
-        //    IQueryable<Content> model = db.Contents;
-
-        //    if (!string.IsNullOrEmpty(searchString))
-        //    {
-        //        model = model.Where(x => x.Name.Contains(searchString) ||
-        //        x.MetaTitle.Contains(searchString) ||
-        //        x.Tag.Contains(searchString) ||
-        //        x.CreateBy.Contains(searchString));
-        //    }
-        //    return model.OrderByDescending(x => x.CreateAt).ToPagedList(page, pageSize);
-        //}
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                model = model.Where(x => x.Name.Contains(searchString) ||
+                x.MetaTitle.Contains(searchString) ||
+                x.Tag.Contains(searchString) ||
+                x.CreateBy.Contains(searchString));
+            }
+            return model.OrderByDescending(x => x.CreateAt).Where(c => c.Locked == false).ToPagedList(page, pageSize);
+        }
+        //Danh sách bài viết đã được duyệt
         public IEnumerable<Content> ListAllPaging(string searchString, int page, int pageSize)
+        {
+
+            IQueryable<Content> model = db.Contents;
+
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                model = model.Where(x => x.Name.Contains(searchString) ||
+                x.MetaTitle.Contains(searchString) ||
+                x.Tag.Contains(searchString) ||
+                x.CreateBy.Contains(searchString));
+            }
+            return model.OrderByDescending(x => x.CreateAt).Where(c => c.Locked == false).ToPagedList(page, pageSize);
+        }
+        //Status = true (Trạng thái Hiện), Locked = false (Trạng thái phê duyệt, cấm)
+        public IEnumerable<Content> ListAllPagingPublic(string searchString, int page, int pageSize)
         {
 
             var model = from content in db.Contents
@@ -51,7 +68,7 @@ namespace Model.DAO
                 x.Account.Name.Contains(searchString) ||
                 x.Account.Email.Contains(searchString));
             }
-            return model.Select(x => x.Content).OrderByDescending(x => x.CreateAt).ToPagedList(page, pageSize);
+            return model.Select(x => x.Content).OrderByDescending(x => x.CreateAt).Where(c => c.Status == true && c.Locked == false).ToPagedList(page, pageSize);
         }
         public IEnumerable<Content> ListAllByTag(string tag, int page, int pageSize)
         {
@@ -81,7 +98,9 @@ namespace Model.DAO
                              ViewCount = x.ViewCount,
                              Id = x.ID
                          });
-            return model.OrderByDescending(x => x.CreateAt).ToPagedList(page, pageSize);
+            return model.OrderByDescending(x => x.CreateAt)
+                .Where(c => c.Status == true && c.Locked == false)
+                .ToPagedList(page, pageSize);
         }
         public IEnumerable<Content> GetTop3ContentMostView()
         {
@@ -120,6 +139,8 @@ namespace Model.DAO
             }
             content.CreateAt = DateTime.Now;
             content.ViewCount = 0;
+            content.Status = false;
+            content.Locked = false;
 
             db.Contents.Add(content);
             await db.SaveChangesAsync();

@@ -10,7 +10,6 @@ namespace CodeRumWebBlog.Controllers
         {
             return View();
         }
-        [OutputCache(Location = OutputCacheLocation.Client, Duration = 3600 * 24)]
         public ActionResult TopContent()
         {
             var dao = new ContentDAO();
@@ -19,7 +18,6 @@ namespace CodeRumWebBlog.Controllers
             ViewBag.TopContents = top;
             return PartialView("TopContent");
         }
-        [OutputCache(Location = OutputCacheLocation.Client, Duration = 3600 * 12)]
         public ActionResult ContentNew()
         {
             var dao = new ContentDAO();

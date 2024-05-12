@@ -1,4 +1,5 @@
-﻿using Model.Entity;
+﻿using Common;
+using Model.Entity;
 using PagedList;
 using System;
 using System.Collections.Generic;
@@ -37,6 +38,11 @@ namespace Model.DAO
         public async Task<long> Insert(Category category)
         {
             category.CreateAt = DateTime.Now;
+            //Xử lý alias
+            if (string.IsNullOrEmpty(category.MetaTitle))
+            {
+                category.MetaTitle = StringHelper.ToUnsignString(category.Name);
+            }
             db.Categories.Add(category);
             await db.SaveChangesAsync();
 

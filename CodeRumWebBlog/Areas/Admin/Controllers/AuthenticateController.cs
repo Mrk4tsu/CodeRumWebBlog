@@ -29,6 +29,8 @@ namespace CodeRumWebBlog.Areas.Admin.Controllers
                     var userSession = new UserLogin();
                     userSession.UserName = user.Username;
                     userSession.UserId = user.Id;
+                    userSession.Name = user.Name;
+                    userSession.Avatar = user.Avatar;
                     Session.Add(CommonConstants.USER_SESSION, userSession);
 
                     return RedirectToAction("Index", "Home");

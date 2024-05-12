@@ -9,11 +9,10 @@ namespace CodeRumWebBlog.Controllers
     public class BlogController : Controller
     {
         // GET: Blog
-        [OutputCache(Location = OutputCacheLocation.Client, Duration = 60 * 10, VaryByParam = "searchString")]
         public ActionResult Index(string searchString, int page = 1, int pageSize = 10)
         {
             var dao = new ContentDAO();
-            var model = dao.ListAllPaging(searchString, page, pageSize);
+            var model = dao.ListAllPagingPublic(searchString, page, pageSize);
 
             ViewBag.SearchString = searchString;
 
@@ -34,7 +33,6 @@ namespace CodeRumWebBlog.Controllers
 
             return View(model);
         }
-        [OutputCache(Location = OutputCacheLocation.Server, Duration = 3600 * 24, VaryByParam = "id")]
         public async Task<ActionResult> Detail(long id, int page = 1, int pageSize = 5)
         {
             var model = await new ContentDAO().ViewDetail(id);
@@ -43,7 +41,6 @@ namespace CodeRumWebBlog.Controllers
             ViewBag.Comments = new CommentDAO().ListByContent(id, page, pageSize);
             return View(model);
         }
-        [OutputCache(Location = OutputCacheLocation.Client, Duration = 3600 * 3, VaryByParam = "id")]
         public async Task<ActionResult> Tag(string tagId, int page = 1, int pageSize = 10)
         {
             var dao = new ContentDAO();

@@ -20,6 +20,9 @@
 @section styles{
     <link href="~/Resourse/client/css/tooltip.css" rel="stylesheet" />
 }
+@section jsFooter{
+    <script src="~/Resourse/plugin/utils.js"></script>
+}
 <section class="container position-relative">
     <div class="row d-flex justify-content-center">
         <div class="col-sm-12 col-md-8 col-lg-8 col-12">
@@ -99,7 +102,7 @@
                             <div class="tooltip-group">
                                 <div class='field'>
                                     <span class="text-light small">
-                                        Tải lên @item.CreateAt.Value.ToString("dd MMMM yyyy", new System.Globalization.CultureInfo("vi-VN")) | Bởi
+                                        Tải lên <span class="text-date" data-date="@item.CreateAt.Value.ToString("o")"></span> | Bởi
                                     </span>
                                     <a href="@Url.Action("Detail", "Account", new {id = user.Id, name = user.Name })" class='has-tooltip small'> @user.Name </a>
                                     <span class='tooltip og shadow-light'>

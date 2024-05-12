@@ -20,7 +20,7 @@ namespace CodeRumWebBlog.Areas.Admin.Controllers
             var dao = new ContentDAO();
             var model = dao.ListAllPaging(searchString, page, pageSize);
 
-            ViewBag.SearchString = searchString;           
+            ViewBag.SearchString = searchString;
 
             return View(model);
         }
@@ -46,7 +46,6 @@ namespace CodeRumWebBlog.Areas.Admin.Controllers
             return View(model);
         }
         [HttpGet]
-        [OutputCache(Location = OutputCacheLocation.Any, Duration = int.MaxValue)]
         public ActionResult Create()
         {
             SetViewBag();
@@ -58,13 +57,15 @@ namespace CodeRumWebBlog.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
+                var session = (UserLogin)Session[Common.CommonConstants.USER_SESSION];
+
+                model.CreateBy = session.UserName;
                 await new ContentDAO().InsertAsync(model);
                 return RedirectToAction("Index");
             }
             SetViewBag();
             return View();
         }
-        [OutputCache(Location = OutputCacheLocation.Any, Duration = 3600 * 24, VaryByParam = "id")]
         public async Task<ActionResult> Detail(long id, int page = 1, int pageSize = 5)
         {
             var model = await new ContentDAO().ViewDetail(id);
@@ -74,7 +75,6 @@ namespace CodeRumWebBlog.Areas.Admin.Controllers
             return View(model);
         }
         [HttpGet]
-        [OutputCache(Location = OutputCacheLocation.Any, Duration = int.MaxValue, VaryByParam = "id")]
         public async Task<ActionResult> Edit(long id)
         {
             var dao = new ContentDAO();
