@@ -66,12 +66,11 @@ namespace CodeRumWebBlog.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                var serviceRss = new RssFeedService();
                 var session = (UserLogin)Session[Common.CommonConstants.USER_SESSION];
 
                 model.CreateBy = session.UserName;
                 await new ContentDAO().InsertAsync(model);
-                serviceRss.CreateRssFeed();
+
                 return RedirectToAction("Index");
             }
             SetViewBag();
@@ -123,7 +122,13 @@ namespace CodeRumWebBlog.Areas.Admin.Controllers
         [HttpDelete]
         public async Task<ActionResult> ApproveContent(long id)
         {
-            await new ContentDAO().ApproveAsync(id);
+            var dao = new ContentDAO();
+
+            var content = await dao.GetByIDAsync(id);
+
+            await dao.ApproveAsync(id);
+            var serviceRss = new RssFeedService();
+            serviceRss.CreateRssFeed();
             return RedirectToAction("Index");
         }
         [HttpDelete]

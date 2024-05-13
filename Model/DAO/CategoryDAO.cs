@@ -19,7 +19,7 @@ namespace Model.DAO
         {
             return db.Categories.Where(x => x.Status == true).ToList();
         }
-        public IEnumerable<Category> ListAll(string searchString, int page, int pageSize)
+        public IEnumerable<Category> ListAll(string searchString, int page, int pageSize, bool isStatus)
         {
             IQueryable<Category> model = db.Categories;
             if (!string.IsNullOrEmpty(searchString))
@@ -29,7 +29,7 @@ namespace Model.DAO
                     x.MetaKeyword.Contains(searchString)||
                     x.MetaTitle.Contains(searchString));
             }
-            return model.OrderByDescending(x => x.CreateAt).ToPagedList(page, pageSize);
+            return model.OrderByDescending(x => x.CreateAt).Where(c => c.Status == isStatus).ToPagedList(page, pageSize);
         }
         public Category GetById(long id)
         {

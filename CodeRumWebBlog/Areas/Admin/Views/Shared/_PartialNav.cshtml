@@ -56,10 +56,27 @@
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Quản lý:</h6>
                 <a class="collapse-item" href="@Url.Action("Index", "User")">Danh sách</a>
-                <a class="collapse-item" href="utilities-other.html">Danh sách cấm</a>
+                <a class="collapse-item" href="utilities-other.html">Danh sách ẩn</a>
             </div>
         </div>
-    </li>   
+    </li>
+
+
+    <li class="nav-item @(ViewBag.IsCategory ? "active" : "")">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseCategory"
+           aria-expanded="true" aria-controls="collapseCategory">
+            <i class="fas fa-th-list"></i>
+            <span>Danh mục</span>
+        </a>
+        <div id="collapseCategory" class="collapse @(ViewBag.IsCategory ? "show" : "")" aria-labelledby="headingCategory"
+             data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <h6 class="collapse-header">Quản lý:</h6>
+                <a class="collapse-item" href="@Url.Action("Index", "Category")">Danh sách</a>
+                <a class="collapse-item" href="@Url.Action("HidenCate", "Category")">Danh sách ẩn</a>
+            </div>
+        </div>
+    </li>
 
     <!-- Nav Item - Charts -->
     <li class="nav-item">

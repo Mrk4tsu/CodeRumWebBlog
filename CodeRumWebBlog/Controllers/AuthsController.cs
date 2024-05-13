@@ -9,7 +9,7 @@ using System.Web.Mvc;
 
 namespace CodeRumWebBlog.Controllers
 {
-    public class AuthsController : Controller
+    public class AuthsController : BaseController
     {
         [HttpGet]
         public ActionResult Register()
@@ -64,6 +64,7 @@ namespace CodeRumWebBlog.Controllers
         [HttpPost]
         public ActionResult Login(LoginViewModel model)
         {
+            string resultString = "";
             if (ModelState.IsValid)
             {
                 var userDAO = new AccountDAO();
@@ -84,27 +85,39 @@ namespace CodeRumWebBlog.Controllers
                 }
                 else if (result == 0)
                 {
+                    resultString = "Tài khoản không tồn tại";
+                    SetAlert(resultString, "warning");
                     ModelState.AddModelError("", "Tài khoản không tồn tại.");
                 }
                 else if (result == -1)
                 {
+                    resultString = "Tài khoản đang bị khoá.";
+                    SetAlert(resultString, "warning");
                     ModelState.AddModelError("", "Tài khoản đang bị khoá.");
                 }
                 else if (result == -2)
                 {
+                    resultString = "Mật khẩu không đúng.";
+                    SetAlert(resultString, "warning");
                     ModelState.AddModelError("", "Mật khẩu không đúng.");
                 }
                 else if (result == -3)
                 {
+                    resultString = "Tài khoản của bạn không có quyền đăng nhập.";
+                    SetAlert(resultString, "warning");
                     ModelState.AddModelError("", "Tài khoản của bạn không có quyền đăng nhập.");
                 }
                 else
                 {
+                    resultString = "Đăng nhập không thành công.";
+                    SetAlert(resultString, "warning");
                     ModelState.AddModelError("", "Đăng nhập không thành công.");
                 }
 
             }
-            return PartialView("Login", model);
+            string results = resultString;
+            SetAlert("Đăng nhập không thành công.", "warning");
+            return RedirectToAction("Index", "Home");
         }
         public ActionResult Logout()
         {

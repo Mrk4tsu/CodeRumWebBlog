@@ -49,6 +49,16 @@ namespace CodeRumWebBlog
                     id = UrlParameter.Optional,
                     metatitle = UrlParameter.Optional
                 });
+            routes.MapRoute(
+                name: "Detail Blog ID",
+                url: "chi-tiet-{id}",
+                defaults: new
+                {
+                    controller = "Blog",
+                    action = "Detail",
+                    id = UrlParameter.Optional,
+                    metatitle = UrlParameter.Optional
+                });
 
             routes.MapRoute(
                 name: "Detail Profile",

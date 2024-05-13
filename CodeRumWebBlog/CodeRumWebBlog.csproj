@@ -169,6 +169,7 @@
     <Compile Include="Areas\Admin\Data\LoginModel.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AuthsController.cs" />
+    <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\BlogController.cs" />
     <Compile Include="Controllers\FeedsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -207,8 +208,10 @@
     <Content Include="Areas\Admin\Views\Home\Index.cshtml" />
     <Content Include="Areas\Admin\Views\User\Index.cshtml" />
     <Content Include="ico.ico" />
+    <Content Include="Resourse\admin\css\PagedList.css" />
     <Content Include="Resourse\admin\css\sb-admin-2.css" />
     <Content Include="Resourse\admin\css\sb-admin-2.min.css" />
+    <Content Include="Resourse\admin\css\Site.css" />
     <Content Include="Resourse\admin\css\style.css" />
     <Content Include="Resourse\admin\img\undraw_posting_photo.svg" />
     <Content Include="Resourse\admin\img\undraw_profile.svg" />
@@ -3986,6 +3989,7 @@
     <Folder Include="App_Data\" />
     <Folder Include="Models\" />
     <Folder Include="Resourse\data\" />
+    <Folder Include="Views\Base\" />
     <Folder Include="Views\Feeds\" />
   </ItemGroup>
   <ItemGroup>

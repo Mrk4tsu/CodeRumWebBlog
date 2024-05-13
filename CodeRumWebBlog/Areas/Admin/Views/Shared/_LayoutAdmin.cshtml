@@ -16,8 +16,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <!-- Custom styles for this template-->
     <link href="~/Resourse/admin/css/sb-admin-2.min.css" rel="stylesheet">
-    <link href="~/Assets/css/PagedList.css" rel="stylesheet" />
-    <link href="~/Assets/css/Site.css" rel="stylesheet" />
+    <link href="~/Resourse/admin/css/PagedList.css" rel="stylesheet" />
+    <link href="~/Resourse/admin/css/Site.css" rel="stylesheet" />
     <link href="~/Resourse/admin/css/style.css" rel="stylesheet" />
 
 </head>
@@ -42,7 +42,7 @@
                 <div class="container-fluid">
                     @if (TempData["AlertMessage"] != null)
                     {
-                        <div id="AlertBox" class="alert alert-dismissible @TempData["AlertType"] hide">
+                        <div id="alert-admin-box" class="alert alert-dismissible @TempData["AlertType"] hide">
                             <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
                             @TempData["AlertMessage"]
                         </div>
@@ -105,8 +105,7 @@
     <!--Ck-Editor-->
     <script src="/Resourse/plugin/ckeditor/ckeditor.js"></script>
     <!--<script src="/Assets/plugin/ckeditor/ckeditor.js"></script>-->
-
-    <script src="~/Resourse/admin/js/sb-admin-2.min.js"></script>
+    <script src="~/Resourse/admin/js/sb-admin-2.js"></script>
     <!--Thêm JavaScript cá nhân-->
     @RenderSection("jsFooter", required: false)
 

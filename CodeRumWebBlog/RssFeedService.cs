@@ -12,13 +12,14 @@ namespace CodeRumWebBlog
     {
         private readonly ContentDAO _contentDao;
 
+        private const string pathRssFeed = @"d:\DZHosts\LocalUser\mrkatsu2212\www.mrkatsu.somee.com\rss.xml";
         public RssFeedService()
         {
             _contentDao = new ContentDAO();
         }
         public SyndicationFeed ReadRssFeed()
         {
-            using (var reader = XmlReader.Create("rss.xml"))
+            using (var reader = XmlReader.Create(pathRssFeed))
             {
                 var feed = SyndicationFeed.Load(reader);
                 return feed;
@@ -34,20 +35,20 @@ namespace CodeRumWebBlog
                 var item = new SyndicationItem(
                     content.Name,
                     content.Description,
-                    new Uri("http://gatapchoi.id.vn/" + "chi-tiet-" + content.MetaTitle + content.Id), // Replace with the URL of the content
+                    new Uri("https://gatapchoi.id.vn/chi-tiet-" + content.MetaTitle + "-" + content.Id), // Replace with the URL of the content
                     content.Id.ToString(),
                     content.CreateAt.GetValueOrDefault());
 
                 items.Add(item);
             }
 
-            var feed = new SyndicationFeed("MrK4tsuBlog", "Description", new Uri("http://gatapchoi.id.vn"), items)
+            var feed = new SyndicationFeed("MrK4tsuBlog", "Bài viết mới của Katsu", new Uri("https://gatapchoi.id.vn"), items)
             {
                 LastUpdatedTime = DateTimeOffset.Now
             };
 
-            var path = @"d:\DZHosts\LocalUser\mrkatsu2212\www.mrkatsu.somee.com\rss.xml";
-            using (var writer = XmlWriter.Create(path))
+            //var path = @"d:\DZHosts\LocalUser\mrkatsu2212\www.mrkatsu.somee.com\rss.xml";
+            using (var writer = XmlWriter.Create(pathRssFeed))
             {
                 var formatter = new Rss20FeedFormatter(feed);
                 formatter.WriteTo(writer);

@@ -31,7 +31,13 @@
 <body id="page-top">
     <div class="bg-layer">
         <!-- Page Preloder -->
-
+        @if (TempData["AlertClientMessage"] != null)
+        {
+            <div id="alert-client-box" class="alert @TempData["AlertClientType"] hide alert-dismissible">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                <span class="text-center">@TempData["AlertClientMessage"]</span>
+            </div>
+        }
 
         @RenderSection("Nav", required: false)
         <!-- Humberger Begin -->

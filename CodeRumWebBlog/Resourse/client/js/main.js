@@ -7,7 +7,14 @@
     Created: Colorlib
 ---------------------------------------------------------  */
 (function ($) {
+    $(document).ready(function () {
+        if ($.fn.metisMenu) {
+            $('#side-menu').metisMenu();
+        }
 
+        $('#alert-client-box').removeClass('hide');
+        $('#alert-client-box').delay(7000).slideUp(500);
+    });
     $(document).ready(function () {
         $('.dot-ellipsis').dotdotdot({
             height: 90

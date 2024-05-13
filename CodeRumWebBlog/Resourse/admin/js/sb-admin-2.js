@@ -61,5 +61,13 @@
         $('#AlertBox').removeClass('hide');
         $('#AlertBox').delay(7000).slideUp(500);
     });
+    $(document).ready(function () {
+        if ($.fn.metisMenu) {
+            $('#side-menu').metisMenu();
+        }
+
+        $('#alert-admin-box').removeClass('hide');
+        $('#alert-admin-box').delay(7000).slideUp(500);
+    });
 
 })(jQuery); // End of use strict

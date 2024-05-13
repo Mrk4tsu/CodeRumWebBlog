@@ -13,18 +13,29 @@ namespace CodeRumWebBlog.Areas.Admin.Controllers
         {
             var dao = new CategoryDAO();
 
-            var list = dao.ListAll(searchString, page, pageSize);
+            var list = dao.ListAll(searchString, page, pageSize, true);
 
             ViewBag.SearchString = searchString;
             return View(list);
+        }
+        public ActionResult HidenCate(string searchString = "", int page = 1, int pageSize = 10)
+        {
+            var dao = new CategoryDAO();
+
+            var list = dao.ListAll(searchString, page, pageSize, false);
+
+            ViewBag.SearchString = searchString;
+            return View(list);
+            return View();
         }
         [HttpGet]
         public ActionResult Create() => View();
         [HttpPost]
         public async Task<ActionResult> Create(Category category)
         {
+            var session = (UserLogin)Session[Common.CommonConstants.USER_SESSION];
             var dao = new CategoryDAO();
-
+            category.CreateBy = session.UserName;
             long id = await dao.Insert(category);
             if (id > 0)
             {

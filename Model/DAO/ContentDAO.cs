@@ -98,7 +98,8 @@ namespace Model.DAO
         }
         public IEnumerable<Content> GetRecentPosts()
         {
-            return db.Contents.Where(c => c.Status == true).OrderByDescending(c => c.CreateAt).ToList();
+            return db.Contents.Where(c => c.Status == true && c.Locked == false)
+                .OrderByDescending(c => c.CreateAt).ToList();
         }
         public int CountAll()
         {
@@ -236,6 +237,7 @@ namespace Model.DAO
             if (content != null)
             {
                 content.Locked = false;
+                content.Status = true;
                 await db.SaveChangesAsync();
                 return true;
             }

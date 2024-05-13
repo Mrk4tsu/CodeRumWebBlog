@@ -11,6 +11,7 @@
         ViewBag.IsHome = false;
         ViewBag.IsContent = true;
         ViewBag.IsUser = false;
+        ViewBag.IsCategory = false;
     }
 }
 @section jsFooter{
@@ -41,57 +42,57 @@
 
                     </div>
                 }
-            <div class="table-responsive">
-                <table class="table table-hover table-bordered">
-                    <thead>
-                        <tr class="text-center">
-                            <th>Auths</th>
-                            <th>Tiêu đề</th>
-                            <th>Ngày đăng</th>
-                            <th>#</th>
-                        </tr>
-                    </thead>
-                    <tbody id="myTable">
-                        @foreach (var item in Model)
-                        {
-                            <tr id="rowContent_@item.Id" class="text-center">
-                                <td>@item.CreateBy</td>
-                                <td>
-                                    <div><a href="/chi-tiet-@item.MetaTitle-@item.Id" target="_blank">@item.Name</a></div>
-                                </td>
-                                <td>
+                <div class="table-responsive">
+                    <table class="table table-hover table-bordered">
+                        <thead>
+                            <tr class="text-center">
+                                <th>Auths</th>
+                                <th>Tiêu đề</th>
+                                <th>Ngày đăng</th>
+                                <th>#</th>
+                            </tr>
+                        </thead>
+                        <tbody id="myTable">
+                            @foreach (var item in Model)
+                            {
+                                <tr id="rowContent_@item.Id" class="text-center">
+                                    <td>@item.CreateBy</td>
+                                    <td>
+                                        <div><a href="/chi-tiet-@item.MetaTitle-@item.Id" target="_blank">@item.Name</a></div>
+                                    </td>
+                                    <td>
 
-                                    <div class="text-date" data-date="@item.CreateAt.Value.ToString("o")"></div>
-                                </td>
-                                <td>
-                                    @*<a href="/Admin/Content/ApproveContent/@item.Id" class="text-center badge badge-success">
-                                <i class="fas fa-check-circle py-1 px-2"></i>
-                            </a>*@
-                                    @Ajax.ActionLink("Phê duyệt", "ApproveContent", new { @id = item.Id }, new AjaxOptions
+                                        <div class="text-date" data-date="@item.CreateAt.Value.ToString("o")"></div>
+                                    </td>
+                                    <td>
+                                        @*<a href="/Admin/Content/ApproveContent/@item.Id" class="text-center badge badge-success">
+                                                <i class="fas fa-check-circle py-1 px-2"></i>
+                                            </a>*@
+                                        @Ajax.ActionLink("Phê duyệt", "ApproveContent", new { @id = item.Id }, new AjaxOptions
+                                        {
+
+                                            OnComplete = "$('#rowContent_" + item.Id + "').remove()",
+                                            HttpMethod = "Delete",
+                                        }, new { @class = "accept-link badge badge-success" })
+
+                                        @Ajax.ActionLink("Xóa", "Delete", new { @id = item.Id }, new AjaxOptions
                                     {
-
+                                        Confirm = "Bạn có muốn xóa?",
                                         OnComplete = "$('#rowContent_" + item.Id + "').remove()",
                                         HttpMethod = "Delete",
-                                    }, new { @class = "accept-link badge badge-success" })
+                                    }, new { @class = "deny-link badge badge-danger" })
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                    @if (Model.Count() < 1)
+                    {
+                        <h4 class="fw-bold text-center">Không có bài viết nào.</h4>
+                    }
+                    @Html.PagedListPager(Model, page => Url.Action("DisApproveContent", new { page, @searchString = @ViewBag.SearchString }))
 
-                                    @Ajax.ActionLink("Xóa", "Delete", new { @id = item.Id }, new AjaxOptions
-                                {
-                                    Confirm = "Bạn có muốn xóa?",
-                                    OnComplete = "$('#rowContent_" + item.Id + "').remove()",
-                                    HttpMethod = "Delete",
-                                }, new { @class = "deny-link badge badge-danger" })
-                                </td>
-                            </tr>
-                        }
-                    </tbody>
-                </table>
-                @if (Model.Count() < 1)
-                {
-                    <h4 class="fw-bold text-center">Không có bài viết nào.</h4>
-                }
-                @Html.PagedListPager(Model, page => Url.Action("DisApproveContent", new { page, @searchString = @ViewBag.SearchString }))
-
-            </div>
+                </div>
             </div>
         </div>
     </div>
