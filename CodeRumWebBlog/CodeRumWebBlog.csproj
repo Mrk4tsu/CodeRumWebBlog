@@ -161,8 +161,6 @@
     <Compile Include="Areas\Admin\Controllers\AuthenticateController.cs" />
     <Compile Include="Areas\Admin\Controllers\BaseController.cs" />
     <Compile Include="Areas\Admin\Controllers\CategoryController.cs" />
-    <Compile Include="Areas\Admin\Controllers\CommentController.cs" />
-    <Compile Include="Areas\Admin\Controllers\CommentsController.cs" />
     <Compile Include="Areas\Admin\Controllers\ContentController.cs" />
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
     <Compile Include="Areas\Admin\Controllers\UserController.cs" />
@@ -189,15 +187,9 @@
     <Content Include="Areas\Admin\Views\Content\Detail.cshtml" />
     <Content Include="Areas\Admin\Views\Content\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Content\Tag.cshtml" />
-    <Content Include="Areas\Admin\Views\Comment\Create.cshtml" />
     <Content Include="Areas\Admin\Views\Authenticate\Login.cshtml" />
-    <Content Include="Areas\Admin\Views\Comments\Create.cshtml" />
-    <Content Include="Areas\Admin\Views\Comments\Delete.cshtml" />
-    <Content Include="Areas\Admin\Views\Comments\Details.cshtml" />
-    <Content Include="Areas\Admin\Views\Comments\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Shared\_LayoutAdmin.cshtml" />
     <Content Include="Areas\Admin\Views\Shared\_PartialNav.cshtml" />
-    <Content Include="Areas\Admin\Views\Comments\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Shared\_PartialTopNav.cshtml" />
     <Content Include="Areas\Admin\Views\Category\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Content\DisApproveContent.cshtml" />
