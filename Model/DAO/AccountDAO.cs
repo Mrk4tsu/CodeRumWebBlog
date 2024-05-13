@@ -67,6 +67,7 @@ namespace Model.DAO
                 }
                 user.Name = entity.Name;
                 user.Email = entity.Email;
+                user.RoleId = entity.RoleId;
                 user.Avatar = entity.Avatar;
                 user.ModifyBy = entity.ModifyBy;
                 user.ModifyDate = DateTime.Now;

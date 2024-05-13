@@ -2948,7 +2948,9 @@ input.input-search:focus {
     }
 
 .image-wrapper {
-    background-size: cover;
+    background-size: inherit;
+    background-repeat: no-repeat;
+    background-position: center;
     border-top-right-radius: 20px;
     border-top-left-radius: 20px;
     height: 250px;
