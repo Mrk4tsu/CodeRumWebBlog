@@ -21,7 +21,7 @@
                     <div class="col-lg-4 col-md-4 col-sm-6 mb-3">
                         <div class="blog__item">
                             <div class="blog__item__pic">
-                                <a href="/chi-tiet-@content.MetaTitle-@content.Id"><img src="@content.Image" class="img-fluid" alt=""></a>
+                                <a href="@Url.Action("Detail", "Blog", new {id = content.Id, metatitle = content.MetaTitle})"><img src="@content.Image" class="img-fluid" alt=""></a>
                             </div>
                             <div class="blog__item__text">
                                 <ul>

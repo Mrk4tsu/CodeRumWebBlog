@@ -96,6 +96,10 @@ namespace Model.DAO
         {
             return db.Contents.Where(c => c.Status == true).OrderByDescending(c => c.CreateAt).Take(3).ToList();
         }
+        public IEnumerable<Content> GetRecentPosts()
+        {
+            return db.Contents.Where(c => c.Status == true).OrderByDescending(c => c.CreateAt).ToList();
+        }
         public int CountAll()
         {
             return db.Contents.Count();

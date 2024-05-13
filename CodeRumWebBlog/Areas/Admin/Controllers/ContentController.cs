@@ -66,10 +66,12 @@ namespace CodeRumWebBlog.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
+                var serviceRss = new RssFeedService();
                 var session = (UserLogin)Session[Common.CommonConstants.USER_SESSION];
 
                 model.CreateBy = session.UserName;
                 await new ContentDAO().InsertAsync(model);
+                serviceRss.CreateRssFeed();
                 return RedirectToAction("Index");
             }
             SetViewBag();

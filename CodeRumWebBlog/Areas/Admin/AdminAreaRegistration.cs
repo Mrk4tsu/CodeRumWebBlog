@@ -104,6 +104,15 @@ namespace CodeRumWebBlog.Areas.Admin
                     action = "Create"
                 });
 
+            context.MapRoute(
+                name: "AdminCreateContent",
+                url: "tao-moi-bai-viet",
+                defaults: new
+                {
+                    controller = "Content",
+                    action = "Create"
+                });
+
             // Route cho chỉnh sửa người dùng
             context.MapRoute(
                 name: "AdminEditUser",

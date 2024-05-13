@@ -14,6 +14,15 @@ namespace CodeRumWebBlog
             new { botdetect = @"(.*)BotDetectCaptcha\.ashx" });
 
             routes.MapRoute(
+                name: "Feed",
+                url: "feed",
+                defaults: new 
+                { 
+                    controller = "Feeds",
+                    action = "Index" 
+                });
+
+            routes.MapRoute(
                name: "Register",
                url: "dang-ky",
                defaults: new
@@ -37,7 +46,8 @@ namespace CodeRumWebBlog
                 {
                     controller = "Blog",
                     action = "Detail",
-                    id = UrlParameter.Optional
+                    id = UrlParameter.Optional,
+                    metatitle = UrlParameter.Optional
                 });
 
             routes.MapRoute(

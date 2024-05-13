@@ -1,4 +1,4 @@
-﻿@{ 
+﻿@{
     var session = (UserLogin)Session[Common.CommonConstants.USER_SESSION];
 }
 
@@ -52,7 +52,24 @@
             <div class="col-lg-3">
                 <div class="header__function">
                     <ul>
-                        <li><a href="#"><i class="fa fa-upload" aria-hidden="true"></i></a></li>
+                        <li>
+                            @if (Session[Common.CommonConstants.USER_SESSION] != null)
+                            {
+                                var user = new Model.DAO.AccountDAO().GetById(session.UserId);
+                                if (user.RoleId == "admin")
+                                {
+                                    <a href="/tao-moi-bai-viet">
+                                        <i class="fa fa-upload" aria-hidden="true"></i>
+                                    </a>
+                                }
+                            }
+                            else
+                            {
+                                <a href="">
+                                    <i class="fa fa-upload" aria-hidden="true"></i>
+                                </a>
+                            }
+                        </li>
                         <li><a href="#"><i class="fa fa-bell" aria-hidden="true"></i> <span>99+</span></a></li>
                     </ul>
                     @if (Session[Common.CommonConstants.USER_SESSION] == null)
@@ -67,24 +84,25 @@
                     }
                     else
                     {
+                        var user = new Model.DAO.AccountDAO().GetById(session.UserId);
                         <div class="header__user dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><img src="@session.Avatar" alt=""></a>
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><img src="@user.Avatar" alt=""></a>
                             <div class="dropdown-menu dropdown__header__cus shadow">
                                 <div class="image-dropdown">
-                                    <img src="@session.Avatar" alt="">
+                                    <img src="@user.Avatar" alt="">
                                 </div>
-                                <p class="text-center text-info h6"> @session.Name </p>
-                                <a class="dropdown-item" href="@Url.Action("Detail", "Account", new {id = session.UserId, name = session.Name})"> Trang cá nhân </a>
+                                <p class="text-center text-info h6"> @user.Name </p>
+                                <a class="dropdown-item" href="@Url.Action("Detail", "Account", new { id = user.Id, name = user.Name })"> Trang cá nhân </a>
                                 <a class="dropdown-item" href="#"> Đổi mật khẩu </a>
-                                <a class="dropdown-item" href="/trang-chu-quan-tri-vien"> Trang quản trị </a>
+                                @if (user.RoleId == "admin")
+                                {
+                                    <a class="dropdown-item" href="/trang-chu-quan-tri-vien"> Trang quản trị </a>
+                                }
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="@Url.Action("Logout", "Auths")"> Đăng xuất </a>
                             </div>
                         </div>
                     }
-
-
-
 
                 </div>
             </div>
