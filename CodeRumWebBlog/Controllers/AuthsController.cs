@@ -1,11 +1,15 @@
 ﻿using BotDetect.Web.UI.Mvc;
 using Common;
+using Microsoft.Ajax.Utilities;
 using Model.DAO;
 using Model.Entity;
 using Model.ViewModel;
 using System;
 using System.Threading.Tasks;
+using System.Web;
 using System.Web.Mvc;
+using System.Web.Security;
+using System.Web.UI.WebControls;
 
 namespace CodeRumWebBlog.Controllers
 {
@@ -57,12 +61,14 @@ namespace CodeRumWebBlog.Controllers
             return View(model);
         }
         // GET: Auths
-        public ActionResult Login()
+        [HttpGet]
+        public ActionResult Login(string returnUrl)
         {
+            ViewBag.ReturnUrl = returnUrl;
             return PartialView();
         }
         [HttpPost]
-        public ActionResult Login(LoginViewModel model)
+        public ActionResult Login(LoginViewModel model, string returnUrl)
         {
             string resultString = "";
             if (ModelState.IsValid)
@@ -81,7 +87,18 @@ namespace CodeRumWebBlog.Controllers
                     userSession.Name = user.Name;
                     Session.Add(CommonConstants.USER_SESSION, userSession);
 
-                    return RedirectToAction("Index", "Home");
+
+                    //int timeout = model.RememberMe ? 525600 : 20; // 525600 min = 1 year
+                    //var ticket = new FormsAuthenticationTicket(model.Username, model.RememberMe, timeout);
+                    //string encrypted = FormsAuthentication.Encrypt(ticket);
+                    //var cookie = new HttpCookie(FormsAuthentication.FormsCookieName, encrypted);
+                    //cookie.Expires = DateTime.Now.AddMinutes(timeout);
+                    //cookie.HttpOnly = true;
+                    //Response.Cookies.Add(cookie);
+
+
+                    return Redirect(returnUrl);
+
                 }
                 else if (result == 0)
                 {
@@ -119,9 +136,11 @@ namespace CodeRumWebBlog.Controllers
             SetAlert("Đăng nhập không thành công.", "warning");
             return RedirectToAction("Index", "Home");
         }
+
         public ActionResult Logout()
         {
             Session[Common.CommonConstants.USER_SESSION] = null;
+            FormsAuthentication.SignOut();
             return Redirect("/");
         }
     }

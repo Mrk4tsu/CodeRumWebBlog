@@ -117,34 +117,7 @@ namespace Model.DAO
         {
             return await db.Contents.CountAsync(c => c.CreateBy == creatorUsername);
         }
-        public int Login(string username, string password)
-        {
-            var result = GetByUsername(username);
-            if (result == null)
-            {
-                return 0;
-            }
-            else
-            {
-                if (result.Status == false)
-                {
-                    return -1;
-                }
-                else
-                {
-                    if (result.Password.Equals(password))
-                    {
-                        return 1;
-                    }    
-                       
-                    else
-                    {
-                        return -2;
-                    }    
-                        
-                }
-            }
-        }
+
         public void Register()
         {
 
@@ -188,6 +161,34 @@ namespace Model.DAO
 
             // Kiểm tra sự khớp của username với pattern
             return Regex.IsMatch(username, pattern);
+        }
+        public int Login(string username, string password)
+        {
+            var result = GetByUsername(username);
+            if (result == null)
+            {
+                return 0;
+            }
+            else
+            {
+                if (result.Status == false)
+                {
+                    return -1;
+                }
+                else
+                {
+                    if (result.Password.Equals(password))
+                    {
+                        return 1;
+                    }
+
+                    else
+                    {
+                        return -2;
+                    }
+
+                }
+            }
         }
     }
 }

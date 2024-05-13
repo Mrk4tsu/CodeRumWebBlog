@@ -61,7 +61,7 @@ namespace Model.DAO
             var model = (from a in db.Contents
                          join b in db.ContentTags
                          on a.Id equals b.ContentId
-                         where b.TagId == tag
+                         where b.TagId == tag && a.Status == true
                          select new
                          {
                              Name = a.Name,
@@ -85,7 +85,6 @@ namespace Model.DAO
                              Id = x.ID
                          });
             return model.OrderByDescending(x => x.CreateAt)
-                .Where(c => c.Status == true && c.Locked == false)
                 .ToPagedList(page, pageSize);
         }
         public IEnumerable<Content> GetTop3ContentMostView()
@@ -345,7 +344,7 @@ namespace Model.DAO
                          select new
                          {
                              ID = b.TagId,
-                             Name = a.Name
+                             Name = a.Name,                            
                          }).AsEnumerable().Select(x => new Tag()
                          {
                              Id = x.ID,

@@ -16,5 +16,7 @@ namespace Model.ViewModel
         [Display(Name = "Mật khẩu")]
         [Required(ErrorMessage = "Vui lòng nhập mật khẩu")]
         public string Password { get; set; }
+        [Display(Name = "Remember me")]
+        public bool RememberMe { get; set; }
     }
 }
