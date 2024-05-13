@@ -19,7 +19,7 @@ namespace CodeRumWebBlog
                 defaults: new 
                 { 
                     controller = "Feeds",
-                    action = "Index" 
+                    action = "Feed" 
                 });
 
             routes.MapRoute(

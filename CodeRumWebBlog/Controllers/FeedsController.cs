@@ -12,6 +12,29 @@ namespace CodeRumWebBlog.Controllers
 {
     public class FeedsController : Controller
     {
+        public ActionResult Feed()
+        {
+            var rssFeedService = new RssFeedService();
+            rssFeedService.CreateRssFeed();
+            var feed = rssFeedService.ReadRssFeed();
+            var rssFormatter = new Rss20FeedFormatter(feed, false);
+
+            using (var memoryStream = new MemoryStream())
+            {
+                using (var xmlWriter = XmlWriter.Create(memoryStream))
+                {
+                    rssFormatter.WriteTo(xmlWriter);
+                }
+
+                memoryStream.Position = 0; // Reset the position of the memory stream to be able to read it from the start
+
+                using (var reader = new StreamReader(memoryStream))
+                {
+                    var rssOutput = reader.ReadToEnd();
+                    return Content(rssOutput, "application/xml");
+                }
+            }
+        }
         // GET: Feeds
         public ActionResult Index()
         {

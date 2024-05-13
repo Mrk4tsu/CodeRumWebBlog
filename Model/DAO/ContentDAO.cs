@@ -129,8 +129,8 @@ namespace Model.DAO
             }
             content.CreateAt = DateTime.Now;
             content.ViewCount = 0;
-            content.Status = false;
-            content.Locked = false;
+            content.Status = false;//Ẩn bài viết
+            content.Locked = true;//Khóa bài viết
 
             db.Contents.Add(content);
             await db.SaveChangesAsync();
