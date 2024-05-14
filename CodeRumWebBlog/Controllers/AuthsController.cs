@@ -134,14 +134,15 @@ namespace CodeRumWebBlog.Controllers
             }
             string results = resultString;
             SetAlert("Đăng nhập không thành công.", "warning");
-            return RedirectToAction("Index", "Home");
+            return Redirect(returnUrl);
         }
 
-        public ActionResult Logout()
+        public ActionResult Logout(string returnUrl)
         {
             Session[Common.CommonConstants.USER_SESSION] = null;
             FormsAuthentication.SignOut();
-            return Redirect("/");
+
+            return Redirect(returnUrl);
         }
     }
 }

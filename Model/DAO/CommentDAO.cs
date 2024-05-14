@@ -37,6 +37,15 @@ namespace Model.DAO
             await db.SaveChangesAsync();
             return comment.Id;
         }
+        public long Insert(Comment comment)
+        {
+            comment.CreateAt = DateTime.Now;
+            comment.Status = true;
+            db.Comments.Add(comment);
+
+            db.SaveChanges();
+            return comment.Id;
+        }
         public async Task UpdateAsync(Comment comment)
         {
             var entity = await db.Comments.FindAsync(comment.Id);
@@ -45,6 +54,24 @@ namespace Model.DAO
                 entity.Content = comment.Content;
                 await db.SaveChangesAsync();
             }
+        }
+        public async Task<bool> DeleteAsync(long id)
+        {
+            var comment = await db.Comments.FindAsync(id);
+            if (comment != null)
+            {
+                db.Comments.Remove(comment);
+                await db.SaveChangesAsync();
+                return true;
+            }
+            return false;
+        }
+        public Comment GetLastCommentByUser(string username)
+        {
+            return db.Comments
+                .Where(c => c.CreateBy == username)
+                .OrderByDescending(c => c.CreateAt)
+                .FirstOrDefault();
         }
     }
 }

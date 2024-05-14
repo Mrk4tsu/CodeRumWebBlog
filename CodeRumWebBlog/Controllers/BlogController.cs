@@ -67,5 +67,91 @@ namespace CodeRumWebBlog.Controllers
             ViewBag.Prev = page - 1;
             return View(model);
         }
+        [HttpPost]
+        public JsonResult AddComment(string comment, long contentId)
+        {
+            var session = (UserLogin)Session[Common.CommonConstants.USER_SESSION];
+            var dao = new CommentDAO();
+            if (session == null)
+            {
+                return Json(new { success = false, message = "Vui lòng đăng nhập tài khoản!" }, JsonRequestBehavior.AllowGet);
+            }
+            var lastComment = dao.GetLastCommentByUser(session.UserName);
+            if (lastComment != null)
+            {
+                var diffInSeconds = (DateTime.Now - lastComment.CreateAt.Value).TotalSeconds;
+                if (diffInSeconds < 300)
+                {
+                    return Json(new 
+                    { 
+                        success = false,
+                        message = "Bạn mới bình luận lúc: " + lastComment.CreateAt.Value.ToString("hh:mm") + ". Vui lòng đợi 5 phút để bình luận tiếp!" 
+                    }, 
+                        JsonRequestBehavior.AllowGet);
+                }
+            }
+            var commentEntity = new Model.Entity.Comment
+            {
+                Content = comment,
+                CreateBy = session.UserName,
+                CreateAt = TimeZoneInfo.ConvertTimeBySystemTimeZoneId(DateTime.Now, "SE Asia Standard Time"),
+                PostId = contentId
+            };
+
+            var result = dao.Insert(commentEntity);
+            if (result > 0)
+            {
+                var user = new AccountDAO().GetByUsername(session.UserName);
+                var isAuthor = (session.UserName == user.Username);
+
+                var author = "";
+                if (isAuthor) author = "author";
+                else author = "visitor";
+
+                return Json(new
+                {
+                    success = true,
+                    message = "Comment added successfully",
+                    avatar = user.Avatar,
+                    userName = user.Name,
+                    userId = user.Id,
+                    createAt = DateTime.Now.ToString("dd MMMM yyyy",
+                    new System.Globalization.CultureInfo("vi-VN")),
+                    commentId = result,
+                    isAuthor = author
+                },
+                    JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                return Json(new
+                {
+                    success = false,
+                    message = "Đã xảy ra lỗi!"
+                }, JsonRequestBehavior.AllowGet);
+            }
+        }
+        [HttpPost]
+        public async Task<JsonResult> DeleteComment(long id)
+        {
+            var dao = new CommentDAO();
+            var result = await dao.DeleteAsync(id);
+            if (result)
+            {
+                return Json(new 
+                { 
+                    success = true,
+                    message = "Comment deleted successfully" 
+                }, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                return Json(new 
+                { 
+                    success = false, 
+                    message = "Error deleting comment" 
+                }, JsonRequestBehavior.AllowGet);
+            }
+        }
     }
 }

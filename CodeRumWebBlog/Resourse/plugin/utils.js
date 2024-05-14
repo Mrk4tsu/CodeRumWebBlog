@@ -1,21 +1,19 @@
 ﻿
 $(document).ready(function () {
     $('.delete-link').html('<i class="fas fa-trash p-1"></i>');
-});
-$(document).ready(function () {
     $("#myInput").on("keyup", function () {
         var value = $(this).val().toLowerCase();
         $("#myTable tr").filter(function () {
             $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
         });
     });
-});
-$(document).ready(function () {
+
     $(".text-date").each(function () {
         var date = new Date($(this).data("date"));
         $(this).text(utils.timeAgo(date));
     });
 });
+
 var utils = {
     init: function () {
         utils.registerEvents('.btn-change-user-status', "/Admin/User/ChangeStatus");
@@ -47,35 +45,49 @@ var utils = {
         });
     },
     timeAgo: function (date) {
-        var seconds = Math.floor((new Date() - date) / 1000);
-        var interval = Math.floor(seconds / 31536000);
-        if (interval > 1) {
-            return interval + " năm trước";
-        }
-        interval = Math.floor(seconds / 2592000);
-        if (interval >= 1) {
-            return interval + " tháng trước";
-        }
-        interval = Math.floor(seconds / 86400);
-        if (interval > 1) {
-            return interval + " ngày trước";
-        }
-        interval = Math.floor(seconds / 3600);
-        if (interval >= 1) {
-            var minutes = Math.floor((seconds % 3600) / 60);
-            return interval + " giờ " + minutes + " phút trước";
-        }
-        interval = Math.floor(seconds / 60);
-        if (interval >= 1) {
-            return interval + " phút trước";
-        }
-        return Math.floor(seconds) + " giây trước";
-    },
+    var seconds = Math.floor((new Date() - date) / 1000);
+    var interval = Math.floor(seconds / 31536000);
+    if (interval >= 1) {
+        return interval + " năm trước";
+    }
+    interval = Math.floor(seconds / 2592000);
+    if (interval >= 1) {
+        return interval + " tháng trước";
+    }
+    interval = Math.floor(seconds / 86400);
+    if (interval >= 1) {
+        return interval + " ngày trước";
+    }
+    interval = Math.floor(seconds / 3600);
+    if (interval >= 1) {
+        return interval + " giờ trước";
+    }
+    interval = Math.floor(seconds / 60);
+    if (interval >= 1) {
+        return interval + " phút trước";
+    }
+    return "Vừa xong";
+},
     updateTimeAgo: function () {
         $(".text-date").each(function () {
             var date = new Date($(this).data("date"));
             $(this).text(utils.timeAgo(date));
         });
     }
+
 }
 utils.init();
+
+function deleteComment(id) {
+    var confirmDelete = confirm("Are you sure you want to delete this comment?");
+    if (confirmDelete) {
+        $.post('/Blog/DeleteComment', { id: id }, function (data, e) {
+            if (data.success) {
+                $('.comment_' + id).remove();
+                // Refresh the page or remove the comment from the DOM
+            } else {
+                // Show an error message
+            }
+        });
+    }
+}

@@ -105,6 +105,8 @@ namespace CodeRumWebBlog.Areas.Admin.Controllers
         [HttpPost]
         public async Task<JsonResult> AddComment(long id, Comment comment)
         {
+            var session = (UserLogin)Session[Common.CommonConstants.USER_SESSION];
+            comment.CreateBy = session.UserName;
             var result = await new CommentDAO().InsertAsync(comment);
             return Json(new
             {

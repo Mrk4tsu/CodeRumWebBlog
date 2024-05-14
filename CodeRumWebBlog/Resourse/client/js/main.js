@@ -17,7 +17,7 @@
     });
     $(document).ready(function () {
         $('.dot-ellipsis').dotdotdot({
-            height: 90
+            height: 120
         });
     });
 

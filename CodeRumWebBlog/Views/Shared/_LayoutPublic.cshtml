@@ -41,7 +41,9 @@
         <!-- Humberger Begin -->
         <div class="humberger__menu__overlay"></div>
 
-        @{ Html.RenderPartial("~/Views/Shared/_PartialNavigation.cshtml"); }
+        @{
+            Html.RenderPartial("~/Views/Shared/_PartialNavigation.cshtml");
+        }
 
 
 
@@ -75,6 +77,7 @@
     <!-- Footer Section End -->
     <!-- Js Plugins -->
     <script src="~/Resourse/client/js/jquery-3.3.1.min.js"></script>
+    <script src="~/Resourse/plugin/ajax/jquery.unobtrusive-ajax.js"></script>
     <script src="~/Resourse/plugin/dododot/jquery.dotdotdot.js"></script>
     <script src="~/Resourse/client/js/bootstrap.bundle.js"></script>
     <script src="~/Resourse/client/js/bootstrap.min.js"></script>

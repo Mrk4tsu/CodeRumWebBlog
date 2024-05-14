@@ -57,7 +57,7 @@
                                         <div><a href="/chi-tiet-@item.MetaTitle-@item.Id" target="_blank">@item.Name</a></div>
                                     </td>
                                     <td>
-                                        <div>@item.CreateAt.Value.ToString("dd MMMM yyyy")</div>
+                                        <div class="text-date">@item.CreateAt.Value.ToString("dd MMMM yyyy")</div>
                                     </td>
                                     <td>
                                         <a href="#" class="@(item.Status ? "badge badge-success" : "badge badge-danger") btn-change-content-status text-decoration-none" data-id="@item.Id">

@@ -25,7 +25,7 @@
                             </div>
                             <div class="blog__item__text">
                                 <ul>
-                                    <li><i class="fa fa-calendar-o"></i> @content.CreateAt.Value.ToString("dd MMMM yyyy", new System.Globalization.CultureInfo("vi-VN")) </li>
+                                    <li><i class="fa fa-calendar-o"></i> <span  class="text-date" data-date="@content.CreateAt.Value.ToString("o")"> </span></li>
                                     <li><i class="fa fa-comment-o"></i> @count </li>
                                 </ul>
                                 <h5><a href="/chi-tiet-@content.MetaTitle-@content.Id">@content.Name</a></h5>

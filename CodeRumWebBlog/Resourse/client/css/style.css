@@ -914,6 +914,7 @@ ol {
 
     .from-blog .blog__item {
         margin-bottom: 5px;
+        height: 100%;
     }
 
 .from-blog__title {
@@ -2832,7 +2833,6 @@ ol {
     .dropdown__header__cus a {
         color: white;
         padding: 0 15px;
-        text-align: center;
         line-height: 1.5;
     }
 
@@ -3050,6 +3050,17 @@ input.input-search:focus {
     border-radius: 50%;
 }
 
+.pagination-comment li.PagedList-skipToPrevious a,
+.pagination-comment li.PagedList-skipToNext a {
+    background-image: none !important;
+    vertical-align: middle;
+    text-align: center;
+    padding: 10px 16px;
+    margin: 0 10px;
+    font-weight: 700;
+    color: #ffffff;
+    border-radius: 50px;
+}
 /*---------------------
     Custom Login Modal
 -----------------------*/
@@ -3355,6 +3366,10 @@ input.input-search:focus {
 /*---------------------
     Custom Utilities
 -----------------------*/
+iframe {
+    width: 100% !important;
+    height: calc(350px - 20px);
+}
 #cke_txtContent {
     border-radius: 10px;
 }

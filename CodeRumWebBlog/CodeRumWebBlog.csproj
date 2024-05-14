@@ -1922,6 +1922,7 @@
     <Content Include="Resourse\client\img\demo\wm.jpg" />
     <Content Include="Resourse\client\img\logo.png" />
     <Content Include="Resourse\client\img\payment-item.png" />
+    <Content Include="Resourse\client\js\blogcontroller.js" />
     <Content Include="Resourse\client\js\bootstrap.bundle.js" />
     <Content Include="Resourse\client\js\bootstrap.bundle.min.js" />
     <Content Include="Resourse\client\js\bootstrap.js" />

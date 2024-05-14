@@ -133,7 +133,7 @@ namespace Model.DAO
             {
                 content.MetaTitle = StringHelper.ToUnsignString(content.Name);
             }
-            content.CreateAt = DateTime.Now;
+            content.CreateAt = TimeZoneInfo.ConvertTimeBySystemTimeZoneId(DateTime.Now, "SE Asia Standard Time");
             content.ViewCount = 0;
             content.Status = false;//Ẩn bài viết
             content.Locked = true;//Khóa bài viết

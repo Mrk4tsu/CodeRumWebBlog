@@ -140,11 +140,13 @@ namespace CodeRumWebBlog.Areas.Admin.Controllers
         [HttpPost]
         public async Task<ActionResult> AddComment(long ContentId, string CommentText)
         {
+            var session = (UserLogin)Session[Common.CommonConstants.USER_SESSION];
             var comment = new Comment
             {
                 PostId = ContentId,
                 Content = CommentText,
                 CreateAt = DateTime.Now,
+                CreateBy = session.UserName,
                 Status = true
             };
 
