@@ -87,7 +87,7 @@ namespace Model.DAO
             {
                 var user = await GetByIdAsync(id);
                 // Delete the user's directory.
-                var userDirectory = $@"d:\DZHosts\LocalUser\mrkatsu2212\www.mrkatsu.somee.com\Resourse\data\{user.Username}\";
+                var userDirectory = $@"d:\DZHosts\LocalUser\mrkatsu2212\www.mrkatsu.somee.com\uploads\{user.Username}\";
                 if (Directory.Exists(userDirectory))
                 {
                     Directory.Delete(userDirectory, true);

@@ -104,6 +104,12 @@ namespace Model.DAO
         {
             return db.Contents.Count();
         }
+        public int CountLockContent()
+        {
+            return (from a in db.Contents
+                    where a.Locked == true
+                    select a).Count();
+        }
         public int CountAllByTag(string tag)
         {
             return (from a in db.Contents

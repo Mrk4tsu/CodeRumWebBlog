@@ -111,7 +111,7 @@
             </div>
             <section class="comment-list p-2">
                 <div class="d-flex w-100 justify-content-between align-items-center my-1">
-                    <div class="h5 text-light font-weight-bold">
+                    <div class="h5 text-light font-weight-bold mt-2">
                         <i class="fa fa-comment bg-gradient-primary p-2 rounded-circle"></i> Danh sách bình luận
                     </div>
                     <div>
@@ -157,23 +157,27 @@
                         </div>
 
                         @*<div id="reply" class="reply-group collapse">
-                            <img class="rounded-circle mx-2" src="@session.Avatar" style="width: 45px; height: 100%">
-                            <textarea class="form-control form-comment p-3 text-light" id="comment-reply" rows="2"></textarea>
-                        </div>*@
+                        <img class="rounded-circle mx-2" src="@session.Avatar" style="width: 45px; height: 100%">
+                        <textarea class="form-control form-comment p-3 text-light" id="comment-reply" rows="2"></textarea>
+                    </div>*@
                     }
                 }
 
             </section>
-            <!--                Bình luận-->
-            <section class="mt-3 section-null">
-                <p class="p-2 mx-2">
-                    <i class="fa fa-info bg-gradient-warning rounded-circle"></i>
-                    <a href="#" data-toggle="modal" data-target="#modalLogin" class="text-info">Đăng nhập</a>
-                    hoặc
-                    <a href="#" class="text-info">đăng ký</a>
-                    để bình luận
-                </p>
-            </section>
+            @if (Session[Common.CommonConstants.USER_SESSION] == null)
+            {
+                <!--                Bình luận-->
+                <section class="mt-3 section-null">
+                    <p class="p-2 mx-2">
+                        <i class="fa fa-info bg-gradient-warning rounded-circle"></i>
+                        <a href="#" data-toggle="modal" data-target="#modalLogin" class="text-info">Đăng nhập</a>
+                        hoặc
+                        <a href="#" class="text-info">đăng ký</a>
+                        để bình luận
+                    </p>
+                </section>
+            }
+
             <div class="container comment-group my-3 py-3">
                 <div class="form-group">
                     <label for="comment" class="h5 text-light font-weight-bold">

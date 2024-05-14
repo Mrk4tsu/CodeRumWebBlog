@@ -3902,6 +3902,47 @@
     <Content Include="Resourse\plugin\ckeditor\plugins\codesnippet\lib\highlight\LICENSE" />
     <Content Include="Resourse\plugin\ckeditor\plugins\codesnippet\lib\highlight\README.md" />
     <Content Include="Resourse\plugin\ckeditor\plugins\codesnippet\lib\highlight\README.ru.md" />
+    <Content Include="Resourse\plugin\ckeditor\plugins\exportpdf\CHANGELOG.md" />
+    <Content Include="Resourse\plugin\ckeditor\plugins\exportpdf\LICENSE.md" />
+    <Content Include="Resourse\plugin\ckeditor\plugins\exportpdf\README.md" />
+    <Content Include="Resourse\plugin\ckeditor\plugins\exportpdf\tests\manual\configfilename.md" />
+    <Content Include="Resourse\plugin\ckeditor\plugins\exportpdf\tests\manual\emptyeditor.md" />
+    <Content Include="Resourse\plugin\ckeditor\plugins\exportpdf\tests\manual\integration.md" />
+    <Content Include="Resourse\plugin\ckeditor\plugins\exportpdf\tests\manual\integrations\easyimage.md" />
+    <Content Include="Resourse\plugin\ckeditor\plugins\exportpdf\tests\manual\notifications.md" />
+    <Content Include="Resourse\plugin\ckeditor\plugins\exportpdf\tests\manual\notificationsasync.md" />
+    <Content Include="Resourse\plugin\ckeditor\plugins\exportpdf\tests\manual\paperformat.md" />
+    <Content Include="Resourse\plugin\ckeditor\plugins\exportpdf\tests\manual\readonly.md" />
+    <Content Include="Resourse\plugin\ckeditor\plugins\exportpdf\tests\manual\stylesheets.md" />
+    <Content Include="Resourse\plugin\ckeditor\plugins\exportpdf\tests\manual\tokenfetching.md" />
+    <Content Include="Resourse\plugin\ckeditor\plugins\exportpdf\tests\manual\tokentwoeditorscorrect.md" />
+    <Content Include="Resourse\plugin\ckeditor\plugins\exportpdf\tests\manual\tokentwoeditorswrong.md" />
+    <Content Include="Resourse\plugin\ckeditor\plugins\exportpdf\tests\manual\tokenwithouturl.md" />
+    <Content Include="Resourse\plugin\ckeditor\plugins\exportpdf\tests\manual\wrongendpoint.md" />
+    <Content Include="Resourse\plugin\ckeditor\plugins\videodetector\LICENSE" />
+    <Content Include="Resourse\plugin\ckeditor\plugins\videodetector\README.md" />
+    <Content Include="Resourse\plugin\ckeditor\README.md" />
+    <Content Include="Resourse\plugin\ckeditor\samples\old\assets\posteddata.php" />
+    <Content Include="Resourse\plugin\ckeditor\samples\old\sample_posteddata.php" />
+    <Content Include="Resourse\plugin\ckeditor\samples\toolbarconfigurator\font\config.json" />
+    <Content Include="Resourse\plugin\ckeditor\samples\toolbarconfigurator\font\fontello.eot" />
+    <Content Include="Resourse\plugin\ckeditor\samples\toolbarconfigurator\font\fontello.ttf" />
+    <Content Include="Resourse\plugin\ckeditor\samples\toolbarconfigurator\font\fontello.woff" />
+    <Content Include="Resourse\plugin\ckeditor\samples\toolbarconfigurator\lib\codemirror\LICENSE" />
+    <Content Include="Resourse\plugin\ckeditor\SECURITY.md" />
+    <Content Include="Resourse\plugin\ckeditor\skins\moono-lisa\readme.md" />
+    <Content Include="Resourse\plugin\ckeditor\skins\n1theme\readme.md" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+    <Folder Include="Models\" />
+    <Folder Include="Resourse\data\" />
+    <Folder Include="uploads\" />
+    <Folder Include="Views\Base\" />
+    <Folder Include="Views\Feeds\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
     <Content Include="Resourse\plugin\ckeditor\plugins\codeTag\.git\COMMIT_EDITMSG" />
     <Content Include="Resourse\plugin\ckeditor\plugins\codeTag\.git\config" />
     <Content Include="Resourse\plugin\ckeditor\plugins\codeTag\.git\description" />
@@ -3946,46 +3987,6 @@
     <Content Include="Resourse\plugin\ckeditor\plugins\codeTag\.git\refs\heads\master" />
     <Content Include="Resourse\plugin\ckeditor\plugins\codeTag\.git\refs\remotes\origin\master" />
     <Content Include="Resourse\plugin\ckeditor\plugins\codeTag\README.md" />
-    <Content Include="Resourse\plugin\ckeditor\plugins\exportpdf\CHANGELOG.md" />
-    <Content Include="Resourse\plugin\ckeditor\plugins\exportpdf\LICENSE.md" />
-    <Content Include="Resourse\plugin\ckeditor\plugins\exportpdf\README.md" />
-    <Content Include="Resourse\plugin\ckeditor\plugins\exportpdf\tests\manual\configfilename.md" />
-    <Content Include="Resourse\plugin\ckeditor\plugins\exportpdf\tests\manual\emptyeditor.md" />
-    <Content Include="Resourse\plugin\ckeditor\plugins\exportpdf\tests\manual\integration.md" />
-    <Content Include="Resourse\plugin\ckeditor\plugins\exportpdf\tests\manual\integrations\easyimage.md" />
-    <Content Include="Resourse\plugin\ckeditor\plugins\exportpdf\tests\manual\notifications.md" />
-    <Content Include="Resourse\plugin\ckeditor\plugins\exportpdf\tests\manual\notificationsasync.md" />
-    <Content Include="Resourse\plugin\ckeditor\plugins\exportpdf\tests\manual\paperformat.md" />
-    <Content Include="Resourse\plugin\ckeditor\plugins\exportpdf\tests\manual\readonly.md" />
-    <Content Include="Resourse\plugin\ckeditor\plugins\exportpdf\tests\manual\stylesheets.md" />
-    <Content Include="Resourse\plugin\ckeditor\plugins\exportpdf\tests\manual\tokenfetching.md" />
-    <Content Include="Resourse\plugin\ckeditor\plugins\exportpdf\tests\manual\tokentwoeditorscorrect.md" />
-    <Content Include="Resourse\plugin\ckeditor\plugins\exportpdf\tests\manual\tokentwoeditorswrong.md" />
-    <Content Include="Resourse\plugin\ckeditor\plugins\exportpdf\tests\manual\tokenwithouturl.md" />
-    <Content Include="Resourse\plugin\ckeditor\plugins\exportpdf\tests\manual\wrongendpoint.md" />
-    <Content Include="Resourse\plugin\ckeditor\plugins\videodetector\LICENSE" />
-    <Content Include="Resourse\plugin\ckeditor\plugins\videodetector\README.md" />
-    <Content Include="Resourse\plugin\ckeditor\README.md" />
-    <Content Include="Resourse\plugin\ckeditor\samples\old\assets\posteddata.php" />
-    <Content Include="Resourse\plugin\ckeditor\samples\old\sample_posteddata.php" />
-    <Content Include="Resourse\plugin\ckeditor\samples\toolbarconfigurator\font\config.json" />
-    <Content Include="Resourse\plugin\ckeditor\samples\toolbarconfigurator\font\fontello.eot" />
-    <Content Include="Resourse\plugin\ckeditor\samples\toolbarconfigurator\font\fontello.ttf" />
-    <Content Include="Resourse\plugin\ckeditor\samples\toolbarconfigurator\font\fontello.woff" />
-    <Content Include="Resourse\plugin\ckeditor\samples\toolbarconfigurator\lib\codemirror\LICENSE" />
-    <Content Include="Resourse\plugin\ckeditor\SECURITY.md" />
-    <Content Include="Resourse\plugin\ckeditor\skins\moono-lisa\readme.md" />
-    <Content Include="Resourse\plugin\ckeditor\skins\n1theme\readme.md" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="App_Data\" />
-    <Folder Include="Models\" />
-    <Folder Include="Resourse\data\" />
-    <Folder Include="Views\Base\" />
-    <Folder Include="Views\Feeds\" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Common\Common.csproj">

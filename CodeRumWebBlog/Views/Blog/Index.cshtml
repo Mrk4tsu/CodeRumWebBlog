@@ -89,7 +89,7 @@
             @foreach (var item in Model)
             {
                 var user = new Model.DAO.AccountDAO().GetByUsername(item.CreateBy);
-
+                var count = new Model.DAO.ContentDAO().GetCommentCountByContentId(item.Id);
                 <div class="panel blog-container ">
                     <div class="panel-body my-4 shadow-light rounded-e-20">
                         <a href="/chi-tiet-@item.MetaTitle-@item.Id">
@@ -122,7 +122,7 @@
                                         <i class="fa fa-eye" aria-hidden="true"></i>@item.ViewCount
                                     </a>
                                     <a href="javascript:void(0);" class="stat-item text-light">
-                                        <i class="fa fa-comment" aria-hidden="true"></i> 128
+                                        <i class="fa fa-comment" aria-hidden="true"></i> @count
                                     </a>
                                 </div>
                             </div>
