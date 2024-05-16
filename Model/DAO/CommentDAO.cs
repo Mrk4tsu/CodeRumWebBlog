@@ -30,7 +30,7 @@ namespace Model.DAO
         }
         public async Task<long> InsertAsync(Comment comment)
         {
-            comment.CreateAt = DateTime.Now;
+            comment.CreateAt = TimeZoneInfo.ConvertTimeBySystemTimeZoneId(DateTime.Now, "SE Asia Standard Time");
             comment.Status = true;
             db.Comments.Add(comment);
 
@@ -39,7 +39,7 @@ namespace Model.DAO
         }
         public long Insert(Comment comment)
         {
-            comment.CreateAt = DateTime.Now;
+            comment.CreateAt = TimeZoneInfo.ConvertTimeBySystemTimeZoneId(DateTime.Now, "SE Asia Standard Time");
             comment.Status = true;
             db.Comments.Add(comment);
 

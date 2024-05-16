@@ -1,4 +1,5 @@
 ﻿using Model.Entity;
+using PagedList;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +11,6 @@ namespace Model.ViewModel
     public class UserContentViewModel
     {
         public Account Account { get; set; }
-        public IEnumerable<Content> Contents { get; set; }
+        public IPagedList<Content> Contents { get; set; }
     }
 }

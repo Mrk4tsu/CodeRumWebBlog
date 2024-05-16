@@ -350,13 +350,28 @@ namespace Model.DAO
                          select new
                          {
                              ID = b.TagId,
-                             Name = a.Name,                            
+                             Name = a.Name,
                          }).AsEnumerable().Select(x => new Tag()
                          {
                              Id = x.ID,
                              Name = x.Name
                          });
             return model.ToList();
+        }
+        public async Task<bool> DeleteByIdUser(long userId)
+        {
+            var user = await GetByIDAsync(userId);
+
+            if(user != null)
+            {
+                var list = from a in db.Contents
+                           join b in db.Accounts
+                           on a.CreateBy equals b.Username
+                           where b.Id == userId
+                           select a;
+                return true;
+            }
+            return false;
         }
         public bool ChangeStatus(long id)
         {

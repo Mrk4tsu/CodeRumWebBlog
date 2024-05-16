@@ -74,6 +74,7 @@
     <Compile Include="Entity\Content.cs" />
     <Compile Include="Entity\ContentCategory.cs" />
     <Compile Include="Entity\ContentTag.cs" />
+    <Compile Include="Entity\Credential.cs" />
     <Compile Include="Entity\Menu.cs" />
     <Compile Include="Entity\MenuType.cs" />
     <Compile Include="Entity\Role.cs" />
@@ -81,6 +82,7 @@
     <Compile Include="Entity\sysdiagram.cs" />
     <Compile Include="Entity\SystemConfig.cs" />
     <Compile Include="Entity\Tag.cs" />
+    <Compile Include="Entity\UserGroup.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModel\ContentViewModel.cs" />
     <Compile Include="ViewModel\LoginViewModel.cs" />

@@ -1,4 +1,5 @@
-﻿using Model.DAO;
+﻿using Common;
+using Model.DAO;
 using Model.Entity;
 using System.Threading.Tasks;
 using System.Web.Mvc;
@@ -8,7 +9,7 @@ namespace CodeRumWebBlog.Areas.Admin.Controllers
     public class CategoryController : BaseController
     {
         // GET: Admin/Category
-
+        [HasCredential(RoleId = "VIEW_CATEGORY")]
         public ActionResult Index(string searchString = "", int page = 1, int pageSize = 10)
         {
             var dao = new CategoryDAO();
@@ -18,6 +19,7 @@ namespace CodeRumWebBlog.Areas.Admin.Controllers
             ViewBag.SearchString = searchString;
             return View(list);
         }
+        [HasCredential(RoleId = "VIEW_CATEGORY")]
         public ActionResult HidenCate(string searchString = "", int page = 1, int pageSize = 10)
         {
             var dao = new CategoryDAO();
@@ -29,8 +31,10 @@ namespace CodeRumWebBlog.Areas.Admin.Controllers
             return View();
         }
         [HttpGet]
+        [HasCredential(RoleId = "ADD_CATEGORY")]
         public ActionResult Create() => View();
         [HttpPost]
+        [HasCredential(RoleId = "ADD_CATEGORY")]
         public async Task<ActionResult> Create(Category category)
         {
             var session = (UserLogin)Session[Common.CommonConstants.USER_SESSION];
@@ -50,6 +54,7 @@ namespace CodeRumWebBlog.Areas.Admin.Controllers
             return View("Index");
         }
         [HttpGet]
+        [HasCredential(RoleId = "EDIT_CATEGORY")]
         public ActionResult Edit(long id)
         {
             var dao = new CategoryDAO();
@@ -57,6 +62,7 @@ namespace CodeRumWebBlog.Areas.Admin.Controllers
             return View(cate);
         }
         [HttpPost]
+        [HasCredential(RoleId = "EDIT_CATEGORY")]
         public async Task<ActionResult> Edit(Category category)
         {
             var dao = new CategoryDAO();

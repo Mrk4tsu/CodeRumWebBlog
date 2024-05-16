@@ -3,8 +3,6 @@
 }
 
 
-<!-- Humberger Begin -->
-<div class="humberger__menu__overlay"></div>
 <!--Phần navbar trên điện thoại-->
 <div class="humberger__menu__wrapper">
     <div class="humberger__menu__logo">
@@ -19,9 +17,9 @@
     </div>
     <nav class="humberger__menu__nav mobile-menu">
         <ul>
-            <li class="active"><a href="@Url.Action("Index", "Home")">Trang chủ</a></li>
-            <li><a href="@Url.Action("Index", "Blog")">Blog</a></li>
-            <li><a href="./#">Liên hệ</a></li>
+            <li class="@(ViewBag.IsHome ? "active" : "")"><a href="@Url.Action("Index", "Home")">Trang chủ</a></li>
+            <li class="@(ViewBag.IsBlog ? "active" : "")"><a href="@Url.Action("Index", "Blog")">Blog</a></li>
+            <li><a href="profile.html">Liên hệ</a></li>
             <li><a href="./#">Ứng dụng</a></li>
         </ul>
     </nav>
@@ -53,17 +51,11 @@
                 <div class="header__function">
                     <ul>
                         <li>
-                            @if (Session[Common.CommonConstants.USER_SESSION] != null)
-                            {
-                                var user = new Model.DAO.AccountDAO().GetById(session.UserId);
-                                if (user.RoleId == "admin")
-                                {
-                                    <a href="/tao-moi-bai-viet">
-                                        <i class="fa fa-upload" aria-hidden="true"></i>
-                                    </a>
-                                }
-                            }
-                            
+
+                            <a href="/tao-moi-bai-viet">
+                                <i class="fa fa-upload" aria-hidden="true"></i>
+                            </a>
+
                         </li>
                         <li><a href="#"><i class="fa fa-bell" aria-hidden="true"></i> <span>99+</span></a></li>
                     </ul>
@@ -87,15 +79,12 @@
                                     <img src="@user.Avatar" alt="">
                                 </div>
                                 <p class="text-center text-info h6"> @user.Name </p>
-                                <a class="dropdown-item" href="@Url.Action("Detail", "Account", new { id = user.Id, name = user.Name })"> Trang cá nhân </a>
-                                <a class="dropdown-item" href="#"> Đổi mật khẩu </a>
-                                @if (user.RoleId == "admin")
-                                {
-                                    <a class="dropdown-item" href="/trang-chu-quan-tri-vien"> Trang quản trị </a>
-                                }
+                                <a class="dropdown-item text-center" href="@Url.Action("Detail", "Account", new { id = user.Id, name = user.Name })"> Trang cá nhân </a>
+                                <a class="dropdown-item text-center" href="#"> Đổi mật khẩu </a>
+                                <a class="dropdown-item text-center" href="/trang-chu-quan-tri-vien"> Trang quản trị </a>
                                 <div class="dropdown-divider"></div>
                                 @*@Html.Hidden("returnUrl", Request.UrlReferrer)*@
-                                <a class="dropdown-item" href="@Url.Action("Logout", "Auths",new { returnUrl = Request.Url.PathAndQuery })"> Đăng xuất </a>
+                                <a class="dropdown-item text-center" href="@Url.Action("Logout", "Auths",new { returnUrl = Request.Url.PathAndQuery })"> Đăng xuất </a>
                             </div>
                         </div>
                     }

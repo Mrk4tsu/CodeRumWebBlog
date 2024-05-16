@@ -1,0 +1,21 @@
+﻿
+@{
+    ViewBag.Title = "View";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+
+@section Navbar {
+    @{
+        ViewBag.IsHome = false;
+        ViewBag.IsContent = false;
+        ViewBag.IsUser = false;
+        ViewBag.IsCategory = false;
+    }
+}
+
+
+<div class="alert alert-danger">
+    Bạn đéo có quyền truy cập, cút ngay.
+</div>
+

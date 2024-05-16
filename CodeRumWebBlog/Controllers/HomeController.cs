@@ -1,4 +1,5 @@
 ﻿using Model.DAO;
+using System.Configuration;
 using System.Web.Mvc;
 using System.Web.UI;
 
@@ -8,6 +9,12 @@ namespace CodeRumWebBlog.Controllers
     {
         public ActionResult Index()
         {
+            //set SEO
+            ViewBag.Title = ConfigurationManager.AppSettings["HomeTitle"];
+            ViewBag.KeyWords = ConfigurationManager.AppSettings["HomeKeyWord"];
+            ViewBag.Descriptions = ConfigurationManager.AppSettings["HomeDescription"];
+
+
             return View();
         }
         public ActionResult TopContent()

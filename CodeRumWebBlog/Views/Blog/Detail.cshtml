@@ -1,16 +1,22 @@
 ﻿@model Model.Entity.Content
 @using PagedList.Mvc;
+@using Model.DAO;
 @{
     ViewBag.Title = "Chi tiết: " + Model.Name;
+    ViewBag.Descriptions = Model.Name;
+    ViewBag.KeyWords = Model.MetaKeyword;
     Layout = "~/Views/Shared/_LayoutPublic.cshtml";
 
-    var user = new Model.DAO.AccountDAO().GetByUsername(Model.CreateBy);
-    var session = (UserLogin)Session[Common.CommonConstants.USER_SESSION];
-    var count = new Model.DAO.ContentDAO().GetCommentCountByContentId(Model.Id);
+    var dao = new AccountDAO();
 
-    ViewBag.URL = $"/chi-tiet-{Model.MetaTitle}-{Model.Id}";
-    ViewBag.Image = Model.Image;
-    ViewBag.Description = Model.Name;
+    var user = dao.GetByUsername(Model.CreateBy);
+
+    var session = (UserLogin)Session[Common.CommonConstants.USER_SESSION];
+
+    var count = new ContentDAO().GetCommentCountByContentId(Model.Id);
+
+    //ViewBag.URL = $"/chi-tiet-{Model.MetaTitle}-{Model.Id}";
+
 }
 
 @section Nav {
@@ -22,8 +28,7 @@
 
 @section styles{
     <link href="~/Resourse/client/css/tooltip.css" rel="stylesheet" />
-    <link href="~/Resourse/client/dist/ekko-lightbox.css" rel="stylesheet" />
-    <link href="~/Resourse/client/plugin/styles/hybrid.css" rel="stylesheet" />
+    @Styles.Render("~/bundles/csscore")
 }
 
 <section class="container position-relative">
@@ -106,7 +111,7 @@
                 <section class="mt-3 section-null">
                     <p class="p-2 mx-2">
                         <i class="fa fa-info bg-gradient-warning rounded-circle"></i>
-                        <a href="#" class="login-link">Đăng nhập</a> hoặc
+                        <a href="" class="text-info" data-toggle="modal" data-target="#modalLogin">Đăng nhập</a> hoặc
                         <a href="/dang-ky" target="_blank" class="text-info">đăng ký tài khoản</a>
                         để bình luận
                     </p>
@@ -160,8 +165,8 @@
                                     @if (session != null && session.UserName == cmt.CreateBy)
                                     {
                                         <div class="dropdown-menu dropdown__header__cus shadow mr-5">
-                                            <a class="dropdown-item" href="#"> Sửa </a>
-                                            <a class="dropdown-item" href="#list-cmt" onclick="deleteComment(@cmt.Id)"> Xóa </a>
+                                            <a class="dropdown-item text-center" href="#"> Sửa </a>
+                                            <a class="dropdown-item text-center" href="#list-cmt" onclick="deleteComment(@cmt.Id)"> Xóa </a>
                                         </div>
                                     }
                                 </div>
@@ -204,7 +209,7 @@
                                         }
                                         else
                                         {
-                                            <a href="#" class="ml-3" data-toggle="modal" data-target="#messageModal">
+                                            <a href="#" class="ml-3" data-toggle="modal" data-target="#modalLogin">
                                                 <i class="fa fa-reply" aria-hidden="true"></i>
                                                 <span>Reply</span>
                                             </a>
@@ -219,8 +224,9 @@
                             </div>
                             if (Session[Common.CommonConstants.USER_SESSION] != null)
                             {
+                                var userSS = dao.GetById(session.UserId);
                                 <div id="reply_@cmt.Id" class="reply-group collapse">
-                                    <img class="rounded-circle mx-2" src="@session.Avatar" style="width: 45px; height: 100%">
+                                    <img class="rounded-circle mx-2" src="@userSS.Avatar" style="width: 45px; height: 100%">
                                     <input type="text" class="form-control form-comment p-3 text-light" id="comment-reply">
                                 </div>
                             }

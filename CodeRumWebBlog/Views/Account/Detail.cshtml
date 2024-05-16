@@ -1,5 +1,5 @@
 ﻿@model Model.ViewModel.UserContentViewModel
-
+@using PagedList.Mvc;
 @{
     ViewBag.Title = Model.Account.Name;
     Layout = "~/Views/Shared/_LayoutPublic.cshtml";
@@ -65,6 +65,7 @@
                     </section>
                 }
                 <div class="col-sm-12">
+
                     @foreach (var item in Model.Contents)
                     {
                         <div class="panel panel-white post rounded-e-20">
@@ -95,8 +96,23 @@
                                     </a>
                                 </div>
                             </div>
-                           
+
                         </div>
+
+                        @Html.PagedListPager(Model.Contents, page => Url.Action("Detail", new { page }),
+                            new PagedListRenderOptions
+                            {
+                                Display = PagedListDisplayMode.IfNeeded,
+                                DisplayLinkToPreviousPage = PagedListDisplayMode.IfNeeded,
+                                DisplayLinkToNextPage = PagedListDisplayMode.IfNeeded,
+                                DisplayLinkToIndividualPages = false,
+                                DisplayLinkToFirstPage = PagedListDisplayMode.Never,
+                                DisplayLinkToLastPage = PagedListDisplayMode.Never,
+                                EllipsesFormat = null,
+                                LinkToNextPageFormat = "Cũ hơn",
+                                LinkToPreviousPageFormat = "Mới hơn",
+                                ContainerDivClasses = new[] { "pagination-container pagination-comment" } // Add a class for AJAX to target
+                            })
                     }
 
                 </div>

@@ -1,4 +1,5 @@
-﻿using Model.Entity;
+﻿using Common;
+using Model.Entity;
 using Model.ViewModel;
 using PagedList;
 using System;
@@ -67,7 +68,7 @@ namespace Model.DAO
                 }
                 user.Name = entity.Name;
                 user.Email = entity.Email;
-                user.RoleId = entity.RoleId;
+                user.GroupId = entity.GroupId;
                 user.Avatar = entity.Avatar;
                 user.ModifyBy = entity.ModifyBy;
                 user.ModifyDate = DateTime.Now;
@@ -102,10 +103,10 @@ namespace Model.DAO
                 return false;
             }
         }
-        public async Task<UserContentViewModel> DetailAsyn(long id)
+        public async Task<UserContentViewModel> DetailAsyn(long id, int page, int pageSize)
         {
             var account = await GetByIdAsync(id);
-            var content = await db.Contents.Where(c => c.CreateBy == account.Username).ToListAsync();
+            var content = db.Contents.Where(c => c.CreateBy == account.Username).OrderByDescending(x => x.CreateAt).ToPagedList(page, pageSize);
 
             return new UserContentViewModel
             {
@@ -162,33 +163,81 @@ namespace Model.DAO
             // Kiểm tra sự khớp của username với pattern
             return Regex.IsMatch(username, pattern);
         }
-        public int Login(string username, string password)
+        public bool Login(string username, string password)
         {
             var result = GetByUsername(username);
             if (result == null)
             {
-                return 0;
+                return false;
             }
             else
             {
                 if (result.Status == false)
                 {
-                    return -1;
+                    return false;
                 }
                 else
                 {
                     if (result.Password.Equals(password))
                     {
-                        return 1;
+                        return true;
                     }
 
                     else
                     {
-                        return -2;
+                        return false;
                     }
 
                 }
             }
+        }
+        public int Login(string username, string password, bool isLoginAdmin = false)
+        {
+            var result = GetByUsername(username);
+            if (result == null) return 0;
+            else
+            {
+                if (isLoginAdmin == true)
+                {
+                    if (result.GroupId == CommonConstants.ADMIN_GROUP || result.GroupId == CommonConstants.MOD_GROUP)
+                    {
+                        if (result.Status == false) return -1;
+                        else
+                        {
+                            if (result.Password.Equals(password)) return 1;
+                            else return -2;
+                        }
+                    }
+                    else return -3;
+                }
+                else
+                {
+                    if (result.Status == false) return -1;
+                    else
+                    {
+                        if (result.Password.Equals(password)) return 1;
+                        else return -2;
+                    }
+                }
+            }
+        }
+        public List<string> GetListCredential(string username)
+        {
+            var user = GetByUsername(username);
+            var data = (from a in db.Credentials
+                       join b in db.UserGroups on a.UserGroupId equals b.Id
+                       join c in db.Roles on a.RoleId equals c.Id
+                       where b.Id == user.GroupId
+                       select new
+                       {
+                           RoleId = a.RoleId,
+                           UserGroupId = b.Id
+                       }).AsEnumerable().Select(x => new Credential()
+                       {
+                           RoleId = x.RoleId,
+                           UserGroupId = x.UserGroupId
+                       });
+            return data.Select(x => x.RoleId).ToList();
         }
     }
 }

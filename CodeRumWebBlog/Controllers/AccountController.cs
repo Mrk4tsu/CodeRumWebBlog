@@ -7,10 +7,10 @@ namespace CodeRumWebBlog.Controllers
     public class AccountController : Controller
     {
         // GET: Account
-        public async Task<ActionResult> Detail(long id, string name, int page = 1, int pageSize = 5)
+        public async Task<ActionResult> Detail(long id, string name, int page = 1, int pageSize = 10)
         {
             var dao = new AccountDAO();
-            var viewModel = await new AccountDAO().DetailAsyn(id);
+            var viewModel = await new AccountDAO().DetailAsyn(id, page, pageSize);
 
             var user = await dao.GetByIdAsync(id);
             

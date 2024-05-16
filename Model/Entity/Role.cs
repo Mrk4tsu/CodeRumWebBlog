@@ -11,9 +11,10 @@ namespace Model.Entity
     [Table("Role")]
     public partial class Role
     {
+        [StringLength(50)]
         public string Id { get; set; }
 
-        [StringLength(150)]
+        [StringLength(50)]
         public string Name { get; set; }
     }
 }

@@ -1,6 +1,8 @@
 ﻿using CodeRumWebBlog.Areas.Admin.Data;
 using Common;
 using Model.DAO;
+using Model.Entity;
+using System.Collections.Generic;
 using System.Web.Mvc;
 
 namespace CodeRumWebBlog.Areas.Admin.Controllers
@@ -20,7 +22,7 @@ namespace CodeRumWebBlog.Areas.Admin.Controllers
             if (ModelState.IsValid)
             {
                 var userDAO = new AccountDAO();
-                var result = userDAO.Login(model.UserName, model.Password);
+                var result = userDAO.Login(model.UserName, model.Password, true);
 
                 if (result == 1)
                 {
@@ -29,8 +31,10 @@ namespace CodeRumWebBlog.Areas.Admin.Controllers
                     var userSession = new UserLogin();
                     userSession.UserName = user.Username;
                     userSession.UserId = user.Id;
-                    userSession.Name = user.Name;
-                    userSession.Avatar = user.Avatar;
+                    userSession.GroupId = user.GroupId;
+
+                    var listCredential = userDAO.GetListCredential(model.UserName);
+                    Session.Add(CommonConstants.SESSION_CREDENTIALS, listCredential);
                     Session.Add(CommonConstants.USER_SESSION, userSession);
 
                     return RedirectToAction("Index", "Home");

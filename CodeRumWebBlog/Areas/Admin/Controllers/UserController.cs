@@ -1,4 +1,5 @@
-﻿using Model.DAO;
+﻿using Common;
+using Model.DAO;
 using Model.Entity;
 using System.Threading.Tasks;
 using System.Web.Mvc;
@@ -8,6 +9,7 @@ namespace CodeRumWebBlog.Areas.Admin.Controllers
     public class UserController : BaseController
     {
         // GET: Admin/User
+        [HasCredential(RoleId = "VIEW_USER")]
         public ActionResult Index(string searchString = "", int page = 1, int pageSize = 10)
         {
             var dao = new AccountDAO().ListAllPaging(searchString, page, pageSize);
@@ -16,12 +18,14 @@ namespace CodeRumWebBlog.Areas.Admin.Controllers
         }
         #region[Create]
         [HttpGet]
+        [HasCredential(RoleId = "ADD_USER")]
         public ActionResult Create()
         {
             SetViewBag();
             return View();
         }
         [HttpPost]
+        [HasCredential(RoleId = "ADD_USER")]
         public async Task<ActionResult> Create(Account account)
         {
             var dao = new AccountDAO();
@@ -56,13 +60,15 @@ namespace CodeRumWebBlog.Areas.Admin.Controllers
         #endregion
         #region[Edit]
         [HttpGet]
+        [HasCredential(RoleId = "EDIT_USER")]
         public async Task<ActionResult> Edit(long id)
         {
             var user = await new AccountDAO().GetByIdAsync(id);
-            SetViewBag(user.RoleId);
+            SetViewBag(user.GroupId);
             return View(user);
         }
         [HttpPost]
+        [HasCredential(RoleId = "EDIT_USER")]
         public async Task<ActionResult> Edit(Account account)
         {
             var userDAO = new AccountDAO();
@@ -82,17 +88,19 @@ namespace CodeRumWebBlog.Areas.Admin.Controllers
             {
                 ModelState.AddModelError("", "Cập nhật người dùng không thành công");
             }
-            SetViewBag(account.RoleId);
+            SetViewBag(account.GroupId);
             return View("Index");
         }
         #endregion
         [HttpDelete]
+        [HasCredential(RoleId = "DELETE_USER")]
         public async Task<ActionResult> Delete(long id)
         {
             await new AccountDAO().Delete(id);
             return RedirectToAction("Index");
         }
         [HttpPost]
+        [HasCredential(RoleId = "EDIT_USER")]
         public JsonResult ChangeStatus(long id)
         {
             var result = new AccountDAO().ChangeStatus(id);

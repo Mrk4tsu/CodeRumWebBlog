@@ -37,7 +37,7 @@ namespace Model.DAO
         }
         public async Task<long> Insert(Category category)
         {
-            category.CreateAt = DateTime.Now;
+            category.CreateAt = TimeZoneInfo.ConvertTimeBySystemTimeZoneId(DateTime.Now, "SE Asia Standard Time");
             //Xử lý alias
             if (string.IsNullOrEmpty(category.MetaTitle))
             {
@@ -57,7 +57,7 @@ namespace Model.DAO
                 cate.MetaTitle = category.MetaTitle;
                 cate.SeoTitle = category.SeoTitle;
                 cate.DisplayOrder = category.DisplayOrder;
-                cate.ModifyDate = DateTime.Now;
+                cate.ModifyDate = TimeZoneInfo.ConvertTimeBySystemTimeZoneId(DateTime.Now, "SE Asia Standard Time");
                 cate.Status = category.Status;
                 cate.ShowOnHome = category.ShowOnHome;
                 cate.ParentId = category.ParentId;

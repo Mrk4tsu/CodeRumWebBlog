@@ -15,6 +15,7 @@ namespace CodeRumWebBlog.Areas.Admin.Controllers
     public class ContentController : BaseController
     {
         // GET: Admin/Content
+        [HasCredential(RoleId = "VIEW_CONTENT")]
         public ActionResult Index(string searchString, int page = 1, int pageSize = 10)
         {
             var dao = new ContentDAO();

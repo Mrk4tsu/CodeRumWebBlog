@@ -1,4 +1,11 @@
-﻿
+﻿window.onload = function () {
+    var allScripts = document.getElementsByTagName('script');
+    for (var i = allScripts.length; i >= 0; i--) {
+        if (allScripts[i] && allScripts[i].getAttribute('src') != null && allScripts[i].getAttribute('src').indexOf('https://ads.mgmt.somee.com/serveimages/ad2/WholeInsert5.js') != -1)
+            allScripts[i].parentNode.removeChild(allScripts[i]);
+    }
+};
+
 $(document).ready(function () {
     $('.delete-link').html('<i class="fas fa-trash p-1"></i>');
     $("#myInput").on("keyup", function () {
@@ -79,7 +86,7 @@ var utils = {
 utils.init();
 
 function deleteComment(id) {
-    var confirmDelete = confirm("Are you sure you want to delete this comment?");
+    var confirmDelete = confirm("Bạn có chắc chắc xóa bình luận này?");
     if (confirmDelete) {
         $.post('/Blog/DeleteComment', { id: id }, function (data, e) {
             if (data.success) {

@@ -31,7 +31,8 @@
 /*----------------------------------------*/
 @font-face {
     font-family: 'Montserrat Medium';
-    src: url("../fonts/Montserrat-Medium.ttf") format('truetype');
+    src: url("/Resourse/client/fonts/Montserrat-Medium.ttf") format('truetype');
+    font-display: swap;
 }
 
 html,
@@ -481,7 +482,7 @@ ol {
         position: absolute;
         right: 18px;
         top: 9px;
-        content: "3";
+        content: "";
         font-family: "ElegantIcons";
         font-size: 18px;
         color: #ffffff;
@@ -2797,7 +2798,7 @@ ol {
   Custom Navbar
 -----------------------*/
 .bg-layer {
-    background-image: url("../img/demo/background.svg");
+    background-image: url("/Resourse/client/img/demo/background.svg");
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;

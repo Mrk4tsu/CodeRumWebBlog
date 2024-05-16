@@ -1,8 +1,8 @@
 ﻿@{ 
-    var count = new Model.DAO.ContentDAO().CountLockContent();
+
 }
 
-<ul class="navbar-nav bg-success sidebar sidebar-dark accordion" id="accordionSidebar">
+<ul class="navbar-nav bg-gray sidebar sidebar-dark accordion" id="accordionSidebar" style="background: #273D52 !important;">
 
     <!-- Sidebar - Brand -->
     <a class="sidebar-brand d-flex align-items-center justify-content-center" href="@Url.Action("Index", "Home")">
@@ -42,8 +42,8 @@
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Quản lý:</h6>
                 <a class="collapse-item" href="@Url.Action("Index", "Content")">Danh sách</a>
-                <a class="collapse-item" href="@Url.Action("DisApproveContent", "Content")">Duyệt bài @if (count > 0) { <span class="small ml-2 mb-1"><i class="fas fa-circle text-primary"></i></span>}</a>
-                <a class="collapse-item" href="@Url.Action("Index", "Category")">Danh mục</a>
+                <a class="collapse-item" href="@Url.Action("DisApproveContent", "Content")">Duyệt bài</a>
+                <a class="collapse-item" href="@Url.Action("Create", "Content")">Đăng bài</a>
             </div>
         </div>
     </li>

@@ -79,7 +79,7 @@ namespace CodeRumWebBlog.Controllers
             var lastComment = dao.GetLastCommentByUser(session.UserName);
             if (lastComment != null)
             {
-                var diffInSeconds = (DateTime.Now - lastComment.CreateAt.Value).TotalSeconds;
+                var diffInSeconds = (TimeZoneInfo.ConvertTimeBySystemTimeZoneId(DateTime.Now, "SE Asia Standard Time") - lastComment.CreateAt.Value).TotalSeconds;
                 if (diffInSeconds < 300)
                 {
                     return Json(new 

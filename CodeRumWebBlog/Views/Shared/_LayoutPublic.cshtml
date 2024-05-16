@@ -1,34 +1,36 @@
 ﻿<!DOCTYPE html>
-<html lang="zxx">
+<html lang="vi">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="icon" href="/ico.ico" type="image/x-icon">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
-    <meta property="og:title" content="@ViewBag.Title" />
-    <meta property="og:description" content="@ViewBag.Description" />
-    <meta property="og:image" content="@ViewBag.Image" />
-    <meta property="og:url" content="@ViewBag.URL" />
-    <link rel="icon" href="/ico.ico" type="image/x-icon">
+    <title>@ViewBag.Title</title>
+    <meta name="description" content="@ViewBag.Descriptions" />
+    <meta name="keywords" content="gavl, gavl blog, gà tập chơi, mrkatsu, @ViewBag.KeyWords" />
 
-    <title>GaVL | @ViewBag.Title</title>
+
+    @*<meta property="og:title" name="title" content="@ViewBag.Title" />
+        <meta property="og:description" itemprop="description" name="description" content="@ViewBag.Description" />
+        <meta property="og:image" content="@ViewBag.Image" />
+        <meta property="og:url" content="@ViewBag.URL" />*@
 
     <!-- Css Styles -->
-    <link rel="stylesheet" href="~/Resourse/client/css/bootstrap.min.css" type="text/css">
+    @Styles.Render("~/bundles/csscore")
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="~/Resourse/client/css/font-awesome.min.css" type="text/css">
-    <link rel="stylesheet" href="~/Resourse/client/css/elegant-icons.css" type="text/css">
-    <link rel="stylesheet" href="~/Resourse/client/css/nice-select.css" type="text/css">
-    <link rel="stylesheet" href="~/Resourse/client/css/jquery-ui.min.css" type="text/css">
-    <link rel="stylesheet" href="~/Resourse/client/css/owl.carousel.min.css" type="text/css">
-    <link rel="stylesheet" href="~/Resourse/client/css/slicknav.min.css" type="text/css">
-    <link rel="stylesheet" href="~/Resourse/client/css/style.css" type="text/css">
     @RenderSection("styles", required: false)
 </head>
 
 <body id="page-top">
     <div class="bg-layer">
         <!-- Page Preloder -->
+        @RenderSection("Nav", required: false)
         @if (TempData["AlertClientMessage"] != null)
         {
             <div id="alert-client-box" class="alert @TempData["AlertClientType"] hide alert-dismissible">
@@ -36,57 +38,58 @@
                 <span class="text-center">@TempData["AlertClientMessage"]</span>
             </div>
         }
-
-        @RenderSection("Nav", required: false)
         <!-- Humberger Begin -->
         <div class="humberger__menu__overlay"></div>
 
-        @{
-            Html.RenderPartial("~/Views/Shared/_PartialNavigation.cshtml");
-        }
-
-
-
+        @Html.Partial("~/Views/Shared/_PartialNavigation.cshtml")
 
         @RenderBody()
         <a class="scroll-to-top rounded-circle" href="#page-top">
             <i class="fa fa-caret-up" aria-hidden="true"></i>
         </a>
-        <div id="loginModalContainer" style="display: none;"></div>
+        @*<div id="loginModalContainer" style="display: none;"></div>*@
+
+        @Html.Partial("~/Views/Auths/Login.cshtml", new Model.ViewModel.LoginViewModel())
         <!-- Footer Section Begin -->
         <footer class="footer">
             <div class="container">
                 <div class="row">
-                    <div class="col-lg-12">
+                    <div class="col-6 d-flex justify-content-start">
+                        <p>
+
+                        </p>
+                    </div>
+                    @*<div class="col-lg-12">
                         <div class="footer__copyright__text">
                             <p class="text-light">
-                                <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                                 Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. 
                                 Copyright &copy;
                                 <script>document.write(new Date().getFullYear());</script>
                                 All rights reserved | This template is made with <i class="fa fa-heart"
                                                                                     aria-hidden="true"></i> by <a href="https://github.com/Mrk4tsu" target="_blank" class="text-info">MrKatsu</a>
-                                <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                                 Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. 
                             </p>
                         </div>
-                        <div class="footer__copyright__payment"><img src="~/Resourse/client/img/payment-item.png" alt=""></div>
-                    </div>
+                        <div class="footer__copyright__payment mb-2">
+                            <div class="d-flex align-items-center justify-content-center">
+                                <script type="text/javascript">
+                                    //<![CDATA[
+                                    var tlJsHost = ((window.location.protocol == "https:") ? "https://secure.trust-provider.com/" : "http://www.trustlogo.com/");
+                                    document.write(unescape("%3Cscript src='" + tlJsHost + "trustlogo/javascript/trustlogo.js' type='text/javascript'%3E%3C/script%3E"));
+                                    //]]></script>
+                                <script language="JavaScript" type="text/javascript">
+                                    TrustLogo("https://www.positivessl.com/images/seals/positivessl_trust_seal_lg_222x54.png", "POSDV", "none");
+                                </script>
+                            </div>
+                            
+                        </div>
+                    </div>*@
                 </div>
             </div>
         </footer>
     </div>
-    <!-- Footer Section End -->
-    <!-- Js Plugins -->
-    <script src="~/Resourse/client/js/jquery-3.3.1.min.js"></script>
-    <script src="~/Resourse/plugin/ajax/jquery.unobtrusive-ajax.js"></script>
-    <script src="~/Resourse/plugin/dododot/jquery.dotdotdot.js"></script>
-    <script src="~/Resourse/client/js/bootstrap.bundle.js"></script>
-    <script src="~/Resourse/client/js/bootstrap.min.js"></script>
-    <script src="~/Resourse/client/js/jquery.nice-select.min.js"></script>
-    <script src="~/Resourse/client/js/jquery-ui.min.js"></script>
-    <script src="~/Resourse/client/js/jquery.slicknav.js"></script>
-    <script src="~/Resourse/client/js/mixitup.min.js"></script>
-    <script src="~/Resourse/client/js/owl.carousel.min.js"></script>
-    <script src="~/Resourse/client/js/main.js"></script>
+
+    @Scripts.Render("~/bundles/jscore")
     @RenderSection("jsFooter", required: false)
 </body>
 

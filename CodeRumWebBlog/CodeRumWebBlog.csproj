@@ -174,6 +174,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\CustomMembershipProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RssFeedService.cs" />
   </ItemGroup>
@@ -200,6 +201,7 @@
     <Content Include="Areas\Admin\Views\Home\Index.cshtml" />
     <Content Include="Areas\Admin\Views\User\Index.cshtml" />
     <Content Include="ico.ico" />
+    <Content Include="Resourse\admin\css\error.css" />
     <Content Include="Resourse\admin\css\PagedList.css" />
     <Content Include="Resourse\admin\css\sb-admin-2.css" />
     <Content Include="Resourse\admin\css\sb-admin-2.min.css" />
@@ -3674,7 +3676,6 @@
     <Content Include="Views\Web.config" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
-    <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\_LayoutPublic.cshtml" />
     <Content Include="Views\Blog\Tag.cshtml" />
@@ -3936,13 +3937,13 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\" />
     <Folder Include="Resourse\data\" />
     <Folder Include="uploads\" />
     <Folder Include="Views\Base\" />
     <Folder Include="Views\Feeds\" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Areas\Admin\Views\Shared\Error401.cshtml" />
     <None Include="packages.config" />
     <Content Include="Resourse\plugin\ckeditor\plugins\codeTag\.git\COMMIT_EDITMSG" />
     <Content Include="Resourse\plugin\ckeditor\plugins\codeTag\.git\config" />

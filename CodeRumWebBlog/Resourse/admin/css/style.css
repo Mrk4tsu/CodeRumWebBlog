@@ -21,3 +21,6 @@
 .bg-gradient-violet {
     background-image: linear-gradient(to bottom, #b700ff 2%, #7b00ff 99%) !important;
 }
+.bg-gray {
+    background: #273D52 !important;
+}

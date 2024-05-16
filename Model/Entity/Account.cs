@@ -19,8 +19,8 @@
 
         [StringLength(150)]
         public string Name { get; set; }
-        [StringLength(50)]
-        public string RoleId { get; set; }
+        [StringLength(20)]
+        public string GroupId { get; set; }
 
         [StringLength(50)]
         public string Email { get; set; }
