@@ -163,6 +163,34 @@ namespace Model.DAO
             // Kiểm tra sự khớp của username với pattern
             return Regex.IsMatch(username, pattern);
         }
+        public bool SignIn(string username, string password)
+        {
+            var result = GetByUsername(username);
+            if (result == null)
+            {
+                return false;
+            }
+            else
+            {
+                if (result.Status == false)
+                {
+                    return false;
+                }
+                else
+                {
+                    if (result.Password.Equals(password))
+                    {                       
+                        return true;
+                    }
+
+                    else
+                    {
+                        return false;
+                    }
+
+                }
+            }
+        }
         public bool Login(string username, string password)
         {
             var result = GetByUsername(username);

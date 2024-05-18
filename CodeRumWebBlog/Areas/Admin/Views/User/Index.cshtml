@@ -61,7 +61,7 @@
                                         @item.Username
                                     </td>
                                     <td>
-                                        <div class="text-truncate">@item.CreateAt.Value.ToString("dd-MM-yyyy")</div>
+                                        <div>@item.CreateAt.Value.ToString("dd-MM-yyyy")</div>
                                     </td>
                                     <td>
                                         <a href="#" class="@(item.Status ? "badge badge-success" : "badge badge-danger") btn-change-user-status text-decoration-none" data-id="@item.Id">

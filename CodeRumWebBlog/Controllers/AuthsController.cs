@@ -1,6 +1,4 @@
 ﻿using BotDetect.Web.UI.Mvc;
-using Common;
-using Microsoft.Ajax.Utilities;
 using Model.DAO;
 using Model.Entity;
 using Model.ViewModel;
@@ -10,7 +8,6 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
 using System.Web.UI;
-using System.Web.UI.WebControls;
 
 namespace CodeRumWebBlog.Controllers
 {
@@ -76,22 +73,59 @@ namespace CodeRumWebBlog.Controllers
             if (ModelState.IsValid)
             {
                 var userDAO = new AccountDAO();
-                var result = userDAO.Login(model.Username, model.Password);
+                var result = userDAO.SignIn(model.Username, model.Password);
 
                 if (result)
                 {
-                    var user = userDAO.GetByUsername(model.Username);
+                    //var user = userDAO.GetByUsername(model.Username);
+                    #region[Session]
+                    //var userSession = new UserLogin();
+                    //userSession.UserName = user.Username;
+                    //userSession.UserId = user.Id;
+                    //userSession.GroupId = user.GroupId;
 
-                    var userSession = new UserLogin();
-                    userSession.UserName = user.Username;
-                    userSession.UserId = user.Id;
-                    userSession.GroupId = user.GroupId;
+                    //var listCredential = userDAO.GetListCredential(model.Username);
+                    //Session.Add(CommonConstants.SESSION_CREDENTIALS, listCredential);
+                    //Session.Add(CommonConstants.USER_SESSION, userSession);
+                    #endregion
+                    #region[Cookies]
+                    //// Create the authentication ticket
+                    //var authTicket = new FormsAuthenticationTicket(
+                    //    1,                             // version
+                    //    model.Username,                // user name
+                    //    DateTime.Now,                  // created
+                    //    DateTime.Now.AddMinutes(20),   // expires
+                    //    false,                         // persistent?
+                    //    user.GroupId                   // can be used to store roles
+                    //);
 
-                    var listCredential = userDAO.GetListCredential(model.Username);
-                    Session.Add(CommonConstants.SESSION_CREDENTIALS, listCredential);
-                    Session.Add(CommonConstants.USER_SESSION, userSession);
+                    //// Now encrypt the ticket.
+                    //string encryptedTicket = FormsAuthentication.Encrypt(authTicket);
 
-                    return Redirect(returnUrl);
+                    //// Create a cookie and add the encrypted ticket to the
+                    //// cookie as data.
+                    //var authCookie = new HttpCookie(FormsAuthentication.FormsCookieName, encryptedTicket);
+
+                    //// Add the cookie to the outgoing cookies collection.
+                    //Response.Cookies.Add(authCookie);
+                    #endregion
+                    //Dặt thời gian hết hạn của vé xác thực dựa trên việc người dùng có tick remember me
+                    int timeOut = model.RememberMe ? (40320 * 4) : 1; //5256000 phút = 1 năm
+
+                    //Tạo một vé xác thực Forms mới với username của người dùng
+                    var ticket = new FormsAuthenticationTicket(model.Username, model.RememberMe, timeOut);
+                    string encrypted = FormsAuthentication.Encrypt(ticket);
+                    var cookie = new HttpCookie(FormsAuthentication.FormsCookieName, encrypted);
+
+                    cookie.Expires = DateTime.Now.AddMinutes(timeOut);
+                    //Đặt HttpOnly = true ngăn cookie được truy cập bởi mã JavaScript
+                    cookie.HttpOnly = true;
+
+                    Response.Cookies.Add(cookie);
+                    if (Url.IsLocalUrl(returnUrl))
+                        return Redirect(returnUrl);
+                    else
+                        return Redirect("/");
                 }
                 else
                 {
@@ -105,6 +139,7 @@ namespace CodeRumWebBlog.Controllers
             SetAlert("Đăng nhập không thành công.", "warning");
             return Redirect(returnUrl);
         }
+        [Authorize]
         public ActionResult Logout(string returnUrl)
         {
             Session[Common.CommonConstants.USER_SESSION] = null;

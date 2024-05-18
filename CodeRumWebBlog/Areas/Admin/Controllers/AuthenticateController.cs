@@ -1,9 +1,8 @@
 ﻿using CodeRumWebBlog.Areas.Admin.Data;
 using Common;
 using Model.DAO;
-using Model.Entity;
-using System.Collections.Generic;
 using System.Web.Mvc;
+using System.Web.UI;
 
 namespace CodeRumWebBlog.Areas.Admin.Controllers
 {
@@ -16,7 +15,7 @@ namespace CodeRumWebBlog.Areas.Admin.Controllers
         }
         // GET: Authenticate
         [HttpPost]
-        [OutputCache(Location = System.Web.UI.OutputCacheLocation.Client, Duration = int.MaxValue)]
+        [OutputCache(Location = OutputCacheLocation.Client, Duration = int.MaxValue)]
         public ActionResult Login(LoginModel model)
         {
             if (ModelState.IsValid)
@@ -63,6 +62,14 @@ namespace CodeRumWebBlog.Areas.Admin.Controllers
             }
             return View(model);
 
+        }
+        public ActionResult EditModerator()
+        {
+            return View();
+        }
+        public ActionResult AddCredential()
+        {
+            return View();
         }
     }
 }

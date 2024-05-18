@@ -2029,7 +2029,7 @@ ol {
     position: relative;
     font-size: 16px;
     color: #1c1c1c;
-    padding-left: 20px;
+    padding-left: 10px;
     cursor: pointer;
     user-select: none;
 }

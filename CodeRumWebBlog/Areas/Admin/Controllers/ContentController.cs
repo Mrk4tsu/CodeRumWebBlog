@@ -46,6 +46,7 @@ namespace CodeRumWebBlog.Areas.Admin.Controllers
             ViewBag.Prev = page - 1;
             return View(model);
         }
+        #region[Danh sách bài chưa duyệt]
         public ActionResult DisApproveContent(string searchString, int page = 1, int pageSize = 10)
         {
             var dao = new ContentDAO();
@@ -55,6 +56,20 @@ namespace CodeRumWebBlog.Areas.Admin.Controllers
 
             return View(model);
         }
+        [HttpDelete]
+        public async Task<ActionResult> ApproveContent(long id)
+        {
+            var dao = new ContentDAO();
+
+            var content = await dao.GetByIDAsync(id);
+
+            await dao.ApproveAsync(id);
+            var serviceRss = new RssFeedService();
+            serviceRss.CreateRssFeed();
+            return RedirectToAction("Index");
+        }
+        #endregion
+        #region[Tạo mới]
         [HttpGet]
         public ActionResult Create()
         {
@@ -77,6 +92,7 @@ namespace CodeRumWebBlog.Areas.Admin.Controllers
             SetViewBag();
             return View();
         }
+        #endregion
         public async Task<ActionResult> Detail(long id, int page = 1, int pageSize = 5)
         {
             var model = await new ContentDAO().ViewDetail(id);
@@ -85,6 +101,7 @@ namespace CodeRumWebBlog.Areas.Admin.Controllers
             ViewBag.Comments = new CommentDAO().ListByContent(id, page, pageSize);
             return View(model);
         }
+        #region[Chỉnh sửa]
         [HttpGet]
         public async Task<ActionResult> Edit(long id)
         {
@@ -120,24 +137,15 @@ namespace CodeRumWebBlog.Areas.Admin.Controllers
             SetViewBag(model.CategoryId);
             return View();
         }
-        [HttpDelete]
-        public async Task<ActionResult> ApproveContent(long id)
-        {
-            var dao = new ContentDAO();
-
-            var content = await dao.GetByIDAsync(id);
-
-            await dao.ApproveAsync(id);
-            var serviceRss = new RssFeedService();
-            serviceRss.CreateRssFeed();
-            return RedirectToAction("Index");
-        }
+        #endregion
+       
         [HttpDelete]
         public async Task<ActionResult> Delete(long id)
         {
             await new ContentDAO().DeleteAsyn(id);
             return RedirectToAction("Index");
         }
+        #region[Bình luận]
         [HttpPost]
         public async Task<ActionResult> AddComment(long ContentId, string CommentText)
         {
@@ -175,6 +183,7 @@ namespace CodeRumWebBlog.Areas.Admin.Controllers
             }
             return Json(new { success = false });
         }
+        #endregion
         public void SetViewBag(long? selectedId = null)
         {
             var dao = new CategoryDAO();

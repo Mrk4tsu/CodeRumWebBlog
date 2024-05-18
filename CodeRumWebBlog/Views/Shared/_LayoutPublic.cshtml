@@ -12,12 +12,6 @@
     <meta name="description" content="@ViewBag.Descriptions" />
     <meta name="keywords" content="gavl, gavl blog, gà tập chơi, mrkatsu, @ViewBag.KeyWords" />
 
-
-    @*<meta property="og:title" name="title" content="@ViewBag.Title" />
-        <meta property="og:description" itemprop="description" name="description" content="@ViewBag.Description" />
-        <meta property="og:image" content="@ViewBag.Image" />
-        <meta property="og:url" content="@ViewBag.URL" />*@
-
     <!-- Css Styles -->
     @Styles.Render("~/bundles/csscore")
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -53,37 +47,49 @@
         <!-- Footer Section Begin -->
         <footer class="footer">
             <div class="container">
-                <div class="row">
+                <div class="row d-flex align-items-center">
                     <div class="col-6 d-flex justify-content-start">
-                        <p>
-
+                        <p class="text-light">
+                            Copyright &copy;
+                            <script>document.write(new Date().getFullYear());</script> by <a href="https://github.com/Mrk4tsu" target="_blank" class="text-info">MrKatsu</a>
                         </p>
                     </div>
+                    <div class="col-6 d-flex justify-content-end align-items-center">
+                        <script type="text/javascript">
+                            //<![CDATA[
+                            var tlJsHost = ((window.location.protocol == "https:") ? "https://secure.trust-provider.com/" : "http://www.trustlogo.com/");
+                            document.write(unescape("%3Cscript src='" + tlJsHost + "trustlogo/javascript/trustlogo.js' type='text/javascript'%3E%3C/script%3E"));
+                            //]]></script>
+                        <script language="JavaScript" type="text/javascript">
+                            TrustLogo("https://www.positivessl.com/images/seals/positivessl_trust_seal_lg_222x54.png", "POSDV", "none");
+                        </script>
+
+                    </div>
                     @*<div class="col-lg-12">
-                        <div class="footer__copyright__text">
-                            <p class="text-light">
-                                 Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. 
-                                Copyright &copy;
-                                <script>document.write(new Date().getFullYear());</script>
-                                All rights reserved | This template is made with <i class="fa fa-heart"
-                                                                                    aria-hidden="true"></i> by <a href="https://github.com/Mrk4tsu" target="_blank" class="text-info">MrKatsu</a>
-                                 Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. 
-                            </p>
-                        </div>
-                        <div class="footer__copyright__payment mb-2">
-                            <div class="d-flex align-items-center justify-content-center">
-                                <script type="text/javascript">
-                                    //<![CDATA[
-                                    var tlJsHost = ((window.location.protocol == "https:") ? "https://secure.trust-provider.com/" : "http://www.trustlogo.com/");
-                                    document.write(unescape("%3Cscript src='" + tlJsHost + "trustlogo/javascript/trustlogo.js' type='text/javascript'%3E%3C/script%3E"));
-                                    //]]></script>
-                                <script language="JavaScript" type="text/javascript">
-                                    TrustLogo("https://www.positivessl.com/images/seals/positivessl_trust_seal_lg_222x54.png", "POSDV", "none");
-                                </script>
+                            <div class="footer__copyright__text">
+                                <p class="text-light">
+                                     Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0.
+                                    Copyright &copy;
+                                    <script>document.write(new Date().getFullYear());</script>
+                                    All rights reserved | This template is made with <i class="fa fa-heart"
+                                                                                        aria-hidden="true"></i> by <a href="https://github.com/Mrk4tsu" target="_blank" class="text-info">MrKatsu</a>
+                                     Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0.
+                                </p>
                             </div>
-                            
-                        </div>
-                    </div>*@
+                            <div class="footer__copyright__payment mb-2">
+                                <div class="d-flex align-items-center justify-content-center">
+                                    <script type="text/javascript">
+                                        //<![CDATA[
+                                        var tlJsHost = ((window.location.protocol == "https:") ? "https://secure.trust-provider.com/" : "http://www.trustlogo.com/");
+                                        document.write(unescape("%3Cscript src='" + tlJsHost + "trustlogo/javascript/trustlogo.js' type='text/javascript'%3E%3C/script%3E"));
+                                        //]]></script>
+                                    <script language="JavaScript" type="text/javascript">
+                                        TrustLogo("https://www.positivessl.com/images/seals/positivessl_trust_seal_lg_222x54.png", "POSDV", "none");
+                                    </script>
+                                </div>
+
+                            </div>
+                        </div>*@
                 </div>
             </div>
         </footer>

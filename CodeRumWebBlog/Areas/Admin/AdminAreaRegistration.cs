@@ -24,6 +24,14 @@ namespace CodeRumWebBlog.Areas.Admin
                     action = "Index"
                 });
             context.MapRoute(
+                name: "LoginAdmin",
+                url: "dang-nhap-quan-tri",
+                defaults: new
+                {
+                    controller = "Authenticate",
+                    action = "Login"
+                });
+            context.MapRoute(
                 name: "Tags",
                 url: "tag/{tagId}",
                 defaults: new

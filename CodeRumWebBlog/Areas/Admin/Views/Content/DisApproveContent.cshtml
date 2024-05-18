@@ -61,13 +61,9 @@
                                         <div><a href="/chi-tiet-@item.MetaTitle-@item.Id" target="_blank">@item.Name</a></div>
                                     </td>
                                     <td>
-
                                         <div class="text-date" data-date="@item.CreateAt.Value.ToString("o")"></div>
                                     </td>
                                     <td>
-                                        @*<a href="/Admin/Content/ApproveContent/@item.Id" class="text-center badge badge-success">
-                                                <i class="fas fa-check-circle py-1 px-2"></i>
-                                            </a>*@
                                         @Ajax.ActionLink("Phê duyệt", "ApproveContent", new { @id = item.Id }, new AjaxOptions
                                         {
 

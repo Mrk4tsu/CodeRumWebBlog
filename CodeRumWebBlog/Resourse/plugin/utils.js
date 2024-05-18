@@ -19,6 +19,17 @@ $(document).ready(function () {
         var date = new Date($(this).data("date"));
         $(this).text(utils.timeAgo(date));
     });
+    $('#myTextarea').on('input', function () {
+        var words = this.value.match(/\S+/g).length;
+        // Update the word count
+        $('#wordCount').text(words + '/150');
+        if (words > 150) {
+            // Split the string on first 250 words and rejoin on spaces
+            var trimmed = $(this).val().split(/\s+/, 150).join(" ");
+            // Add a space at the end to keep new typing making new words
+            $(this).val(trimmed + " ");
+        }
+    });
 });
 
 var utils = {
