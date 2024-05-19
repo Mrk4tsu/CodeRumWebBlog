@@ -1,6 +1,8 @@
 # 63CNTT: DỰ ÁN WEB-2
 > Sinh viên: Nguyễn Đức Thắng 63 CNTT-CLC
  ## 1. Install:
+  + Microsoft Visual Studio
+  + Microsof SQL Server Manager
 *Front End*
  - Framework: Bootstrap 4,5
  - HTML/CSS
