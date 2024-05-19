@@ -185,6 +185,7 @@
     <Compile Include="Controllers\AuthsController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\BlogController.cs" />
+    <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\FeedsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
@@ -4008,6 +4009,11 @@
     <Content Include="Resourse\plugin\ckeditor\plugins\codeTag\.git\refs\remotes\origin\master" />
     <Content Include="Resourse\plugin\ckeditor\plugins\codeTag\README.md" />
     <Content Include="Views\Home\Captcha.cshtml" />
+    <Content Include="Views\Error\BadRequest.cshtml" />
+    <Content Include="Views\Error\Unauthorized.cshtml" />
+    <Content Include="Views\Error\Forbidden.cshtml" />
+    <Content Include="Views\Error\NotFound.cshtml" />
+    <Content Include="Views\Error\MethodNotAllowed.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Common\Common.csproj">
