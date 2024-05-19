@@ -24,14 +24,14 @@ namespace Model.DAO
         {
             return db.Accounts;
         }
-        public IEnumerable<Account> ListAllPaging(string searchString, int page, int pageSize)
+        public IEnumerable<Account> ListAllPaging(string searchString, int page, int pageSize, bool status)
         {
             IQueryable<Account> model = db.Accounts;
             if (!string.IsNullOrEmpty(searchString))
             {
                 model = model.Where(x => x.Username.Contains(searchString) || x.Name.Contains(searchString));
             }
-            return model.OrderByDescending(x => x.CreateAt).ToPagedList(page, pageSize);
+            return model.OrderByDescending(x => x.CreateAt).Where(u => u.Status == status).ToPagedList(page, pageSize);
         }
         public IEnumerable<Role> ListAllRole()
         {
@@ -78,6 +78,21 @@ namespace Model.DAO
                 return true;
             }
             catch (System.Exception)
+            {
+                return false;
+            }
+        }
+        public async Task<bool> Active(long id)
+        {
+            try
+            {
+                var user = await GetByIdAsync(id);
+
+                user.Status = !user.Status;
+                await db.SaveChangesAsync();
+                return true;
+            }
+            catch
             {
                 return false;
             }
@@ -179,7 +194,7 @@ namespace Model.DAO
                 else
                 {
                     if (result.Password.Equals(password))
-                    {                       
+                    {
                         return true;
                     }
 
@@ -253,18 +268,18 @@ namespace Model.DAO
         {
             var user = GetByUsername(username);
             var data = (from a in db.Credentials
-                       join b in db.UserGroups on a.UserGroupId equals b.Id
-                       join c in db.Roles on a.RoleId equals c.Id
-                       where b.Id == user.GroupId
-                       select new
-                       {
-                           RoleId = a.RoleId,
-                           UserGroupId = b.Id
-                       }).AsEnumerable().Select(x => new Credential()
-                       {
-                           RoleId = x.RoleId,
-                           UserGroupId = x.UserGroupId
-                       });
+                        join b in db.UserGroups on a.UserGroupId equals b.Id
+                        join c in db.Roles on a.RoleId equals c.Id
+                        where b.Id == user.GroupId
+                        select new
+                        {
+                            RoleId = a.RoleId,
+                            UserGroupId = b.Id
+                        }).AsEnumerable().Select(x => new Credential()
+                        {
+                            RoleId = x.RoleId,
+                            UserGroupId = x.UserGroupId
+                        });
             return data.Select(x => x.RoleId).ToList();
         }
     }

@@ -28,7 +28,6 @@ namespace CodeRumWebBlog.Areas.Admin.Controllers
 
             ViewBag.SearchString = searchString;
             return View(list);
-            return View();
         }
         [HttpGet]
         [HasCredential(RoleId = "ADD_CATEGORY")]

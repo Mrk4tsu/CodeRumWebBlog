@@ -72,9 +72,9 @@
 
                                         @Ajax.ActionLink("Xóa", "Delete", new { @id = item.Id }, new AjaxOptions
                                            {
-                                           Confirm = "Bạn có muốn xóa?",
-                                           OnComplete = "$('#cateRow_" + item.Id + "').remove()",
-                                           HttpMethod = "Delete"
+                                               Confirm = "Bạn có muốn xóa?",
+                                               OnComplete = "$('#cateRow_" + item.Id + "').remove()",
+                                               HttpMethod = "Delete"
                                            }, new { @class = "delete-link badge badge-danger" })
 
                                     </td>

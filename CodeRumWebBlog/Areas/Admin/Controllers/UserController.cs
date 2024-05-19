@@ -12,7 +12,13 @@ namespace CodeRumWebBlog.Areas.Admin.Controllers
         [HasCredential(RoleId = "VIEW_USER")]
         public ActionResult Index(string searchString = "", int page = 1, int pageSize = 10)
         {
-            var dao = new AccountDAO().ListAllPaging(searchString, page, pageSize);
+            var dao = new AccountDAO().ListAllPaging(searchString, page, pageSize, true);
+            ViewBag.SearchString = searchString;
+            return View(dao);
+        }
+        public ActionResult NotActiveUser(string searchString = "", int page = 1, int pageSize = 10)
+        {
+            var dao = new AccountDAO().ListAllPaging(searchString, page, pageSize, false);
             ViewBag.SearchString = searchString;
             return View(dao);
         }
@@ -109,6 +115,12 @@ namespace CodeRumWebBlog.Areas.Admin.Controllers
             {
                 status = result
             });
+        }
+        [HttpDelete]
+        public async Task<ActionResult> ActiveUser(long id)
+        {
+            await new AccountDAO().Active(id);
+            return RedirectToAction("Index");
         }
         [HttpPost]
         public async Task<JsonResult> AddComment(long id, Comment comment)

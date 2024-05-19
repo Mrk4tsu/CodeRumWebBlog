@@ -70,13 +70,13 @@ namespace CodeRumWebBlog.Controllers
         [HttpPost]
         public JsonResult AddComment(string comment, long contentId)
         {
-            var session = (UserLogin)Session[Common.CommonConstants.USER_SESSION];
+            string username = HttpContext.User.Identity.Name;
             var dao = new CommentDAO();
-            if (session == null)
+            if (!Request.IsAuthenticated)
             {
                 return Json(new { success = false, message = "Vui lòng đăng nhập tài khoản!" }, JsonRequestBehavior.AllowGet);
             }
-            var lastComment = dao.GetLastCommentByUser(session.UserName);
+            var lastComment = dao.GetLastCommentByUser(username);
             if (lastComment != null)
             {
                 var diffInSeconds = (TimeZoneInfo.ConvertTimeBySystemTimeZoneId(DateTime.Now, "SE Asia Standard Time") - lastComment.CreateAt.Value).TotalSeconds;
@@ -93,7 +93,7 @@ namespace CodeRumWebBlog.Controllers
             var commentEntity = new Model.Entity.Comment
             {
                 Content = comment,
-                CreateBy = session.UserName,
+                CreateBy = username,
                 CreateAt = TimeZoneInfo.ConvertTimeBySystemTimeZoneId(DateTime.Now, "SE Asia Standard Time"),
                 PostId = contentId
             };
@@ -101,8 +101,8 @@ namespace CodeRumWebBlog.Controllers
             var result = dao.Insert(commentEntity);
             if (result > 0)
             {
-                var user = new AccountDAO().GetByUsername(session.UserName);
-                var isAuthor = (session.UserName == user.Username);
+                var user = new AccountDAO().GetByUsername(username);
+                var isAuthor = (username == user.Username);
 
                 var author = "";
                 if (isAuthor) author = "author";

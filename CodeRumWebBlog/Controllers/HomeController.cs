@@ -1,5 +1,7 @@
-﻿using Model.DAO;
+﻿using hbehr.recaptcha;
+using Model.DAO;
 using System.Configuration;
+using System.Net;
 using System.Web.Mvc;
 using System.Web.UI;
 
@@ -32,6 +34,23 @@ namespace CodeRumWebBlog.Controllers
 
             ViewBag.NewContents = top;
             return PartialView("ContentNew");
+        }
+
+        public ActionResult Captcha()
+        {
+            return View();
+        }
+        [HttpPost]
+        public ActionResult Confirm()
+        {
+            string captchaResponse = Request.Form["g-recaptcha-response"];
+
+            if (ReCaptcha.ValidateCaptcha(captchaResponse))
+            {
+                return View("Captcha");
+            }
+            // A Bot
+            return RedirectToAction("Robot");
         }
     }
 }

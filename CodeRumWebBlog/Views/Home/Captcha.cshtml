@@ -1,0 +1,17 @@
+﻿@{
+    ViewBag.Title = "Captcha";
+    Layout = null;
+}
+
+
+<div class="container">
+
+    @using (Html.BeginForm("Confirm", "Home", FormMethod.Post))
+    {
+        @hbehr.recaptcha.ReCaptcha.GetCaptcha()
+        <input type="submit"/>
+    }
+</div>
+
+<script src="https://www.google.com/recaptcha/api.js" type="text/javascript"></script>
+

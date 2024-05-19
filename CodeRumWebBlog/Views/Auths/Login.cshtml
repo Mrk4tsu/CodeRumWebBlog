@@ -58,6 +58,11 @@
                                 </label>
                                 @Html.ValidationMessageFor(model => model.RememberMe, "", new { @class = "text-danger" })
                             </div>
+                            @*<div class="mb-2">
+                                @hbehr.recaptcha.ReCaptcha.GetCaptcha()
+                            </div>*@
+                            
+
                             <div class="d-flex justify-content-between align-items-center row mx-2">
                                 <div>
                                     <a href="@Url.Action("Register", "Auths")">Tạo tài khoản</a>
