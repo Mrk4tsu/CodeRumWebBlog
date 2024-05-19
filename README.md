@@ -3,6 +3,7 @@
  ## 1. Install:
   + Microsoft Visual Studio
   + Microsof SQL Server Manager
+
 *Front End*
  - Framework: Bootstrap 4,5
  - HTML/CSS
