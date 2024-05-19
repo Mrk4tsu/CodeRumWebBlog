@@ -7,7 +7,8 @@
  - JavaScript
  - Plugin: CKFinder, CKEditor
  - jQuery
-*Back End*
+ 
+ *Back End*
  - IDE: Visual Studio ver 2017 trở lên
  - Framework: ASP.NET, .NET Framework 4.6 trở lên
  - Database: MSSQL
