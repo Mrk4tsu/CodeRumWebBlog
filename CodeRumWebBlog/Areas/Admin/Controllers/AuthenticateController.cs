@@ -1,7 +1,9 @@
 ﻿using CodeRumWebBlog.Areas.Admin.Data;
 using Common;
 using Model.DAO;
+using System.Collections.Generic;
 using System.Web.Mvc;
+using System.Web.Security;
 using System.Web.UI;
 
 namespace CodeRumWebBlog.Areas.Admin.Controllers
@@ -63,13 +65,10 @@ namespace CodeRumWebBlog.Areas.Admin.Controllers
             return View(model);
 
         }
-        public ActionResult EditModerator()
+        public ActionResult LogOut()
         {
-            return View();
-        }
-        public ActionResult AddCredential()
-        {
-            return View();
+            Session[Common.CommonConstants.USER_SESSION] = null;
+            return Redirect("Login");
         }
     }
 }

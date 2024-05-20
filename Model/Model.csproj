@@ -66,6 +66,7 @@
     <Compile Include="DAO\CommentDAO.cs" />
     <Compile Include="DAO\ContentCategoryDAO.cs" />
     <Compile Include="DAO\ContentDAO.cs" />
+    <Compile Include="DAO\CredentialDAO.cs" />
     <Compile Include="Entity\About.cs" />
     <Compile Include="Entity\Account.cs" />
     <Compile Include="Entity\Category.cs" />

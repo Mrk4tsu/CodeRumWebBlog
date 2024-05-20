@@ -43,8 +43,9 @@ namespace CodeRumWebBlog.Controllers
                     user.Password = model.Password;
                     user.Email = model.Email;
                     user.Name = model.Name;
-                    user.GroupId = "customer";
+                    user.GroupId = "MEMBER";
                     user.CreateAt = DateTime.Now;
+                    user.Avatar = "/uploads/avatar-default.jpg";
                     user.Status = true;
 
                     var result = await dao.InsertAsync(user);

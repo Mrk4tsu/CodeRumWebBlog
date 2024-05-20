@@ -137,7 +137,7 @@ namespace CodeRumWebBlog.Areas.Admin.Controllers
         {
             var dao = new AccountDAO();
             var roles = dao.ListAllRole();
-            ViewBag.RoleId = new SelectList(roles, "Id", "Name", selectedId);
+            ViewBag.GroupId = new SelectList(roles, "Id", "Name", selectedId);
         }
     }
 }

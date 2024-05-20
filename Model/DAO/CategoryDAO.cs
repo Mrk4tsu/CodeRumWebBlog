@@ -92,6 +92,24 @@ namespace Model.DAO
                 return false;
             }
         }
+        public async Task<bool> Active(long id)
+        {
+            try
+            {
+                var cate = GetById(id);
+
+                cate.Status = !cate.Status;
+
+                //db.Categories.Remove(cate);
+                await db.SaveChangesAsync();
+
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
         public bool ChangeStatus(long id)
         {
             var cate = db.Categories.Find(id);

@@ -61,9 +61,12 @@
                                         <div class="text-date" data-date="@item.CreateAt.Value.ToString("o")"></div>
                                     </td>
                                     <td>
-                                        <a href="#" class="@(item.Status ? "badge badge-success" : "badge badge-danger") btn-change-category-status text-decoration-none" data-id="@item.Id">
-                                            @(item.Status ? "Đã kích hoạt" : "Chưa kích hoạt")
-                                        </a>
+                                        @Ajax.ActionLink("Ẩn danh mục", "ActiveCategory", new { @id = item.Id }, new AjaxOptions
+                                        {
+
+                                            OnComplete = "$('#cateRow_" + item.Id + "').remove()",
+                                            HttpMethod = "Delete",
+                                        }, new { @class = "accept-link badge badge-danger" })
                                     </td>
                                     <td>
                                         <a href="/Admin/Category/Edit/@item.Id" class="text-center badge badge-primary">

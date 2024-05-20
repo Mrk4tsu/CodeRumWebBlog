@@ -1,5 +1,4 @@
-﻿
-<!--Phần navbar trên điện thoại-->
+﻿<!--Phần navbar trên điện thoại-->
 <div class="humberger__menu__wrapper">
     <div class="humberger__menu__logo">
         <a href="@Url.Action("Index", "Home")"><img src="~/Resourse/client/img/logo.png" alt=""></a>
@@ -60,7 +59,9 @@
                         var username = HttpContext.Current.User.Identity.Name;
                         var user = new Model.DAO.AccountDAO().GetByUsername(username);
                         <div class="header__user dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><img src="@user.Avatar" alt=""></a>
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                <img src="@user.Avatar" alt="">
+                            </a>
                             <div class="dropdown-menu dropdown__header__cus shadow">
                                 <div class="image-dropdown">
                                     <img src="@user.Avatar" alt="">

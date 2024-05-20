@@ -87,6 +87,7 @@ namespace CodeRumWebBlog.Areas.Admin.Controllers
                 model.CreateBy = session.UserName;
                 await new ContentDAO().InsertAsync(model);
 
+                SetAlert("Bài viết của bạn đã được tạo, vui lòng chờ quản trị duyệt bài để hiển thị", "sucess");
                 return RedirectToAction("Index");
             }
             SetViewBag();

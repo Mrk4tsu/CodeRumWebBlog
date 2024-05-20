@@ -178,8 +178,10 @@
     <Compile Include="Areas\Admin\Controllers\BaseController.cs" />
     <Compile Include="Areas\Admin\Controllers\CategoryController.cs" />
     <Compile Include="Areas\Admin\Controllers\ContentController.cs" />
+    <Compile Include="Areas\Admin\Controllers\CredentialController.cs" />
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
     <Compile Include="Areas\Admin\Controllers\UserController.cs" />
+    <Compile Include="Areas\Admin\Data\CredentialViewModel.cs" />
     <Compile Include="Areas\Admin\Data\LoginModel.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AuthsController.cs" />
@@ -214,7 +216,6 @@
     <Content Include="Global.asax" />
     <Content Include="Areas\Admin\Views\web.config" />
     <Content Include="Areas\Admin\Views\_ViewStart.cshtml" />
-    <Content Include="Areas\Admin\Views\Shared\_Layout.cshtml" />
     <Content Include="Areas\Admin\Views\Home\Index.cshtml" />
     <Content Include="Areas\Admin\Views\User\Index.cshtml" />
     <Content Include="ico.ico" />
@@ -3683,6 +3684,7 @@
     <Content Include="Resourse\plugin\dododot\jquery.dotdotdot.min.js" />
     <Content Include="Resourse\plugin\lib\CKFinder.dll" />
     <Content Include="Resourse\plugin\utils.js" />
+    <Content Include="uploads\avatar-default.jpg" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -3955,7 +3957,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Resourse\data\" />
-    <Folder Include="uploads\" />
     <Folder Include="Views\Base\" />
     <Folder Include="Views\Feeds\" />
   </ItemGroup>
@@ -3963,6 +3964,8 @@
     <Content Include="Areas\Admin\Views\Shared\Error401.cshtml" />
     <Content Include="Areas\Admin\Views\User\NotActiveUser.cshtml" />
     <Content Include="Areas\Admin\Views\Category\HidenCate.cshtml" />
+    <Content Include="Areas\Admin\Views\Credential\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Credential\UserGroupDetail.cshtml" />
     <None Include="packages.config" />
     <Content Include="Resourse\plugin\ckeditor\plugins\codeTag\.git\COMMIT_EDITMSG" />
     <Content Include="Resourse\plugin\ckeditor\plugins\codeTag\.git\config" />

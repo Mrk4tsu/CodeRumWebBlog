@@ -83,6 +83,12 @@ namespace CodeRumWebBlog.Areas.Admin.Controllers
             await new CategoryDAO().Delete(id);
             return RedirectToAction("Index");
         }
+        [HttpDelete]
+        public async Task<ActionResult> ActiveCategory(long id)
+        {
+            await new CategoryDAO().Active(id);
+            return RedirectToAction("Index");
+        }
         [HttpPost]
         public JsonResult ChangeStatus(long id)
         {

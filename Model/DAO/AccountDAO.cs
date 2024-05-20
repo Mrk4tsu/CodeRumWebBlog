@@ -33,9 +33,9 @@ namespace Model.DAO
             }
             return model.OrderByDescending(x => x.CreateAt).Where(u => u.Status == status).ToPagedList(page, pageSize);
         }
-        public IEnumerable<Role> ListAllRole()
+        public IEnumerable<UserGroup> ListAllRole()
         {
-            return db.Roles.ToList();
+            return db.UserGroups.ToList();
         }
         public Account GetByUsername(string username)
         {
@@ -281,6 +281,16 @@ namespace Model.DAO
                             UserGroupId = x.UserGroupId
                         });
             return data.Select(x => x.RoleId).ToList();
+        }
+        public double CalculatePercentageOfActiveAccounts()
+        {
+            var totalAccounts = db.Accounts.Count();
+            var activeAccounts = db.Accounts.Count(a => a.Status);
+
+            if (totalAccounts == 0) return 0; // Avoid division by zero
+
+            var percentage = (double)activeAccounts / totalAccounts * 100;
+            return Math.Round(percentage, 0); // Round to 1 decimal place
         }
     }
 }

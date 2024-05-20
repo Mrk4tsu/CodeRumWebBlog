@@ -14,6 +14,7 @@ namespace CodeRumWebBlog.Areas.Admin
 
         public override void RegisterArea(AreaRegistrationContext context)
         {
+            //Admin/User/NotActiveUser
             // Route trang chủ cho admin
             context.MapRoute(
                 name: "AdminPage",
@@ -101,7 +102,14 @@ namespace CodeRumWebBlog.Areas.Admin
                     controller = "User",
                     action = "Index"
                 });
-
+            context.MapRoute(
+                name: "AdminListHidenUser",
+                url: "danh-sach-nguoi-dung-chua-xac-thuc",
+                defaults: new
+                {
+                    controller = "User",
+                    action = "NotActiveUser"
+                });
             // Route cho tạo mới người dùng
             context.MapRoute(
                 name: "AdminCreateUser",

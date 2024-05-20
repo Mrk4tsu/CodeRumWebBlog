@@ -26,8 +26,8 @@
 
 </head>
 
-<body class="bg-gradient-primary">
-    <div class="container">
+<body class="bg-gradient-primary ">
+    <div class="container ">
 
         <!-- Outer Row -->
         <div class="row  d-flex align-items-center justify-content-center">
@@ -55,15 +55,7 @@
                                             <input type="password" name="Password" class="form-control form-control-user" placeholder="Nhập mật khẩu">
                                             @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
                                         </div>
-                                        <div class="form-group">
-                                            <div class="custom-control custom-checkbox small">
-                                                <input type="checkbox" name="RememberMe" class="custom-control-input" id="customCheck">
-                                                <label class="custom-control-label" for="customCheck">
-                                                    Remember
-                                                    Me
-                                                </label>
-                                            </div>
-                                        </div>
+                                        
                                         <button type="submit" class="btn btn-primary btn-user btn-block">Đăng nhập</button>
 
                                     }

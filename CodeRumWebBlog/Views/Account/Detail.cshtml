@@ -4,9 +4,8 @@
     ViewBag.Title = Model.Account.Name;
     Layout = "~/Views/Shared/_LayoutPublic.cshtml";
 
-    ViewBag.URL = Url.Action("Detail", "Account", new { name = Model.Account.Name, id = Model.Account.Id });
     ViewBag.Description = "Thông tin trang cá nhân: " + Model.Account.Name;
-    ViewBag.Image = Model.Account.Avatar;
+    ViewBag.KeyWords = Model.Account.Name;
 }
 
 @section Nav {
