@@ -31,7 +31,7 @@ namespace Model.DAO
             }
             return model.OrderByDescending(x => x.CreateAt).Where(c => c.Status == isStatus).ToPagedList(page, pageSize);
         }
-        public Category GetById(long id)
+        public Category GetById(long? id)
         {
             return db.Categories.Find(id);
         }

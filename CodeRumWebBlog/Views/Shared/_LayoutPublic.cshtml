@@ -21,8 +21,12 @@
     @RenderSection("styles", required: false)
 </head>
 
-<body id="page-top">
-    <div class="bg-layer">
+<body id="page-top position-relative">
+    <div class="spotify">
+        <iframe src="https://open.spotify.com/embed/track/0SLhB9JLM4Ksz1XdwK3aQD?utm_source=generator" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+    </div>
+    <div class="bg-layer ">
+
         <!-- Page Preloder -->
         @RenderSection("Nav", required: false)
         @if (TempData["AlertClientMessage"] != null)

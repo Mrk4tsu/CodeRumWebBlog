@@ -94,10 +94,10 @@ code {
     border-radius: 10px;
     margin: 5px 0;
 }
-
+/*
 img {
     max-width: 100%;
-}
+}*/
 
 input:focus,
 select:focus,
@@ -2949,9 +2949,9 @@ input.input-search:focus {
     }
 
 .image-wrapper {
-    background-size: inherit;
+    background-size: cover;
     background-repeat: no-repeat;
-    background-position: center;
+    background-position: top center;
     border-top-right-radius: 20px;
     border-top-left-radius: 20px;
     height: 250px;
@@ -3231,8 +3231,6 @@ input.input-search:focus {
     }
 
     .content-detail img {
-        width: 100%;
-        object-fit: cover;
         margin: 10px 0;
         border-radius: 10px;
     }
@@ -3321,6 +3319,7 @@ input.input-search:focus {
         padding: 10px 15px;
         color: #5f3f3f;
     }
+
 .reply-group {
     background: rgba(43, 76, 85);
     display: flex;
@@ -3371,9 +3370,23 @@ iframe {
     width: 100% !important;
     height: calc(350px - 20px);
 }
+.spotify {
+    position: fixed;
+    left: 10px;
+    bottom: 10px;
+    z-index:10;
+}
+.spotify iframe {
+    border-radius: 12px;
+    width: 40%;
+    height: 100px;
+   
+}
+
 #cke_txtContent {
     border-radius: 10px;
 }
+
 .bg-original-layout {
     background: rgba(39, 61, 82);
 }

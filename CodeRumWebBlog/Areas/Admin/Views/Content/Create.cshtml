@@ -30,27 +30,11 @@
         var editor = CKEDITOR.replace('txtContent', {
 
         });
-
-        //$(document).ready(function () {
-        //    $('#myTextarea').on('input', function () {
-        //        var words = this.value.match(/\S+/g).length;
-        //        // Update the word count
-        //        $('#wordCount').text(words + '/150');
-        //        if (words > 150) {
-        //            // Split the string on first 250 words and rejoin on spaces
-        //            var trimmed = $(this).val().split(/\s+/, 150).join(" ");
-        //            // Add a space at the end to keep new typing making new words
-        //            $(this).val(trimmed + " ");
-        //        }
-        //    });
-        //});
-
-
     </script>
 
 }
 <div class="container-fluid">
-    @using (Html.BeginForm())
+    @using (Html.BeginForm("Create", "Content", FormMethod.Post, new { enctype = "multipart/form-data" }))
     {
         @Html.AntiForgeryToken()
         <div class="row">
@@ -87,12 +71,11 @@
                 <div class="form-group">
                     @Html.LabelFor(model => model.Image, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="input-group col-12">
-                        <input type="text" id="txtImage" name="Image" class="form-control col-12">
-                        <a href="#" class="input-group-text text-decoration-none" id="btnSelectImage"
+                        @Html.EditorFor(model => model.Image, new { htmlAttributes = new { @class = "form-control col-12", type = "file", id = "image", name = "Image", placeholder = "Choose Image Content" } })
+                        <a href="#" class="input-group-text text-decoration-none"
                            style="border-bottom-left-radius: 0 !important; border-top-left-radius:0px !important;">
                             Chọn ảnh
                         </a>
-
                     </div>
                     <small class="col-12 font-italic">Có thể dán Url ảnh vào đây</small>
                     @Html.ValidationMessageFor(model => model.Image, "", new { @class = "text-danger" })

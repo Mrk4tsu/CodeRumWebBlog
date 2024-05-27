@@ -31,7 +31,11 @@ namespace CodeRumWebBlog.Areas.Admin.Controllers
         }
         [HttpGet]
         [HasCredential(RoleId = "ADD_CATEGORY")]
-        public ActionResult Create() => View();
+        public ActionResult Create()
+        {
+            SetViewBag();
+            return View();
+        }
         [HttpPost]
         [HasCredential(RoleId = "ADD_CATEGORY")]
         public async Task<ActionResult> Create(Category category)
@@ -50,6 +54,7 @@ namespace CodeRumWebBlog.Areas.Admin.Controllers
                 SetAlert("Thêm User không thành công", "error");
                 ModelState.AddModelError("", "Thêm người dùng không thành công");
             }
+            SetViewBag();
             return View("Index");
         }
         [HttpGet]
@@ -98,6 +103,11 @@ namespace CodeRumWebBlog.Areas.Admin.Controllers
             {
                 status = result
             });
+        }
+        public void SetViewBag(long? selectedId = null)
+        {
+            var dao = new CategoryDAO();
+            ViewBag.ParentId = new SelectList(dao.ListAll(), "ID", "Name", selectedId);
         }
     }
 }

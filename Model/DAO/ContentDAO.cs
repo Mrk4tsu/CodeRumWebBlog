@@ -1,5 +1,4 @@
-﻿using CodeRumWebBlog;
-using Common;
+﻿using Common;
 using Model.Entity;
 using PagedList;
 using System;
@@ -7,6 +6,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace Model.DAO
 {
@@ -126,19 +126,27 @@ namespace Model.DAO
         {
             return await db.Contents.FindAsync(id);
         }
-        public async Task<long> InsertAsync(Content content)
+        public async Task<long> InsertAsync(Content content, HttpPostedFileBase contentImage, string mapPath, string createdBy)
         {
             //Xử lý alias
             if (string.IsNullOrEmpty(content.MetaTitle))
             {
                 content.MetaTitle = StringHelper.ToUnsignString(content.Name);
             }
+
             content.CreateAt = TimeZoneInfo.ConvertTimeBySystemTimeZoneId(DateTime.Now, "SE Asia Standard Time");
             content.ViewCount = 0;
             content.Status = false;//Ẩn bài viết
             content.Locked = true;//Khóa bài viết
 
             db.Contents.Add(content);
+            await db.SaveChangesAsync();
+
+
+            var image = FileStoreCommon.SaveUploadedFile(contentImage, mapPath, $"{content.Id}", 50L);
+            content.Image = $"/uploads/{createdBy}/images/{image}";
+
+            db.Entry(content).State = EntityState.Modified;
             await db.SaveChangesAsync();
 
             //Xử lý tag
@@ -174,20 +182,16 @@ namespace Model.DAO
                 {
                     content.MetaTitle = StringHelper.ToUnsignString(entity.Name);
                 }
+
                 content.Name = entity.Name;
                 content.Description = entity.Description;
                 content.Image = entity.Image;
                 content.CategoryId = entity.CategoryId;
-                content.ViewCount = entity.ViewCount;
-                content.TopHot = entity.TopHot;
                 content.Tag = entity.Tag;
                 content.MetaKeyword = entity.MetaKeyword;
-                content.CreateAt = entity.CreateAt;
                 content.Detail = entity.Detail;
-                content.Status = entity.Status;
-                content.CreateBy = entity.CreateBy;
-                content.ModifyBy = entity.ModifyBy;
-                content.ModifyDate = DateTime.Now;
+                content.Status = content.Status;
+                content.ModifyDate = TimeZoneInfo.ConvertTimeBySystemTimeZoneId(DateTime.Now, "SE Asia Standard Time");
 
                 //Xử lý tag
                 if (!string.IsNullOrEmpty(entity.Tag))
@@ -210,7 +214,7 @@ namespace Model.DAO
 
                     }
                 }
-
+                db.Entry(content).State = EntityState.Modified;
                 await db.SaveChangesAsync();
                 return true;
             }
@@ -248,65 +252,11 @@ namespace Model.DAO
             }
             return false;
         }
-        //public async Task<bool> EditAsyn(Content entity)
-        //{
-        //    try
-        //    {
-        //        var content = await GetByID(entity.Id);
-        //        //Xử lý alias
-        //        if (string.IsNullOrEmpty(entity.MetaTitle))
-        //        {
-        //            content.MetaTitle = StringHelper.ToUnsignString(entity.Name);
-        //        }
-        //        content.Name = entity.Name;
-        //        content.Description = entity.Description;
-        //        content.Image = entity.Image;
-        //        content.CategoryId = entity.CategoryId;
-        //        content.ViewCount = entity.ViewCount;
-        //        content.TopHot = entity.TopHot;
-        //        content.Tag = entity.Tag;
-        //        content.MetaKeyword = entity.MetaKeyword;
-        //        content.CreateAt = entity.CreateAt;
-        //        content.Detail = entity.Detail;
-        //        content.Status = entity.Status;
-        //        content.CreateBy = entity.CreateBy;
-        //        content.ModifyBy = entity.ModifyBy;
-        //        content.ModifyDate = DateTime.Now;
-
-        //        await db.SaveChangesAsync();
-
-        //        //Xử lý tag
-        //        if (!string.IsNullOrEmpty(entity.Tag))
-        //        {
-        //            this.RemoveAllContentTag(entity.Id);
-        //            string[] tags = entity.Tag.Split(',');
-        //            foreach (var tag in tags)
-        //            {
-        //                var tagId = StringHelper.ToUnsignString(tag);
-        //                var existedTag = await this.CheckTag(tagId);
-
-        //                //insert to to tag table
-        //                if (!existedTag)
-        //                {
-        //                    await this.InsertTag(tagId, tag);
-        //                }
-
-        //                //insert to content tag
-        //                await this.InsertContentTag(entity.Id, tagId);
-
-        //            }
-        //        }
-
-        //        return true;
-        //    }
-        //    catch (Exception)
-        //    {
-        //        return false;
-        //    }
-        //}
         public async Task<Content> ViewDetail(long id)
         {
             var content = await GetByIDAsync(id);
+            if (content.ViewCount == null)
+                content.ViewCount = 0;
             content.ViewCount++;
             await db.SaveChangesAsync();
 
@@ -362,7 +312,7 @@ namespace Model.DAO
         {
             var user = await GetByIDAsync(userId);
 
-            if(user != null)
+            if (user != null)
             {
                 var list = from a in db.Contents
                            join b in db.Accounts

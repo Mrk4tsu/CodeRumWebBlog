@@ -275,7 +275,7 @@ $(document).ready(function () {
     $('.content-detail img').each(function () {
         var imgSrc = $(this).attr('src');
         var imgClass = $(this).attr('class');
-        var newElement = '<a href="' + imgSrc + '" data-toggle="lightbox" class="image-lightbox lightbox-group" data-gallery="example-gallery"><img src="' + imgSrc + '" class="' + imgClass + '"></a>';
+        var newElement = '<a href="' + imgSrc + '" data-toggle="lightbox" class="image-lightbox lightbox-group" data-gallery="example-gallery"><img src="' + imgSrc + '" class="' + imgClass + '" alt="' + imgSrc + '"></a>';
         $(this).replaceWith(newElement);
     });
 });

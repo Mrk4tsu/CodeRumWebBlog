@@ -40,5 +40,7 @@ namespace CodeRumWebBlog.Areas.Admin.Controllers
                     break;
             }
         }
+        protected UserLogin session() => (UserLogin)Session[Common.CommonConstants.USER_SESSION];
+        protected string mapPath() => Server.MapPath($"uploads/{session().UserName}/images");
     }
 }

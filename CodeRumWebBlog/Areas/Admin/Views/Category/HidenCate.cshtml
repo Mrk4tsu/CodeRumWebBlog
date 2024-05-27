@@ -42,6 +42,7 @@
                             <tr class="text-center">
                                 <th>Số thứ tự</th>
                                 <th>Tên</th>
+                                <th>Chủ đề</th>
                                 <th>Meta Title</th>
                                 <th>Ngày tạo</th>
                                 <th>Trạng thái</th>
@@ -51,9 +52,20 @@
                         <tbody id="myTable">
                             @foreach (var item in Model)
                             {
+                                var parent = new Model.DAO.CategoryDAO().GetById(item.ParentId);
+                                string nameCate = "";
+                                if (parent != null)
+                                {
+                                    nameCate = parent.Name;
+                                }
+                                else
+                                {
+                                    nameCate = "Không có";
+                                }
                                 <tr id="cateRow_@item.Id" class="text-center">
                                     <td>@item.DisplayOrder</td>
                                     <td>@item.Name</td>
+                                    <td>@nameCate</td>
                                     <td>@item.MetaTitle</td>
                                     <td>
                                         <div class="text-date" data-date="@item.CreateAt.Value.ToString("o")"></div>

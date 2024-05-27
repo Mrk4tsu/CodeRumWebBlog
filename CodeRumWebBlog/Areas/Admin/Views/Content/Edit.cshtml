@@ -18,6 +18,7 @@
     <script src="/Resourse/plugin/ckeditor/ckeditor.js"></script>
     <script src="~/Resourse/plugin/utils.js"></script>
     <script>
+
         $('#btnSelectImage').on('click', function (e) {
             e.preventDefault();
             var finder = new CKFinder();
@@ -28,7 +29,9 @@
         })
 
         var editor = CKEDITOR.replace('detailContent', {
-
+        });
+        document.getElementById('formFile').addEventListener('change', function (e) {
+            document.getElementById('filePath').value = e.target.value;
         });
     </script>
 }
@@ -37,7 +40,7 @@
 
 
 <div class="container-fluid">
-    @using (Html.BeginForm())
+    @using (Html.BeginForm("Edit", "Content", FormMethod.Post, new { enctype = "multipart/form-data" }))
     {
         @Html.AntiForgeryToken()
         <div class="row">
@@ -54,7 +57,9 @@
 
                 <div class="form-group col-12">
                     @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label" })
-                    <textarea class="form-control col-12" id="myTextarea" name="Description" rows="4"></textarea>
+                    @Html.TextAreaFor(model => model.Description, new { @class = "form-control col-12", @rows = "3" })
+
+                    @*<textarea class="form-control col-12" id="myTextarea" name="Description" rows="4"></textarea>*@
                     <div class="d-flex justify-content-between">
                         <small>Tối đa 150 từ</small>
                         <small id="wordCount">0/150</small>
@@ -71,10 +76,14 @@
                     </div>
                 </div>
 
+
+
+
                 <div class="form-group">
                     @Html.LabelFor(model => model.Image, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="input-group col-12">
-                        <input type="text" id="txtImage" name="Image" class="form-control col-12">
+                        @Html.EditorFor(model => model.Image, new { htmlAttributes = new { @class = "form-control col-12", @id="txtImage" } })
+                        @*<input type="text" id="txtImage" name="Image" class="form-control col-12">*@
                         <a href="#" class="input-group-text text-decoration-none" id="btnSelectImage"
                            style="border-bottom-left-radius: 0 !important; border-top-left-radius:0px !important;">
                             Chọn ảnh
@@ -85,12 +94,14 @@
                     @Html.ValidationMessageFor(model => model.Image, "", new { @class = "text-danger" })
                 </div>
 
+
                 <div class="form-group col-12">
                     @Html.LabelFor(model => model.Detail, htmlAttributes: new { @class = "control-label col-12" })
                     @Html.TextAreaFor(model => model.Detail, new { htmlAttributes = new { @class = "form-control 100vh" }, @id = "detailContent", @row = 5 })
 
                     @Html.ValidationMessageFor(model => model.Detail, "", new { @class = "text-danger" })
                 </div>
+
                 <div class="form-group col-12">
                     @Html.LabelFor(model => model.MetaKeyword, htmlAttributes: new { @class = "control-label" })
                     @Html.EditorFor(model => model.MetaKeyword, new { htmlAttributes = new { @class = "form-control col-12" } })

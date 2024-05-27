@@ -1,21 +1,18 @@
-﻿using CodeRumWebBlog.Areas.Admin.Data;
-using Common;
+﻿using Common;
 using Model.DAO;
 using Model.Entity;
 using System;
-using System.Collections.Generic;
-using System.Linq;
+using System.Drawing;
+using System.IO;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
-using System.Web.UI;
 
 namespace CodeRumWebBlog.Areas.Admin.Controllers
 {
     public class ContentController : BaseController
     {
         // GET: Admin/Content
-        [HasCredential(RoleId = "VIEW_CONTENT")]
         public ActionResult Index(string searchString, int page = 1, int pageSize = 10)
         {
             var dao = new ContentDAO();
@@ -78,14 +75,13 @@ namespace CodeRumWebBlog.Areas.Admin.Controllers
         }
         [HttpPost]
         [ValidateInput(false)]
-        public async Task<ActionResult> Create(Content model)
+        public async Task<ActionResult> Create(Content model, HttpPostedFileBase Image)
         {
+
             if (ModelState.IsValid)
             {
-                var session = (UserLogin)Session[Common.CommonConstants.USER_SESSION];
-
-                model.CreateBy = session.UserName;
-                await new ContentDAO().InsertAsync(model);
+                model.CreateBy = session().UserName;
+                await new ContentDAO().InsertAsync(content: model, contentImage: Image, mapPath: mapPath(), createdBy: session().UserName);
 
                 SetAlert("Bài viết của bạn đã được tạo, vui lòng chờ quản trị duyệt bài để hiển thị", "sucess");
                 return RedirectToAction("Index");
@@ -139,7 +135,7 @@ namespace CodeRumWebBlog.Areas.Admin.Controllers
             return View();
         }
         #endregion
-       
+
         [HttpDelete]
         public async Task<ActionResult> Delete(long id)
         {
@@ -150,13 +146,12 @@ namespace CodeRumWebBlog.Areas.Admin.Controllers
         [HttpPost]
         public async Task<ActionResult> AddComment(long ContentId, string CommentText)
         {
-            var session = (UserLogin)Session[Common.CommonConstants.USER_SESSION];
             var comment = new Comment
             {
                 PostId = ContentId,
                 Content = CommentText,
                 CreateAt = DateTime.Now,
-                CreateBy = session.UserName,
+                CreateBy = session().UserName,
                 Status = true
             };
 
@@ -198,6 +193,30 @@ namespace CodeRumWebBlog.Areas.Admin.Controllers
             {
                 status = result
             });
+        }
+        [NonAction]
+        public string SaveUploadedFile(HttpPostedFileBase file, string subFolder, string fail)
+        {
+            if (file != null && file.ContentLength > 0)
+            {
+                var fileName = Path.GetFileName(file.FileName);
+                var directoryPath = Server.MapPath($"~/uploads/{subFolder}/images");
+
+                // Tạo thư mục nếu không tồn tại
+                if (!Directory.Exists(directoryPath))
+                {
+                    Directory.CreateDirectory(directoryPath);
+                }
+
+                var filePath = Path.Combine(directoryPath, fileName);
+
+                // Lưu tệp lên máy chủ
+                file.SaveAs(filePath);
+
+                return fileName;
+            }
+
+            return fail;
         }
     }
 }
