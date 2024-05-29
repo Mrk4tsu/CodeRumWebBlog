@@ -63,6 +63,7 @@ namespace CodeRumWebBlog.Areas.Admin.Controllers
         {
             var dao = new CategoryDAO();
             var cate = dao.GetById(id);
+            SetViewBag(cate.Id);
             return View(cate);
         }
         [HttpPost]
@@ -80,6 +81,7 @@ namespace CodeRumWebBlog.Areas.Admin.Controllers
             {
                 ModelState.AddModelError("", "Cập nhật danh mục không thành công");
             }
+            SetViewBag(category.Id);
             return View("Index");
         }
         [HttpDelete]

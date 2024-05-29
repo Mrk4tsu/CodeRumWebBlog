@@ -34,6 +34,79 @@
 
 }
 <div class="container-fluid">
+    <div class="card shadow mb-4">
+        <div class="card-header">
+            <h6 class="m-0 font-weight-bold text-primary">Add A New Content</h6>
+        </div>
+        <div class="card-body">
+
+            @using (Html.BeginForm("Create", "Content", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                @Html.AntiForgeryToken()
+                <div class="mb-3">
+                    @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "form-label" })
+                    @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control col-12", @id = "name", @placeholder = "Name Category" } })
+                    @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger small" })
+                </div>
+
+                <div class="mb-3">
+                    @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label" })
+                    <textarea class="form-control col-12" id="myTextarea" name="Description" rows="4"></textarea>
+                    <div class="d-flex justify-content-between">
+                        <small>Tối đa 150 từ</small>
+                        <small id="wordCount">0/150</small>
+                    </div>
+
+                    @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="mb-3">
+                    @Html.LabelFor(model => model.CategoryId, htmlAttributes: new { @class = "form-label" })
+                    @Html.DropDownListFor(model => model.CategoryId, null, "--Chọn chủ đề--", new { @class = "form-control col-12" })
+                    @Html.ValidationMessageFor(model => model.CategoryId, "", new { @class = "text-danger small" })
+                </div>
+
+                <div class="mb-3">
+                    @Html.LabelFor(model => model.Image, htmlAttributes: new { @class = "control-label" })
+                    <div class="input-group">
+                        @Html.EditorFor(model => model.Image, new { htmlAttributes = new { @class = "form-control col-12", type = "file", id = "image", name = "Image", placeholder = "Choose Image Content" } })
+
+                    </div>
+                    <small class="col-12 font-italic">Có thể dán Url ảnh vào đây</small>
+                    @Html.ValidationMessageFor(model => model.Image, "", new { @class = "text-danger" })
+                </div>
+                <div class="mb-3">
+                    @Html.LabelFor(model => model.Detail, htmlAttributes: new { @class = "control-label col-12" })
+                    @Html.TextAreaFor(model => model.Detail, new { htmlAttributes = new { @class = "form-control 100vh" }, @id = "txtContent", @row = 5 })
+
+                    @Html.ValidationMessageFor(model => model.Detail, "", new { @class = "text-danger" })
+                </div>
+                <div class="mb-3">
+                    @Html.LabelFor(model => model.MetaKeyword, htmlAttributes: new { @class = "control-label" })
+                    @Html.EditorFor(model => model.MetaKeyword, new { htmlAttributes = new { @class = "form-control col-12" } })
+                    @Html.ValidationMessageFor(model => model.MetaKeyword, "", new { @class = "text-danger" })
+                </div>
+                <div class="mb-3">
+                    @Html.LabelFor(model => model.Tag, htmlAttributes: new { @class = "control-label" })
+                    @Html.EditorFor(model => model.Tag, new { htmlAttributes = new { @class = "form-control col-12" } })
+                    <small class="col-12 font-italic">Mỗi tag cách nhau 1 dấu phẩy: VD: 'game, test' sẽ được <code>game</code> <code>test</code></small>
+                    @Html.ValidationMessageFor(model => model.Tag, "", new { @class = "text-danger" })
+                </div>
+                <div class="form-group">
+                    <div class="d-flex justify-content-center">
+                        <input type="submit" value="Create" class="btn bg-gradient-violet text-light col-4" />
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+
+
+
+
+@*<div class="container-fluid">
     @using (Html.BeginForm("Create", "Content", FormMethod.Post, new { enctype = "multipart/form-data" }))
     {
         @Html.AntiForgeryToken()
@@ -109,5 +182,5 @@
         </div>
 
     }
-</div>
+</div>*@
 

@@ -116,9 +116,8 @@ namespace CodeRumWebBlog.Areas.Admin.Controllers
             if (ModelState.IsValid)
             {
                 var dao = new ContentDAO();
-
-                model.Detail = detailContent;
-
+                
+                model.ModifyBy = session().UserName;
                 var result = await dao.EditAsyn(model);
                 if (result)
                 {
@@ -129,6 +128,9 @@ namespace CodeRumWebBlog.Areas.Admin.Controllers
                 {
                     ModelState.AddModelError("", "Cập nhật bài viết không thành công");
                 }
+
+                model.Detail = detailContent;
+
                 return View("Index", "Content");
             }
             SetViewBag(model.CategoryId);
@@ -193,30 +195,6 @@ namespace CodeRumWebBlog.Areas.Admin.Controllers
             {
                 status = result
             });
-        }
-        [NonAction]
-        public string SaveUploadedFile(HttpPostedFileBase file, string subFolder, string fail)
-        {
-            if (file != null && file.ContentLength > 0)
-            {
-                var fileName = Path.GetFileName(file.FileName);
-                var directoryPath = Server.MapPath($"~/uploads/{subFolder}/images");
-
-                // Tạo thư mục nếu không tồn tại
-                if (!Directory.Exists(directoryPath))
-                {
-                    Directory.CreateDirectory(directoryPath);
-                }
-
-                var filePath = Path.Combine(directoryPath, fileName);
-
-                // Lưu tệp lên máy chủ
-                file.SaveAs(filePath);
-
-                return fileName;
-            }
-
-            return fail;
         }
     }
 }

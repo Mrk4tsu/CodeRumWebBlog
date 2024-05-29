@@ -191,6 +191,7 @@ namespace Model.DAO
                 content.MetaKeyword = entity.MetaKeyword;
                 content.Detail = entity.Detail;
                 content.Status = content.Status;
+                content.ViewCount = content.ViewCount;
                 content.ModifyDate = TimeZoneInfo.ConvertTimeBySystemTimeZoneId(DateTime.Now, "SE Asia Standard Time");
 
                 //Xử lý tag
@@ -255,8 +256,6 @@ namespace Model.DAO
         public async Task<Content> ViewDetail(long id)
         {
             var content = await GetByIDAsync(id);
-            if (content.ViewCount == null)
-                content.ViewCount = 0;
             content.ViewCount++;
             await db.SaveChangesAsync();
 

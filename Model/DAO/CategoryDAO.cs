@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Web.UI.WebControls;
 
 namespace Model.DAO
 {
@@ -54,11 +55,14 @@ namespace Model.DAO
             {
                 var cate = GetById(category.Id);
                 cate.Name = category.Name;
-                cate.MetaTitle = category.MetaTitle;
+                if (string.IsNullOrEmpty(category.MetaTitle))
+                {
+                    cate.MetaTitle = StringHelper.ToUnsignString(category.Name);
+                }
                 cate.SeoTitle = category.SeoTitle;
                 cate.DisplayOrder = category.DisplayOrder;
                 cate.ModifyDate = TimeZoneInfo.ConvertTimeBySystemTimeZoneId(DateTime.Now, "SE Asia Standard Time");
-                cate.Status = category.Status;
+                cate.Status = cate.Status;
                 cate.ShowOnHome = category.ShowOnHome;
                 cate.ParentId = category.ParentId;
                 cate.MetaKeyword = category.MetaKeyword;
