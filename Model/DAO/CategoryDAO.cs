@@ -20,6 +20,14 @@ namespace Model.DAO
         {
             return db.Categories.Where(x => x.Status == true).ToList();
         }
+        public List<Category> ListPrimary(int num)
+        {
+            return db.Categories.Where(c => c.Status == true && (c.ParentId == null || c.ParentId == -1)).Take(num).ToList();
+        }
+        public List<Category> ListSecondary(int num)
+        {
+            return db.Categories.Where(c => c.Status == true && (c.ParentId != null || c.ParentId != -1)).Take(num).ToList();
+        }
         public IEnumerable<Category> ListAll(string searchString, int page, int pageSize, bool isStatus)
         {
             IQueryable<Category> model = db.Categories;

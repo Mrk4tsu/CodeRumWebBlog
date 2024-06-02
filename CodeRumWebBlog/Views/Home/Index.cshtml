@@ -28,7 +28,7 @@
 
 <section class="container position-relative">
     <div class="row d-flex justify-content-center">
-        
+
         <div class="col-sm-12 col-md-8 col-lg-8 col-12">
             @using (Html.BeginForm("Index", "Blog", FormMethod.Get))
             {
@@ -48,22 +48,7 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-3">
-                <div class="hero__categories rounded-e-20">
-                    <div class="hero__categories__all bg-gradient-success rounded-e-20">
-                        <i class="fa fa-bars"></i>
-                        <span>Nội dung</span>
-                    </div>
-                    <ul>
-                        <li><a href="#">Tin tức trò chơi</a></li>
-                        <li><a href="#">Đánh giá trò chơi</a></li>
-                        <li><a href="#">Tin tức công nghệ</a></li>
-                        <li><a href="#">Chia sẻ công nghệ</a></li>
-                        <li><a href="#">Công nghệ thông tin</a></li>
-                        <li><a href="#">Chia sẻ lập trình</a></li>
-                        <li><a href="#">Chia sẻ lập trình</a></li>
-                        <li><a href="#">Chia sẻ lập trình</a></li>
-                    </ul>
-                </div>
+                @{ Html.RenderAction("CategoryCore", "Home"); }
             </div>
             <div class="col-lg-9">
                 <div id="demo" class="carousel slide" data-ride="carousel">
@@ -110,55 +95,7 @@
 </div>
 <!-- Banner End -->
 <!-- Danh sách Categories -->
-<section class="categories pt-5">
-    <div class="container">
-        <div class="d-flex w-100 justify-content-between align-items-center my-1">
-            <div class="h5 text-light font-weight-bold">
-                <i class="fa fa-comment bg-gradient-violet p-2 rounded-circle"></i> Bình luận
-            </div>
-
-        </div>
-        <div class="row">
-            <div class="categories__slider owl-carousel">
-                <div class="col-lg-3">
-                    <div class="categories__item__body shadow-light">
-                        <div class="categories__item" style="background-image: url('../../Resourse/client/img/categories/cat-1.jpg')">
-                            <h5><a href="#">Shounen</a></h5>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3">
-                    <div class="categories__item__body">
-                        <div class="categories__item lazyload" style="background-image: url('../../Resourse/client/img/categories/cat-2.jpg')">
-                            <h5><a href="#">Shounen</a></h5>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3">
-                    <div class="categories__item__body">
-                        <div class="categories__item lazyload" style="background-image: url('../../Resourse/client/img/categories/cat-3.jpg')">
-                            <h5><a href="#">Shounen</a></h5>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3">
-                    <div class="categories__item__body">
-                        <div class="categories__item lazyload" style="background-image: url('../../Resourse/client/img/categories/cat-4.jpg')">
-                            <h5><a href="#">Shounen</a></h5>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3">
-                    <div class="categories__item__body">
-                        <div class="categories__item lazyload" style="background-image: url('../../Resourse/client/img/categories/cat-5.jpg')">
-                            <h5><a href="#">Shounen</a></h5>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
+@{ Html.RenderAction("CategorySecondary", "Home"); }
 <!-- Kết thúc Categories -->
 @{ Html.RenderAction("ContentNew", "Home"); }
 @{ Html.RenderAction("TopContent", "Home"); }

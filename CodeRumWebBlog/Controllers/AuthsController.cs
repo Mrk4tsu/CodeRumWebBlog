@@ -81,38 +81,6 @@ namespace CodeRumWebBlog.Controllers
                 {
                     if (result)
                     {
-                        //var user = userDAO.GetByUsername(model.Username);
-                        #region[Session]
-                        //var userSession = new UserLogin();
-                        //userSession.UserName = user.Username;
-                        //userSession.UserId = user.Id;
-                        //userSession.GroupId = user.GroupId;
-
-                        //var listCredential = userDAO.GetListCredential(model.Username);
-                        //Session.Add(CommonConstants.SESSION_CREDENTIALS, listCredential);
-                        //Session.Add(CommonConstants.USER_SESSION, userSession);
-                        #endregion
-                        #region[Cookies]
-                        //// Create the authentication ticket
-                        //var authTicket = new FormsAuthenticationTicket(
-                        //    1,                             // version
-                        //    model.Username,                // user name
-                        //    DateTime.Now,                  // created
-                        //    DateTime.Now.AddMinutes(20),   // expires
-                        //    false,                         // persistent?
-                        //    user.GroupId                   // can be used to store roles
-                        //);
-
-                        //// Now encrypt the ticket.
-                        //string encryptedTicket = FormsAuthentication.Encrypt(authTicket);
-
-                        //// Create a cookie and add the encrypted ticket to the
-                        //// cookie as data.
-                        //var authCookie = new HttpCookie(FormsAuthentication.FormsCookieName, encryptedTicket);
-
-                        //// Add the cookie to the outgoing cookies collection.
-                        //Response.Cookies.Add(authCookie);
-                        #endregion
                         //Dặt thời gian hết hạn của vé xác thực dựa trên việc người dùng có tick remember me
                         int timeOut = model.RememberMe ? (40320 * 4) : 1; //5256000 phút = 1 năm
 
@@ -126,10 +94,10 @@ namespace CodeRumWebBlog.Controllers
                         cookie.HttpOnly = true;
 
                         Response.Cookies.Add(cookie);
-                        if (Url.IsLocalUrl(returnUrl))
+                        //if (Url.IsLocalUrl(returnUrl))
                             return Redirect(returnUrl);
-                        else
-                            return Redirect("/");
+                        //else
+                        //    return Redirect("/");
                     }
                     else
                     {

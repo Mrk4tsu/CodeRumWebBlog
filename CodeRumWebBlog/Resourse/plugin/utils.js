@@ -6,8 +6,12 @@
     }
 };
 
+
+
+
 $(document).ready(function () {
     $('.delete-link').html('<i class="fas fa-trash p-1"></i>');
+
     $("#myInput").on("keyup", function () {
         var value = $(this).val().toLowerCase();
         $("#myTable tr").filter(function () {

@@ -10,30 +10,55 @@ namespace Common
 {
     public class FileStoreCommon
     {
-        public static string SaveUploadedFile(HttpPostedFileBase file, string directoryPath, string sign)
+        public static string SaveUploadedFile(HttpPostedFileBase fileBase, string createdBy, string sign, string nameCore)
         {
-            if (file != null && file.ContentLength > 0)
+            try
             {
-                var fileName = Path.GetFileName(file.FileName);
-
-                // Tạo thư mục nếu không tồn tại
-                if (!Directory.Exists(directoryPath))
+                if (fileBase.ContentLength > 0)
                 {
-                    Directory.CreateDirectory(directoryPath);
+                    string _FileName = Path.GetFileName(fileBase.FileName);
+                    string _Extension = Path.GetExtension(fileBase.FileName).ToLower();
+
+                    var renameFile = $"{nameCore}-{sign}";
+                    var filePath = Path.Combine(HttpContext.Current.Server.MapPath($"/uploads/{createdBy}/images"), $"{renameFile}{_Extension}");
+
+                    fileBase.SaveAs(filePath);
+
+                    return $"/uploads/{createdBy}/images/{renameFile}{_Extension}";
+
                 }
-
-                var filePath = Path.Combine(directoryPath, fileName);
-
-                // Lưu tệp lên máy chủ
-                file.SaveAs(filePath);
-
-
-                return fileName;
+                return string.Empty;
             }
-
-            return null;
+            catch(Exception e)
+            {
+                File.WriteAllText("error.txt", $"Error: {e.ToString()}" );
+                return string.Empty;
+            }
         }
-        public static string SaveUploadedFile(HttpPostedFileBase file, string directoryPath, string sign, long quality)
+        //public static string SaveUploadedFile(HttpPostedFileBase file, string directoryPath, string sign)
+        //{
+        //    if (file != null && file.ContentLength > 0)
+        //    {
+        //        var fileName = Path.GetFileName(file.FileName);
+
+        //        // Tạo thư mục nếu không tồn tại
+        //        if (!Directory.Exists(directoryPath))
+        //        {
+        //            Directory.CreateDirectory(directoryPath);
+        //        }
+
+        //        var filePath = Path.Combine(directoryPath, fileName);
+
+        //        // Lưu tệp lên máy chủ
+        //        file.SaveAs(filePath);
+
+
+        //        return fileName;
+        //    }
+
+        //    return null;
+        //}
+        public static string SaveUploadedFile(HttpPostedFileBase file, string directoryPath, string sign, string nameCore, long quality)
         {
             if (file != null && file.ContentLength > 0)
             {
@@ -46,8 +71,8 @@ namespace Common
                     Directory.CreateDirectory(directoryPath);
                 }
 
-                var uniqueFileName = $"{fileName}{sign}{extension}";
-                var filePath = Path.Combine(directoryPath, uniqueFileName);
+                var uniqueFileName = $"{nameCore}-{sign}";
+                var filePath = Path.Combine(directoryPath, $"{uniqueFileName}{extension}");
 
                 // Nén chất lượng ảnh
                 using (var image = Image.FromStream(file.InputStream, true, true))
@@ -59,7 +84,7 @@ namespace Common
                     image.Save(filePath, codecInfo, encoderParameters);
                 }
 
-                return uniqueFileName;
+                return $"{uniqueFileName}{extension}";
             }
 
             return null;

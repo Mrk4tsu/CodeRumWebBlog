@@ -19,6 +19,20 @@ namespace CodeRumWebBlog.Controllers
 
             return View();
         }
+        public ActionResult CategoryCore()
+        {
+            var dao = new CategoryDAO();
+            var model = dao.ListPrimary(8);
+
+            return PartialView("CategoryCore", model);
+        }
+        public ActionResult CategorySecondary()
+        {
+            var dao = new CategoryDAO();
+            var model = dao.ListSecondary(8);
+
+            return PartialView("CategorySecondary", model);
+        }
         public ActionResult TopContent()
         {
             var dao = new ContentDAO();

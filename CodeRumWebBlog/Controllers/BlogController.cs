@@ -46,6 +46,15 @@ namespace CodeRumWebBlog.Controllers
             ViewBag.Comments = new CommentDAO().ListByContent(id, page, pageSize);
             return View(model);
         }
+        public ActionResult Category(string searchString, long cateId, int page = 1, int pageSize = 10)
+        {
+            var category = new CategoryDAO().GetById(cateId);
+            ViewBag.Category = category;
+            int totalRecord = 0;
+            var model = new ContentDAO().ListByCategoryId(cateId, ref totalRecord, page, pageSize);
+
+            return View(model);
+        }
         public async Task<ActionResult> Tag(string tagId, int page = 1, int pageSize = 10)
         {
             var dao = new ContentDAO();

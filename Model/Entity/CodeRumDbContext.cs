@@ -98,5 +98,7 @@ namespace Model.Entity
                 .Property(e => e.Type)
                 .IsUnicode(false);
         }
+
+        public System.Data.Entity.DbSet<Model.ViewModel.ContentViewModel> ProductViewModels { get; set; }
     }
 }

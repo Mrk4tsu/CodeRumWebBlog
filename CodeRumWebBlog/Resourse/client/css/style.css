@@ -662,9 +662,8 @@ ol {
             font-size: 18px;
             color: #ffffff;
             font-weight: 700;
-            letter-spacing: 2px;
             padding: 12px 0 10px;
-            background: rgba(87, 87, 87, 0.4);
+            background: #7fad39;
             display: block;
         }
 

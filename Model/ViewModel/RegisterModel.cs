@@ -31,5 +31,8 @@ namespace Model.ViewModel
         [Required(ErrorMessage = "Yêu cầu nhập email.")]
         public string Email { get; set; }
 
+        [Display(Name = "Ảnh đại diện")]
+        public string Avatar { get; set; }
+
     }
 }

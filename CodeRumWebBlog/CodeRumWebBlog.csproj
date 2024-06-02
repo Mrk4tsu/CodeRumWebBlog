@@ -204,7 +204,6 @@
     <Content Include="Areas\Admin\Views\Category\Create.cshtml" />
     <Content Include="Areas\Admin\Views\Content\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Content\Create.cshtml" />
-    <Content Include="Areas\Admin\Views\Content\Detail.cshtml" />
     <Content Include="Areas\Admin\Views\Content\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Content\Tag.cshtml" />
     <Content Include="Areas\Admin\Views\Authenticate\Login.cshtml" />
@@ -1923,6 +1922,7 @@
     <Content Include="Resourse\client\img\categories\cat-3.jpg" />
     <Content Include="Resourse\client\img\categories\cat-4.jpg" />
     <Content Include="Resourse\client\img\categories\cat-5.jpg" />
+    <Content Include="Resourse\client\img\categories\jquery_to_js-769x530.png" />
     <Content Include="Resourse\client\img\demo\background.jpg" />
     <Content Include="Resourse\client\img\demo\background.svg" />
     <Content Include="Resourse\client\img\demo\banner_2.png" />
@@ -3966,6 +3966,7 @@
     <Content Include="Areas\Admin\Views\Category\HidenCate.cshtml" />
     <Content Include="Areas\Admin\Views\Credential\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Credential\UserGroupDetail.cshtml" />
+    <Content Include="Areas\Admin\Views\Content\Details.cshtml" />
     <None Include="packages.config" />
     <Content Include="Resourse\plugin\ckeditor\plugins\codeTag\.git\COMMIT_EDITMSG" />
     <Content Include="Resourse\plugin\ckeditor\plugins\codeTag\.git\config" />
@@ -4017,6 +4018,9 @@
     <Content Include="Views\Error\Forbidden.cshtml" />
     <Content Include="Views\Error\NotFound.cshtml" />
     <Content Include="Views\Error\MethodNotAllowed.cshtml" />
+    <Content Include="Views\Home\CategoryCore.cshtml" />
+    <Content Include="Views\Home\CategorySecondary.cshtml" />
+    <Content Include="Views\Blog\Category.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Common\Common.csproj">

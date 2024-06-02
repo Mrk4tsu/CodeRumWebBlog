@@ -16,6 +16,7 @@
 
 @section jsFooter{
     <script src="~/Resourse/plugin/utils.js"></script>
+ 
 }
 
 <div class="row">
@@ -65,7 +66,7 @@
                                         </a>
                                     </td>
                                     <td>
-                                        <a href="/Admin/Content/Edit/@item.Id" class="text-center badge badge-primary">
+                                        <a href="/Admin/Content/Edit/@item.Id" class="text-center badge badge-warning">
                                             <i class="fas fa-pen-square p-1"></i>
                                         </a>
 
@@ -77,6 +78,7 @@
                                     }, new { @class = "delete-link badge badge-danger" })
                                     </td>
                                 </tr>
+                               
                             }
                         </tbody>
                     </table>
@@ -88,4 +90,6 @@
         </div>
     </div>
 </div>
+
+
 

@@ -1,0 +1,26 @@
+﻿@model IEnumerable<Model.Entity.Category>
+<section class="categories pt-5">
+    <div class="container">
+        <div class="d-flex w-100 justify-content-between align-items-center my-1">
+            <div class="h5 text-light font-weight-bold">
+                <i class="fa fa-comment bg-gradient-violet p-2 rounded-circle"></i> Danh mục phổ biến
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="categories__slider owl-carousel">
+                @foreach (var item in Model)
+                {
+                    <div class="col-lg-3">
+                        <div class="categories__item__body shadow-light">
+                            <div class="categories__item" style="background-image: url('../../Resourse/client/img/categories/jquery_to_js-769x530.png')">
+                                <h5><a href="bai-viet/@item.MetaTitle-@item.Id">@item.Name</a></h5>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+
+        </div>
+    </div>
+</section>

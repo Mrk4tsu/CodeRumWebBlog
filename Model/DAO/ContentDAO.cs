@@ -1,5 +1,6 @@
 ﻿using Common;
 using Model.Entity;
+using Model.ViewModel;
 using PagedList;
 using System;
 using System.Collections.Generic;
@@ -7,6 +8,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
+using System.Web.UI;
 
 namespace Model.DAO
 {
@@ -100,6 +102,41 @@ namespace Model.DAO
             return db.Contents.Where(c => c.Status == true && c.Locked == false)
                 .OrderByDescending(c => c.CreateAt).ToList();
         }
+        public IEnumerable<ContentViewModel> ListByCategoryId(long categoryID, ref int totalRecord, int pageIndex = 1, int pageSize = 2)
+        {
+            totalRecord = db.Contents.Where(x => x.CategoryId == categoryID).Count();
+            var model = (from a in db.Contents
+                         join b in db.Categories
+                         on a.CategoryId equals b.Id
+                         where a.CategoryId == categoryID
+                         select new
+                         {
+                             Description = a.Description,
+                             CateName = b.Name,
+                             CreatedDate = a.CreateAt,
+                             CreatedBy = a.CreateBy,
+                             ID = a.Id,
+                             Images = a.Image,
+                             Name = a.Name,
+                             MetaTitle = a.MetaTitle,
+                             Detail = a.Detail,
+                             ViewCount = a.ViewCount
+                         }).AsEnumerable().Select(x => new ContentViewModel()
+                         {
+                             Description = x.Description,
+                             CateName = x.Name,
+                             CreatedDate = x.CreatedDate,
+                             CreatedBy = x.CreatedBy,
+                             ID = x.ID,
+                             Images = x.Images,
+                             Name = x.Name,
+                             MetaTitle = x.MetaTitle,
+                             Detail = x.Detail,
+                             ViewCount = x.ViewCount
+                         });
+            model.OrderByDescending(x => x.CreatedDate).Skip((pageIndex - 1) * pageSize).Take(pageSize);
+            return model.ToPagedList(pageIndex, pageSize);
+        }
         public int CountAll()
         {
             return db.Contents.Count();
@@ -143,7 +180,7 @@ namespace Model.DAO
             await db.SaveChangesAsync();
 
 
-            var image = FileStoreCommon.SaveUploadedFile(contentImage, mapPath, $"{content.Id}", 50L);
+            var image = FileStoreCommon.SaveUploadedFile(contentImage, mapPath, $"{content.Id}", "content", 50L);
             content.Image = $"/uploads/{createdBy}/images/{image}";
 
             db.Entry(content).State = EntityState.Modified;
@@ -186,6 +223,62 @@ namespace Model.DAO
                 content.Name = entity.Name;
                 content.Description = entity.Description;
                 content.Image = entity.Image;
+                content.CategoryId = entity.CategoryId;
+                content.Tag = entity.Tag;
+                content.MetaKeyword = entity.MetaKeyword;
+                content.Detail = entity.Detail;
+                content.Status = content.Status;
+                content.ViewCount = content.ViewCount;
+                content.ModifyDate = TimeZoneInfo.ConvertTimeBySystemTimeZoneId(DateTime.Now, "SE Asia Standard Time");
+
+                //Xử lý tag
+                if (!string.IsNullOrEmpty(entity.Tag))
+                {
+                    this.RemoveAllContentTag(entity.Id);
+                    string[] tags = entity.Tag.Split(',');
+                    foreach (var tag in tags)
+                    {
+                        var tagId = StringHelper.ToUnsignString(tag);
+                        var existedTag = await this.CheckTag(tagId);
+
+                        //insert to to tag table
+                        if (!existedTag)
+                        {
+                            await this.InsertTag(tagId, tag);
+                        }
+
+                        //insert to content tag
+                        await this.InsertContentTag(entity.Id, tagId);
+
+                    }
+                }
+                db.Entry(content).State = EntityState.Modified;
+                await db.SaveChangesAsync();
+                return true;
+            }
+            catch (Exception)
+            {
+                // Log the exception here
+                return false;
+            }
+        }
+        public async Task<bool> EditAsyn(Content entity, HttpPostedFileBase @base, string createdBy)
+        {
+            try
+            {
+                var content = await GetByIDAsync(entity.Id);
+                //Xử lý alias
+                if (string.IsNullOrEmpty(entity.MetaTitle))
+                {
+                    content.MetaTitle = StringHelper.ToUnsignString(entity.Name);
+                }
+
+                content.Name = entity.Name;
+                content.Description = entity.Description;
+                if (!string.IsNullOrEmpty(entity.Image))
+                {
+                    content.Image = FileStoreCommon.SaveUploadedFile(@base, createdBy, $"{content.Id}", "content");
+                }
                 content.CategoryId = entity.CategoryId;
                 content.Tag = entity.Tag;
                 content.MetaKeyword = entity.MetaKeyword;

@@ -40,6 +40,11 @@ namespace CodeRumWebBlog
                     action = "Index"
                 });
             routes.MapRoute(
+               name: "Product Category",
+               url: "bai-viet/{metatitle}-{cateId}",
+               defaults: new { controller = "Blog", action = "Category", id = UrlParameter.Optional }
+           );
+            routes.MapRoute(
                 name: "Detail Blog",
                 url: "chi-tiet-{metatitle}-{id}",
                 defaults: new

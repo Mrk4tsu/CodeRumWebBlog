@@ -90,13 +90,10 @@ namespace CodeRumWebBlog.Areas.Admin.Controllers
             return View();
         }
         #endregion
-        public async Task<ActionResult> Detail(long id, int page = 1, int pageSize = 5)
+        public async Task<ActionResult> Details(long id)
         {
-            var model = await new ContentDAO().ViewDetail(id);
-
-            ViewBag.Tags = new ContentDAO().ListTag(id);
-            ViewBag.Comments = new CommentDAO().ListByContent(id, page, pageSize);
-            return View(model);
+            var model = await new ContentDAO().GetByIDAsync(id);
+            return PartialView(model);
         }
         #region[Chỉnh sửa]
         [HttpGet]
@@ -111,14 +108,14 @@ namespace CodeRumWebBlog.Areas.Admin.Controllers
         }
         [HttpPost]
         [ValidateInput(false)]
-        public async Task<ActionResult> Edit(Content model, string detailContent)
+        public async Task<ActionResult> Edit(Content model, HttpPostedFileBase Image, string detailContent)
         {
             if (ModelState.IsValid)
             {
                 var dao = new ContentDAO();
                 
                 model.ModifyBy = session().UserName;
-                var result = await dao.EditAsyn(model);
+                var result = await dao.EditAsyn(model, Image, session().UserName);
                 if (result)
                 {
                     SetAlert("Chỉnh sửa bài viết thành công", "sucess");

@@ -1,0 +1,17 @@
+﻿@model IEnumerable<Model.Entity.Category>
+
+
+
+<div class="hero__categories rounded-e-20">
+    <div class="hero__categories__all bg-gradient-success rounded-e-20">
+        <i class="fa fa-bars"></i>
+        <span>Nội dung</span>
+    </div>
+    <ul>
+        @foreach (var item in Model)
+        {
+            <li><a href="#"> @Html.DisplayFor(modelItem => item.Name)</a></li>
+        }
+    </ul>
+</div>
+
