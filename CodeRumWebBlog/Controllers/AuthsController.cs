@@ -5,6 +5,8 @@ using Model.DAO;
 using Model.Entity;
 using Model.ViewModel;
 using System;
+using System.Net;
+using System.Net.Mail;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -25,6 +27,9 @@ namespace CodeRumWebBlog.Controllers
         [CaptchaValidation("CaptchaCode", "registerCapcha", "Mã xác nhận không chính xác!")]
         public async Task<ActionResult> Register(RegisterModel model)
         {
+            bool status = false;
+            string message = "";
+
             if (ModelState.IsValid)
             {
                 var dao = new AccountDAO();
@@ -46,21 +51,43 @@ namespace CodeRumWebBlog.Controllers
                     user.GroupId = "MEMBER";
                     user.CreateAt = DateTime.Now;
                     user.Avatar = "/uploads/avatar-default.jpg";
-                    user.Status = true;
+                    user.Status = false;
+                    user.CodeActive = Guid.NewGuid().ToString();
 
                     var result = await dao.InsertAsync(user);
                     if (result > 0)
                     {
-                        ViewBag.Success = "Tạo tài khoản thành công!";
+                        sendEmail(user.Email, user.CodeActive);
+                        message = "Đăng ký được thực hiện thành công. Liên kết kích hoạt tài khoản đã được gửi đến id email của bạn: " + user.Email;
+                        status = true;
                         model = new RegisterModel();
                     }
                     else
                     {
                         ModelState.AddModelError("", "Đăng ký tài khoản không thành công!");
+                        message = "Đăng ký tài khoản không thành công!"; 
                     }
                 }
             }
+            ViewBag.Message = message;
+            ViewBag.Status = status;
             return View(model);
+        }
+        [HttpGet]
+        public ActionResult Verify(string id)
+        {
+            bool status = false;
+            var dao = new AccountDAO();
+            var user = dao.GetByCodeActive(id);
+            if (user != null)
+            {
+                dao.ChangeStatus(user.Id);
+                status = true;
+            }
+            else ViewBag.Message = "Yêu cầu không hợp lệ!";
+
+            ViewBag.Status = status;
+            return View();
         }
         // GET: Auths
         [HttpGet]
@@ -72,6 +99,7 @@ namespace CodeRumWebBlog.Controllers
         [HttpPost]
         public ActionResult Login(LoginViewModel model, string returnUrl = "")
         {
+            string message = "";
             //string captchaResponse = Request.Form["g-recaptcha-response"];
             if (ModelState.IsValid)
             {
@@ -79,30 +107,45 @@ namespace CodeRumWebBlog.Controllers
                 var result = userDAO.SignIn(model.Username, model.Password);
                 try
                 {
-                    if (result)
+                    switch (result)
                     {
-                        //Dặt thời gian hết hạn của vé xác thực dựa trên việc người dùng có tick remember me
-                        int timeOut = model.RememberMe ? (40320 * 4) : 1; //5256000 phút = 1 năm
+                        case 1:
+                            //Dặt thời gian hết hạn của vé xác thực dựa trên việc người dùng có tick remember me
+                            int timeOut = model.RememberMe ? (40320 * 60) : 1; //5256000 phút = 1 năm
 
-                        //Tạo một vé xác thực Forms mới với username của người dùng
-                        var ticket = new FormsAuthenticationTicket(model.Username, model.RememberMe, timeOut);
-                        string encrypted = FormsAuthentication.Encrypt(ticket);
-                        var cookie = new HttpCookie(FormsAuthentication.FormsCookieName, encrypted);
+                            //Tạo một vé xác thực Forms mới với username của người dùng
+                            var ticket = new FormsAuthenticationTicket(model.Username, model.RememberMe, timeOut);
+                            string encrypted = FormsAuthentication.Encrypt(ticket);
+                            var cookie = new HttpCookie(FormsAuthentication.FormsCookieName, encrypted);
 
-                        cookie.Expires = DateTime.Now.AddMinutes(timeOut);
-                        //Đặt HttpOnly = true ngăn cookie được truy cập bởi mã JavaScript
-                        cookie.HttpOnly = true;
+                            cookie.Expires = DateTime.Now.AddMinutes(timeOut);
+                            //Đặt HttpOnly = true ngăn cookie được truy cập bởi mã JavaScript
+                            cookie.HttpOnly = true;
 
-                        Response.Cookies.Add(cookie);
-                        //if (Url.IsLocalUrl(returnUrl))
-                            return Redirect(returnUrl);
-                        //else
-                        //    return Redirect("/");
-                    }
-                    else
-                    {
-                        SetAlert("Đăng nhập không thành công.", "warning");
-                        ModelState.AddModelError("", "Đăng nhập không thành công.");
+                            Response.Cookies.Add(cookie);
+                            try
+                            {
+                                return Redirect(returnUrl);
+                            }
+                            catch (Exception)
+                            {
+                                return View(model);
+                            }
+                        case -1:
+                            message = "Vui lòng kiểm tra tài khoản và mật khẩu.";
+                            break;
+                        case -2:
+                            message = "Tài khoản của bạn đang bị tạm khóa.";
+                            break;
+                        case -3:
+                            message = "Vui lòng kiểm tra tài khoản và mật khẩu.";
+                            break;
+                        case -4:
+                            message = "Vui lòng nhập đầy đủ để tiến hành đăng nhập.";
+                            break;
+                        default:
+                            message = "Đăng nhập thành công.";
+                            break;
                     }
                 }
                 catch
@@ -110,7 +153,7 @@ namespace CodeRumWebBlog.Controllers
                     return View("Error");
                 }
             }
-            SetAlert("Đăng nhập không thành công.", "warning");
+            SetAlert(message, "warning");
             return Redirect(returnUrl);
         }
         [Authorize]
@@ -121,5 +164,42 @@ namespace CodeRumWebBlog.Controllers
 
             return Redirect(returnUrl);
         }
+        public ActionResult Detail()
+        {
+            return View();
+        }
+        [NonAction]
+        public void sendEmail(string email, string active)
+        {
+            var verifyUrl = $"/active/{active}";
+            var link = Request.Url.AbsoluteUri.Replace(Request.Url.PathAndQuery, verifyUrl);
+
+            var fromEmail = new MailAddress("thang.ndu.63cntt@ntu.edu.vn", "MrKatsu");
+            var toEmail = new MailAddress(email);
+
+            var fromEmailPassword = "thangnguyen2212"; // Replace with actual password
+            string subject = "Tài khoản của bạn đã được tạo thành công!";
+
+            //string body = "<br/><br/>Chúng tôi vui mừng thông báo với bạn rằng tài khoản để tham gia Coderum Blog của bạn được tạo thành công. Vui lòng nhấp vào liên kết bên dưới để xác minh tài khoản của bạn" +
+            //" <br/><br/><a href='" + link + "'>" + "Xác minh tài khoản" + "</a> ";
+            string body = StringHelper.EmailBody(link, active);
+            var smtp = new SmtpClient
+            {
+                Host = "smtp.gmail.com",
+                Port = 587,
+                EnableSsl = true,
+                DeliveryMethod = SmtpDeliveryMethod.Network,
+                UseDefaultCredentials = false,
+                Credentials = new NetworkCredential(fromEmail.Address, fromEmailPassword)
+            };
+
+            using (var message = new MailMessage(fromEmail, toEmail)
+            {
+                Subject = subject,
+                Body = body,
+                IsBodyHtml = true
+            })smtp.Send(message);
+        }
+
     }
 }

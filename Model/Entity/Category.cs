@@ -14,6 +14,8 @@ namespace Model.Entity
 
         [StringLength(250)]
         public string Name { get; set; }
+        [StringLength(250)]
+        public string Image { get; set; }
 
         [StringLength(250)]
         public string MetaTitle { get; set; }

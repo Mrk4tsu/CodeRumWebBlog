@@ -14,6 +14,15 @@ namespace CodeRumWebBlog
             new { botdetect = @"(.*)BotDetectCaptcha\.ashx" });
 
             routes.MapRoute(
+                name: "Verify",
+                url: "active/{id}",
+                defaults: new
+                {
+                    controller = "Auths",
+                    action = "Verify",
+                    id = UrlParameter.Optional
+                });
+            routes.MapRoute(
                 name: "Feed",
                 url: "feed",
                 defaults: new 

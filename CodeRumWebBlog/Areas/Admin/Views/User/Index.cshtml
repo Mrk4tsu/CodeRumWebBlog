@@ -52,6 +52,7 @@
                                 <tr class="text-center">
                                     <th>Tên</th>
                                     <th>Username</th>
+                                    <th>Email</th>
                                     <th>Ngày tạo</th>
                                     <th>Trạng thái</th>
                                     <th>#</th>
@@ -66,12 +67,15 @@
                                             @item.Username
                                         </td>
                                         <td>
+                                            @item.Email
+                                        </td>
+                                        <td>
                                             <div>@item.CreateAt.Value.ToString("dd-MM-yyyy")</div>
                                         </td>
                                         <td>
                                             @*<a href="#" class="@(item.Status ? "badge badge-success" : "badge badge-danger") btn-change-user-status text-decoration-none" data-id="@item.Id">
-                                                    @(item.Status ? "Đã kích hoạt" : "Chưa kích hoạt")
-                                                </a>*@
+                @(item.Status ? "Đã kích hoạt" : "Chưa kích hoạt")
+            </a>*@
                                             @Ajax.ActionLink("Khóa tài khoản", "ActiveUser", new { @id = item.Id }, new AjaxOptions
                                             {
 

@@ -1917,27 +1917,16 @@
     <Content Include="Resourse\client\dist\ekko-lightbox.min.js" />
     <Content Include="Resourse\client\fonts\ElegantIcons.svg" />
     <Content Include="Resourse\client\fonts\fontawesome-webfont.svg" />
-    <Content Include="Resourse\client\img\categories\cat-1.jpg" />
-    <Content Include="Resourse\client\img\categories\cat-2.jpg" />
-    <Content Include="Resourse\client\img\categories\cat-3.jpg" />
-    <Content Include="Resourse\client\img\categories\cat-4.jpg" />
-    <Content Include="Resourse\client\img\categories\cat-5.jpg" />
-    <Content Include="Resourse\client\img\categories\jquery_to_js-769x530.png" />
     <Content Include="Resourse\client\img\demo\background.jpg" />
     <Content Include="Resourse\client\img\demo\background.svg" />
     <Content Include="Resourse\client\img\demo\banner_2.png" />
     <Content Include="Resourse\client\img\demo\blog-1.jpg" />
+    <Content Include="Resourse\client\img\demo\cate.jfif" />
     <Content Include="Resourse\client\img\demo\m.jpg" />
     <Content Include="Resourse\client\img\demo\main_illustration.svg" />
     <Content Include="Resourse\client\img\demo\sakamoto-days.jpg" />
     <Content Include="Resourse\client\img\demo\sakamoto-days.png" />
     <Content Include="Resourse\client\img\demo\sds.jpg" />
-    <Content Include="Resourse\client\img\demo\sekiro-1.jpg" />
-    <Content Include="Resourse\client\img\demo\sekiro-2.jpg" />
-    <Content Include="Resourse\client\img\demo\sekiro-3.jpg" />
-    <Content Include="Resourse\client\img\demo\sekiro-4.jpg" />
-    <Content Include="Resourse\client\img\demo\sekiro-5.jpg" />
-    <Content Include="Resourse\client\img\demo\sekiro-6.jpg" />
     <Content Include="Resourse\client\img\demo\sktmd.png" />
     <Content Include="Resourse\client\img\demo\wm.jpg" />
     <Content Include="Resourse\client\img\logo.png" />
@@ -3956,6 +3945,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Resourse\client\img\categories\" />
     <Folder Include="Resourse\data\" />
     <Folder Include="Views\Base\" />
     <Folder Include="Views\Feeds\" />
@@ -4021,6 +4011,8 @@
     <Content Include="Views\Home\CategoryCore.cshtml" />
     <Content Include="Views\Home\CategorySecondary.cshtml" />
     <Content Include="Views\Blog\Category.cshtml" />
+    <Content Include="Views\Auths\Verify.cshtml" />
+    <Content Include="Views\Auths\Detail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Common\Common.csproj">

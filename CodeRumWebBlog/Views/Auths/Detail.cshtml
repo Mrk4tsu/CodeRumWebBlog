@@ -1,0 +1,14 @@
+﻿
+@{
+    ViewBag.Title = "Detail";
+    Layout = "~/Views/Shared/_LayoutPublic.cshtml";
+    Layout = null;
+    string[] files = Common.StringHelper.GetFilesInDirectory(@"E:\Study\WebDesign\aspnet\CodeRumWebBlog\CodeRumWebBlog\uploads\");
+}
+
+@foreach (var f in files)
+{
+    <p>@Path.GetFileName(f)</p>
+}
+
+

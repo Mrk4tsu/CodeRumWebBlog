@@ -7,7 +7,6 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.IO;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
@@ -44,6 +43,11 @@ namespace Model.DAO
         public async Task<Account> GetByIdAsync(long id)
         {
             return await db.Accounts.FindAsync(id);
+        }
+        public Account GetByCodeActive(string guid)
+        {
+            var v = db.Accounts.Where(a => a.CodeActive == new Guid(guid).ToString()).FirstOrDefault();
+            return v;
         }
         public Account GetById(long id)
         {
@@ -178,29 +182,34 @@ namespace Model.DAO
             // Kiểm tra sự khớp của username với pattern
             return Regex.IsMatch(username, pattern);
         }
-        public bool SignIn(string username, string password)
+
+        public int SignIn(string username, string password)
         {
+            if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
+            {
+                return 4;
+            }
             var result = GetByUsername(username);
             if (result == null)
             {
-                return false;
+                return -1;
             }
             else
             {
                 if (result.Status == false)
                 {
-                    return false;
+                    return -2;
                 }
                 else
                 {
                     if (result.Password.Equals(password))
                     {
-                        return true;
+                        return 1;
                     }
 
                     else
                     {
-                        return false;
+                        return -3;
                     }
 
                 }
@@ -265,7 +274,7 @@ namespace Model.DAO
             }
         }
         public List<string> GetListCredential(string username)
-        {
+        {          
             var user = GetByUsername(username);
             var data = (from a in db.Credentials
                         join b in db.UserGroups on a.UserGroupId equals b.Id
@@ -292,5 +301,6 @@ namespace Model.DAO
             var percentage = (double)activeAccounts / totalAccounts * 100;
             return Math.Round(percentage, 0); // Round to 1 decimal place
         }
+
     }
 }

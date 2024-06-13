@@ -3,8 +3,11 @@ using Model.Entity;
 using PagedList;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
+using System.Runtime.Remoting.Contexts;
 using System.Threading.Tasks;
+using System.Web;
 using System.Web.UI.WebControls;
 
 namespace Model.DAO
@@ -44,7 +47,7 @@ namespace Model.DAO
         {
             return db.Categories.Find(id);
         }
-        public async Task<long> Insert(Category category)
+        public async Task<long> Insert(Category category, HttpPostedFileBase contentImage)
         {
             category.CreateAt = TimeZoneInfo.ConvertTimeBySystemTimeZoneId(DateTime.Now, "SE Asia Standard Time");
             //Xử lý alias
@@ -52,9 +55,12 @@ namespace Model.DAO
             {
                 category.MetaTitle = StringHelper.ToUnsignString(category.Name);
             }
+            if (string.IsNullOrEmpty(category.Image))
+            {
+                category.Image = "/Resourse/client/img/categories/defaultctg.png";
+            }
             db.Categories.Add(category);
-            await db.SaveChangesAsync();
-
+            await db.SaveChangesAsync();           
             return category.Id;
         }
         public async Task<bool> Update(Category category)
@@ -70,11 +76,10 @@ namespace Model.DAO
                 cate.SeoTitle = category.SeoTitle;
                 cate.DisplayOrder = category.DisplayOrder;
                 cate.ModifyDate = TimeZoneInfo.ConvertTimeBySystemTimeZoneId(DateTime.Now, "SE Asia Standard Time");
-                cate.Status = cate.Status;
                 cate.ShowOnHome = category.ShowOnHome;
                 cate.ParentId = category.ParentId;
                 cate.MetaKeyword = category.MetaKeyword;
-
+                cate.Image = category.Image;
                 await db.SaveChangesAsync();
 
                 return true;

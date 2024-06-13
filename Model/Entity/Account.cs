@@ -36,5 +36,8 @@
         public string ModifyBy { get; set; }
 
         public bool Status { get; set; }
+
+        [StringLength(50)]
+        public string CodeActive { get; set; }
     }
 }

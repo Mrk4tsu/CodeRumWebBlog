@@ -2,6 +2,7 @@
 using Model.DAO;
 using Model.Entity;
 using System.Threading.Tasks;
+using System.Web;
 using System.Web.Mvc;
 using System.Web.UI;
 namespace CodeRumWebBlog.Areas.Admin.Controllers
@@ -38,12 +39,11 @@ namespace CodeRumWebBlog.Areas.Admin.Controllers
         }
         [HttpPost]
         [HasCredential(RoleId = "ADD_CATEGORY")]
-        public async Task<ActionResult> Create(Category category)
+        public async Task<ActionResult> Create(Category category, HttpPostedFileBase Image)
         {
-            var session = (UserLogin)Session[Common.CommonConstants.USER_SESSION];
             var dao = new CategoryDAO();
-            category.CreateBy = session.UserName;
-            long id = await dao.Insert(category);
+            category.CreateBy = session().UserName;
+            long id = await dao.Insert(category, Image);
             if (id > 0)
             {
                 SetAlert("Thêm danh mục thành công", "sucess");

@@ -28,72 +28,84 @@
             <div class="section-title text-center mt-2">
                 <h2>Đăng ký</h2>
             </div>
-            @using (Html.BeginForm("Register", "Auths", FormMethod.Post))
+            @if (ViewBag.Status != null && Convert.ToBoolean(ViewBag.Status))
             {
-                <div class="form-group form-sign-in">
-                    @Html.AntiForgeryToken()
-
-                    @if (ViewBag.Success != null)
-                    {
-                        <div class="alert alert-success">@ViewBag.Success</div>
-                    }
-                    <div class="d-flex justify-content-center">
-                        @Html.ValidationSummary(false, "", new { @class = "text-danger my-1" })
+                if (ViewBag.Message != null)
+                {
+                    <div class="alert alert-success">
+                        <strong>Success!</strong>@ViewBag.Message
                     </div>
+                }
+            }
+            else
+            {
+                using (Html.BeginForm("Register", "Auths", FormMethod.Post))
+                {
+                    <div class="form-group form-sign-in">
+                        @Html.AntiForgeryToken()
 
-                    <div class="row d-flex justify-content-center align-items-center">
+                        @if (ViewBag.Success != null)
+                        {
+                            <div class="alert alert-success">@ViewBag.Success</div>
+                        }
+                        <div class="d-flex justify-content-center">
+                            @Html.ValidationSummary(false, "", new { @class = "text-danger my-1" })
+                        </div>
 
-                        <div class="col-lg-8 col-md-10 col-sm-11 py-1">
-                            <label for="username" class="h6 my-0 ml-2"> Tài khoản </label>
-                            <input type="text" id="username" name="Username" class="form-control rounded-e-20 px-4"
-                                   placeholder="Nhập tài khoản">
-                            @Html.ValidationMessageFor(model => model.Username, "", new { @class = "text-danger small" })
-                        </div>
-                        <div class="col-lg-8 col-md-10 col-sm-11 py-1">
-                            <label for="password" class="h6 my-0 ml-2"> Mật khẩu </label>
-                            <input type="password" id="password" name="Password" class="form-control rounded-e-20 px-4"
-                                   placeholder="Nhập mật khẩu">
-                            @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger small" })
-                        </div>
-                        <div class="col-lg-8 col-md-10 col-sm-11 py-1">
-                            <label for="re-password" class="h6 my-0 ml-2"> Xác nhận mật khẩu </label>
-                            <input type="password" id="re-password" name="ConfirmParword" class="form-control rounded-e-20 px-4"
-                                   placeholder="Nhập lại mật khẩu">
-                            @Html.ValidationMessageFor(model => model.ConfirmParword, "", new { @class = "text-danger small" })
-                        </div>
-                        <div class="col-lg-8 col-md-10 col-sm-11 py-1">
-                            <label for="name" class="h6 my-0 ml-2"> Tên hiển thị </label>
-                            <input type="text" id="name" name="Name" class="form-control rounded-e-20 px-4"
-                                   placeholder="Nhập tên hiển thị">
-                            @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger small" })
-                        </div>
-                        <div class="col-lg-8 col-md-10 col-sm-11 py-1">
-                            <label for="email" class="h6 my-0 ml-2"> Địa chỉ email </label>
-                            <input type="text" id="email" name="Email" class="form-control rounded-e-20 px-4" placeholder="Nhập email">
-                            @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger small" })
-                        </div>
-                        <div class="col-lg-8 col-md-10 col-sm-11 py-1 captcha">
-                            @Html.Captcha(registerCapcha)
-                            <input type="text" id="captcha" name="CaptchaCode"
-                                   class="form-control rounded-e-20 mt-2 px-4"
-                                   placeholder="Nhập mã xác nhận">
-                        </div>
-                        <div class="col-lg-8 col-md-10 col-sm-11 py-1">
-                            <div class="checkout__input__checkbox mt-2">
-                                <label class="text-light" for="acc">
-                                    Đồng ý với <span class="text-info">Điều khoản dịch vụ.</span>
-                                    <input type="checkbox" name="RememberMe" id="acc">
-                                    <span class="checkmark"></span>
-                                </label>
+                        <div class="row d-flex justify-content-center align-items-center">
+
+                            <div class="col-lg-8 col-md-10 col-sm-11 py-1">
+                                <label for="username" class="h6 my-0 ml-2"> Tài khoản </label>
+                                <input type="text" id="username" name="Username" class="form-control rounded-e-20 px-4"
+                                       placeholder="Nhập tài khoản">
+                                @Html.ValidationMessageFor(model => model.Username, "", new { @class = "text-danger small" })
+                            </div>
+                            <div class="col-lg-8 col-md-10 col-sm-11 py-1">
+                                <label for="password" class="h6 my-0 ml-2"> Mật khẩu </label>
+                                <input type="password" id="password" name="Password" class="form-control rounded-e-20 px-4"
+                                       placeholder="Nhập mật khẩu">
+                                @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger small" })
+                            </div>
+                            <div class="col-lg-8 col-md-10 col-sm-11 py-1">
+                                <label for="re-password" class="h6 my-0 ml-2"> Xác nhận mật khẩu </label>
+                                <input type="password" id="re-password" name="ConfirmParword" class="form-control rounded-e-20 px-4"
+                                       placeholder="Nhập lại mật khẩu">
+                                @Html.ValidationMessageFor(model => model.ConfirmParword, "", new { @class = "text-danger small" })
+                            </div>
+                            <div class="col-lg-8 col-md-10 col-sm-11 py-1">
+                                <label for="name" class="h6 my-0 ml-2"> Tên hiển thị </label>
+                                <input type="text" id="name" name="Name" class="form-control rounded-e-20 px-4"
+                                       placeholder="Nhập tên hiển thị">
+                                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger small" })
+                            </div>
+                            <div class="col-lg-8 col-md-10 col-sm-11 py-1">
+                                <label for="email" class="h6 my-0 ml-2"> Địa chỉ email </label>
+                                <input type="text" id="email" name="Email" class="form-control rounded-e-20 px-4" placeholder="Nhập email">
+                                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger small" })
+                            </div>
+                            <div class="col-lg-8 col-md-10 col-sm-11 py-1 captcha">
+                                @Html.Captcha(registerCapcha)
+                                <input type="text" id="captcha" name="CaptchaCode"
+                                       class="form-control rounded-e-20 mt-2 px-4"
+                                       placeholder="Nhập mã xác nhận">
+                            </div>
+                            <div class="col-lg-8 col-md-10 col-sm-11 py-1">
+                                <div class="checkout__input__checkbox mt-2">
+                                    <label class="text-light" for="acc">
+                                        Đồng ý với <span class="text-info">Điều khoản dịch vụ.</span>
+                                        <input type="checkbox" name="RememberMe" id="acc">
+                                        <span class="checkmark"></span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-8 col-md-10 col-sm-11 py-3 captcha">
+                                <input type="submit" class="form-control bg-gradient-success rounded-e-20" value="Đăng ký">
                             </div>
                         </div>
-
-                        <div class="col-lg-8 col-md-10 col-sm-11 py-3 captcha">
-                            <input type="submit" class="form-control bg-gradient-success rounded-e-20" value="Đăng ký">
-                        </div>
                     </div>
-                </div>
 
+                }
             }
         </div>
     </div>
