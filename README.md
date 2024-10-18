@@ -9,7 +9,7 @@
  - HTML/CSS
  - JavaScript
  - Plugin: CKFinder, CKEditor
- - jQuery
+ - jQuery, aJax
  
  *Back End*
  - IDE: Visual Studio ver 2017 trở lên
@@ -22,16 +22,16 @@
 solution
 ├──CodeRumWebBlog.csproj
 │  ├── Areas
-│  │   ├── Admin
-│  │   │   └── Controllers
-│  │   │       ├── HomeController.cs
-│  │   │       └── ...Controller.cs
-│  │   ├── Data
-│  │   │   └── LoginModel.cs
-│  │   └── Views
-│  │       ├── Home
-│  │       │  └── Index.cshtml
-│  │       └── ...
+│  │   └── Admin
+│  │       └── Controllers
+│  │       │   ├── HomeController.cs
+│  │       │   └── ...Controller.cs
+│  │       ├── Data
+│  │       │   └── LoginModel.cs
+│  │       └── Views
+│  │           ├── Home
+│  │           │  └── Index.cshtml
+│  │           └── ...
 │  ├── Controllers
 │  │   ├── HomeController.cs
 │  │   └── ...Controller.cs
