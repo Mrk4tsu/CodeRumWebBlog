@@ -177,7 +177,7 @@ namespace CodeRumWebBlog.Controllers
             var fromEmail = new MailAddress("thang.ndu.63cntt@ntu.edu.vn", "MrKatsu");
             var toEmail = new MailAddress(email);
 
-            var fromEmailPassword = "thangnguyen2212"; // Replace with actual password
+            var fromEmailPassword = "**********"; // Replace with actual password
             string subject = "Tài khoản của bạn đã được tạo thành công!";
 
             //string body = "<br/><br/>Chúng tôi vui mừng thông báo với bạn rằng tài khoản để tham gia Coderum Blog của bạn được tạo thành công. Vui lòng nhấp vào liên kết bên dưới để xác minh tài khoản của bạn" +
